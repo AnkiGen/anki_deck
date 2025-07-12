@@ -1,8 +1,9 @@
 import unittest
-from unittest.mock import patch
+from unittest.mock import patch, MagicMock
 from Import_2 import lemmatization
 from Import_1 import splitting
 from api.Appearance import is_word_in_generated_sentences
+from gpt import *
 
 
 class TestSplittingFunction(unittest.TestCase):
@@ -197,6 +198,62 @@ class TestAppearance(unittest.TestCase):
         word = "apple"
         sentences = []
         self.assertFalse(is_word_in_generated_sentences(word, sentences))
+
+
+class TestGPT(unittest.TestCase):
+    def test_generate_prompt(self):
+        unknown_words = ["apple", "banana"]
+        known_words = ["fruit"]
+        count = 5
+        context_sentences = ["I eat an apple.", "Bananas are yellow."]
+        prompt = generate_prompt(unknown_words, known_words, count, context_sentences)
+
+        assert "Unknown words:" in prompt
+        for word in unknown_words:
+            assert word in prompt
+        assert str(count) in prompt
+
+    def test_parse_response_to_dicts(self):
+        response_text = (
+            "apple;яблоко;I eat an apple.;I like apples.;Я люблю яблоки.\n"
+            "banana;банан;Bananas are yellow.;They are tasty.;Они вкусные."
+        )
+        result = parse_response_to_dicts(response_text)
+        assert len(result) == 2
+        first = result[0]
+        assert first["word"] == "apple"
+        assert first["word_translation"] == "яблоко"
+        assert first["context_sentence"] == "I eat an apple."
+        assert first["sentence1"] == "I like apples."
+        assert first["sentence1_translation"] == "Я люблю яблоки."
+
+
+    def test_write_cards_to_csv(self):
+        response_text = [
+            {
+                "word": "apple",
+                "word_translation": "яблоко",
+                "context_sentence": "I eat an apple.",
+                "sentence1": "I like apples.",
+                "sentence1_translation": "Я люблю яблоки."
+            },
+            {
+                "word": "banana",
+                "word_translation": "банан",
+                "context_sentence": "Bananas are yellow.",
+                "sentence1": "They are tasty.",
+                "sentence1_translation": "Они вкусные."
+            }
+        ]
+
+        response = write_cards_to_csv(response_text)
+
+        assert isinstance(response, PlainTextResponse)
+        content = response.body.decode()
+        assert "apple" in content
+        assert "банан" in content
+        assert "word" in content
+        assert "lemma" in content
 
 
 if __name__ == "__main__":

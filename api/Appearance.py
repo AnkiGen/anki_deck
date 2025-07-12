@@ -10,6 +10,8 @@ def is_word_in_generated_sentences(word, sentences):
         if word_lemma not in sentence_lemmas:
             return False
     return True
+
+
 def validate_response_sentences(response_text):
     for line in response_text.strip().split('\n'):
         parts = line.split(';')
