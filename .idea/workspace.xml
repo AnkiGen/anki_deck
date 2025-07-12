@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="222a644d-2c41-450d-9c06-d2446119ffae" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/Appearance.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/Appearance.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/integration_tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/integration_tests.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/unit_tests1.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/unit_tests1.py" afterDir="false" />
-    </list>
+    <list default="true" id="222a644d-2c41-450d-9c06-d2446119ffae" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -82,7 +77,7 @@
       <option name="presentableId" value="Default" />
       <updated>1752149137166</updated>
       <workItem from="1752149138158" duration="12812000" />
-      <workItem from="1752331384320" duration="15681000" />
+      <workItem from="1752331384320" duration="16210000" />
     </task>
     <servers />
   </component>
@@ -101,6 +96,6 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/anki_deck$fast_api.coverage" NAME="fast_api Coverage Results" MODIFIED="1752150347670" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/api" />
-    <SUITE FILE_PATH="coverage/anki_deck$.coverage" NAME=" Coverage Results" MODIFIED="1752150356921" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/api" />
+    <SUITE FILE_PATH="coverage/anki_deck$.coverage" NAME=" Coverage Results" MODIFIED="1752362567396" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/api" />
   </component>
 </project>

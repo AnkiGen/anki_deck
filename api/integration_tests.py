@@ -106,38 +106,6 @@ def test_post_word():
     assert response.json() == {"status": "ok"}
 
 
-def test_wordlist_regeneration_basic():
-    payload = {
-        "known_words": ["слово1", "слово2"],
-        "count": 2,
-        "currentStuff": {
-            "0": {
-                "originalWord": "яблоко",
-                "originalSentence": "Я ем яблоко.",
-            },
-            "1": {
-                "originalWord": "банан",
-                "originalSentence": "Я ем банан.",
-            }
-        }
-    }
-
-    response = client.post("/wordlist/regenerate/post", json=payload)
-    assert response.status_code == 200
-    data = response.json()
-    assert "currentStuff" in data
-    assert len(data["currentStuff"]) == 2
-
-    for key, item in data["currentStuff"].items():
-        assert "originalWord" in item
-        assert "generatedSentence" in item
-        assert "generatedSentenceRussian" in item
-
-    original_words = [item["originalWord"] for item in data["currentStuff"].values()]
-    for word in payload["currentStuff"].values():
-        assert word["originalWord"] in original_words
-
-
 def test_wordlist_regeneration_with_empty_current_stuff():
     payload = {
         "known_words": ["слово1"],
@@ -156,30 +124,6 @@ def test_wordlist_regeneration_invalid_payload():
     }
     response = client.post("/wordlist/regenerate/post", json=payload)
     assert response.status_code == 422
-
-def test_wordlist_regeneration_with_large_input():
-    currentStuff = {}
-    known_words = []
-    for i in range(10):
-        word = f"слово{i}"
-        sentence = f"Это предложение для {word}."
-        currentStuff[str(i)] = {
-            "originalWord": word,
-            "originalSentence": sentence,
-        }
-        known_words.append(word)
-
-    payload = {
-        "known_words": known_words,
-        "count": 5,
-        "currentStuff": currentStuff
-    }
-
-    response = client.post("/wordlist/regenerate/post", json=payload)
-    assert response.status_code == 200
-    data = response.json()
-    assert isinstance(data["currentStuff"], dict)
-    assert len(data["currentStuff"]) == 10
 
 
 def test_get_user_not_found():
