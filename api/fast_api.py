@@ -1,17 +1,15 @@
-from openai import Timeout
-from fastapi import FastAPI, Query,Request
-from fastapi.responses import JSONResponse
+from fastapi import FastAPI, Query
 from sqlite3 import connect
+
+from starlette.responses import JSONResponse
+
 # from fastapi.staticfiles import StaticFiles
 from gpt import request_sentences, write_cards_to_csv, parse_response_to_dicts
 import os
 from fastapi.middleware.cors import CORSMiddleware
 from decryptors import *
-from pydantic import BaseModel
-from typing import List
-from Appearance import is_word_in_generated_sentences,validate_response_sentences
-import json
-from time import sleep
+from Appearance import is_word_in_generated_sentences
+from models import *
 
 app = FastAPI()
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -194,25 +192,11 @@ async def get_wordlist():
     return {"words": words}
 
 
-class WordListRequest(BaseModel):
-    unknown_words: List[str]
-    known_words: List[str]
-    count: int
-    context_sentences: List[str]
-
-
-@app.post("/wordlist/post", response_model=WordListRequest)
-async def post_text(payload: WordListRequest):
-    unknown_words = payload.unknown_words
-    known_words = payload.known_words
-    count = payload.count
-    context_sentences = payload.context_sentences
-
-
+def csv_generation(unknown_words, known_words, count, context_sentences):
     words_to_generate = unknown_words.copy()
     correct_rows = []
     while words_to_generate:
-        response_text = request_sentences(words_to_generate, known_words, count,context_sentences)
+        response_text = request_sentences(words_to_generate, known_words, count, context_sentences)
         rows = parse_response_to_dicts(response_text)
         still_incorrect = []
         for row in rows:
@@ -223,11 +207,50 @@ async def post_text(payload: WordListRequest):
             else:
                 still_incorrect.append(word)
         words_to_generate = still_incorrect
-    try:
-        return write_cards_to_csv(correct_rows)
-    except Timeout:
-        sleep(60)
+    return correct_rows
 
-@app.options("/wordlist/post")
-async def options_wordlist_post(request: Request):
-    return JSONResponse(status_code=200)
+
+@app.post("/wordlist/post", response_model=WordListRequest)
+async def post_text(payload: WordListRequest):
+    unknown_words = payload.unknown_words
+    known_words = payload.known_words
+    count = payload.count
+    context_sentences = payload.context_sentences
+    con = connect(data_file)
+    cur = con.cursor()
+    for word in range(len(known_words)):
+        ids = cur.execute("SELECT word_id FROM words").fetchone()
+        if ids:
+            ids = ids[-1][0] + 1
+        else:
+            ids = 1
+        cur.execute("INSERT INTO words (word, context_sentence, user_id) VALUES (?, ?, ?)",
+                    (known_words[word], "", 0))
+        con.commit()
+        cur.execute("INSERT INTO known_words (word_id) VALUES (?)", (known_words[word],))
+        con.commit()
+        con.close()
+    return write_cards_to_csv(csv_generation(unknown_words, known_words, count, context_sentences))
+
+
+@app.post("/wordlist/regenerate/post", response_model=WordListRegeneration)
+async def wordlist_regeneration(payload: WordListRegeneration):
+    unknown_words = []
+    dict1 = {}
+    known_words = payload.known_words
+    count = payload.count
+    context_sentences = []
+    stuff = payload.currentStuff
+    for index in stuff.keys():
+        data = stuff[index]
+        dict1[data["originalWord"]] = index
+        unknown_words.append(data['originalWord'])
+        context_sentences.append(data['originalSentence'])
+    rows = csv_generation(unknown_words, known_words, count, context_sentences)
+    ans = {"currentStuff": {}}
+    for row in rows:
+        ans["currentStuff"][dict1[row['originalWord']]] = stuff[dict1[row['originalWord']]]
+        ans["currentStuff"][dict1[row['originalWord']]]["generatedSentence"] = row["sentence1"]
+        ans["currentStuff"][dict1[row['originalWord']]]["generatedSentenceRussian"] = row["sentence1_translation"]
+
+    return JSONResponse(ans)
