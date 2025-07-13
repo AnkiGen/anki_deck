@@ -56,6 +56,9 @@ export default {
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
+        },
+        goToWelcome() {
+            this.$router.push({ name: 'Welcom' });
         }
     }
 }
@@ -74,7 +77,7 @@ export default {
             <div v-else style="font-size: 50px;">Генерация...</div>
         </div>
         <div v-if="isErr">Упс, кажется что-то пошло не так</div>
-        <Basebutton ref="buttonRef" class="back-button">Вернуться в начало</Basebutton>
+        <Basebutton ref="buttonRef" class="back-button" @click="goToWelcome">Вернуться в начало</Basebutton>
     </div>
 </template>
 
@@ -85,6 +88,12 @@ export default {
         flex-direction: column;
         height: 100%;
         gap: 5%;
+        font-family: "Inter", sans-serif;
+        font-optical-sizing: auto;
+        font-weight: 200;
+        font-style: normal;
+        color: white;
+        font-size: 17px;
     }
     .button-flex {
         height: 70%;
@@ -110,7 +119,8 @@ export default {
     }
     .back-button {
         margin-bottom: 3%;
-        width: 17%;
+        width:255px;
+        height:100px;
         border-radius: 0%;
     }
     @media(min-width: 1280px) {

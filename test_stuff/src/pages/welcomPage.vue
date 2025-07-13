@@ -2,6 +2,7 @@
 import Basebutton from '@/components/Basebutton.vue';
 import router from '@/router';
 import ArrowWithHint from '@/components/ArrowWithHint.vue';
+import { useUserTextStoreV } from '@/stores/userTextV';
 
 export default {
     data() {
@@ -21,7 +22,25 @@ export default {
     },
     methods: {
         goToGenerSettings() {
-            router.push({name: 'GenerSettings'});
+            // For beginner level, fetch the CSV and redirect to FinalPage
+            fetch('/basic_words.csv')
+                .then(console.log("aboba"))
+                .then(response => response.text())
+                .then(csvText => {
+                    // Parse CSV into array of arrays
+                    const lines = csvText.split('\n').filter(line => line.trim());
+                    // Optionally skip header if present
+                    let startIdx = 0;
+                    if (lines[0].toLowerCase().includes('исходное слово') || lines[0].toLowerCase().includes('original')) {
+                        startIdx = 1;
+                    }
+                    const csvData = lines.slice(startIdx).map(line => line.split(';'));
+                    // Store in userTextV
+                    const userTextStore = useUserTextStoreV();
+                    userTextStore.setCsv(csvData);
+                    // Redirect to FinalPage
+                    this.$router.push({ name: 'FinalPage' });
+                });
         },
         goToPasteText() {
             router.push({name: 'Input'});
