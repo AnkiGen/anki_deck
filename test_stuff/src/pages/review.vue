@@ -139,11 +139,10 @@ export default {
                 // Get data from API store
                 const apiData = this.apiStore.data;
                 
-                // Get current sentences for marked indices
                 const currentStuff = {};
                 this.markedForRegeneration.forEach(index => {
                     if (this.words[index]) {
-                        currentSentences[index] = {
+                        currentStuff[index] = {
                             originalWord: this.words[index][0],
                             lemmaVersion: this.words[index][1],
                             originalSentence: this.words[index][2],
@@ -153,9 +152,9 @@ export default {
                         };
                     }
                 });
-                
-                // Add marked sentences and current data to the request
                 const requestData = {
+                    known_words: apiData.known_words || [],
+                    count: apiData.count || 10, // я не ебу схуяли 10, но от багов иногда спасает
                     currentStuff: currentStuff
                 };
                 
