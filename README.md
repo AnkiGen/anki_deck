@@ -159,21 +159,16 @@ When everything is done, you can proceed further for the download in ```.csv``` 
 <img src = "./images/6.png" width = "1000" height = "1000"> <!--- Скачать колоду в формате ... -->
 <!-- ROADMAP -->
 ## Roadmap
-
-- [ ] Multi-language Support
-    - [ ] German
- - [ ] Improved deck generation logic
- - [ ] Make filter limitations work correctly
- - [ ] Add possibility to fetch text by writing author and song name
- - [ ] Remove automatically redundant symbols, s.a. [1], the, a, an, etc...
- - [ ] Working website run with docker
- - [ ] User can mark words as known/unknown to improve quality of sentences
- - [ ] Tinder-style selecting is provided
- - [ ] User can choose number of words he want to learn and length of generated sentence
- - [ ] Sentences are generated considering context
- - [ ] On the final page user can download csv file with proper fields
+ - [ x ] Working website run with docker
+ - [ x ] User can mark words as known/unknown to improve quality of sentences
+ - [ x ] Tinder-style selecting is provided
+ - [ x ] User can choose number of words he want to learn and length of generated sentence
+ - [ x ] Sentences are generated considering context
+ - [ x ] On the final page user can download csv file with proper fields
  - [ ] Voicover for words
  - [ ] Teacher student system
+ - [ ] Add possibility to fetch text by writing author and song name
+ - [ ] Remove automatically redundant symbols, s.a. [1], the, a, an, etc...
  See all our tasks [here](https://github.com/orgs/AnkiGen/projects/3)
 
 
