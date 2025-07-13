@@ -22,7 +22,7 @@
 <br />
 <div align="center">
     <img src="./images/danko.png" alt="Logo" width="350" height="350">
-  <h3 align="center">DANIL DANKO'S<br> Anki Deck Generator</h3>
+  <h3 align="center"> Anki Deck Generator<br></h3>
 
   <p align="center">
     What if you could learn a new language with Anki cards—using your favorite songs or book passages, in the easy and creative way?<br/><br>
@@ -62,7 +62,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-Whether you're a language enthusiast, a curious learner, or a developer exploring NLP-powered tools,  **DANIL DANKO's Anki Deck Generator**  helps you learn languages in context—sentence by sentence. 
+Whether you're a language enthusiast, a curious learner, or a developer exploring NLP-powered tools,  **Anki Deck Generator**  helps you learn languages in context—sentence by sentence. 
 
 With our project you can turn your *favorite songs* or *books* into **personalized Anki flashcards.** 
 
@@ -86,20 +86,30 @@ Just access this [link.](https://github.com/AnkiGen/anki_deck/deployments/github
 ### 2. Run with Docker (Recommended)
 #### Prerequisites
 * docker
-* git
 
 #### Installation
-
-1. Clone our repository: ```git clone https://github.com/AnkiGen/anki_deck```
-2. Get into the directory: ```cd anki_deck```
-3.  Create ``.env`` with ``OPENAI_API_KEY=TOKEN`` and replace ``TOKEN`` with your GPT token.
-4. ```docker pull dkddjdjjfjdj/anki-deck```
-5. ```docker run --env-file .env -p 8000:8000 dkddjdjjfjdj/anki-deck```
-
+1. Download docker deskop on your computer.
+2. Launch docker desktop application.
+3.  Create ``.env`` with
+```python
+OPENAI_API_KEY=TOKEN
+```
+and replace ``TOKEN`` with your GPT token.
+4. Open terminal in directory with `.env` file.
+5. 
+```bash
+docker pull dkddjdjjfjdj/anki-deck
+```
+6.
+```bash
+docker run --env-file .env -p 8000:8000 dkddjdjjfjdj/anki-deck
+```
+7. After that in browser go to https://localhost:8000/
 ### 3. Run Locally with Node.js (Dev. Mode)
 #### Prerequisites
 * npm
 * node.js
+* git
 #### Installation
 1. Clone our repository: ```git clone https://github.com/AnkiGen/anki_deck.git```
 2. Get into the directory: ```cd anki_deck```
