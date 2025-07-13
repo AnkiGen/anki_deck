@@ -40,7 +40,6 @@ export default {
         redirect(event) {
             // event.preventDefault();
             const names = ["Tinder", "FilterFromText", "List"];
-
             this.textStoreV.setUnknown(this.lenword);
             this.textStoreV.setCount(this.maxword);
             router.push({ name: names[this.choice] });
@@ -59,7 +58,7 @@ export default {
         <div class = "header">Параметры генерации</div>
         <form class = "filter-container">
             <div class = "max-words">
-                <h2 id = "header">Макс. кол-во слов в тексте</h2>
+                <h2 id = "header">Количество слов для изучения</h2>
                 <div class = "slider-container">
                     <input type="range" min = "1" max = "180" v-model = "maxword" value = "90" class = "slider" @input="progressScript">
                     <div class = "number-list">
@@ -76,12 +75,12 @@ export default {
                 </div>
             </div>
             <div class = "max-words">
-                <h2 id = "header">Кол-во незнакомых слов</h2>
+                <h2 id = "header">Кол-во символов в сгенерированном предложении</h2>
                 <div class = "slider-container">
-                    <input type="range" min = "1" max = "180" v-model = "lenword" value = "90" class = "slider" @input="progressScript">
+                    <input type="range" min = "5" max = "180" v-model = "lenword" value = "90" class = "slider" @input="progressScript">
                     <div class = "number-list">
                         <div class = "col">
-                            1
+                            5
                         </div>
                         <div class = "col">
                             {{ lenword }}

@@ -24,7 +24,7 @@ export default {
             resp: {
                 unknown_words: [],
                 known_words: [],
-                count: 0,
+                count: useUserTextStoreV().count,
                 context_sentences: []
             },
         }

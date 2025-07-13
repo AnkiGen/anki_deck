@@ -1,5 +1,6 @@
 <script>
 import { useUserTextStore } from '@/stores/userText';
+import { useUserTextStoreV } from '@/stores/userTextV';
 import Basebutton from '@/components/Basebutton.vue';
 import router from '@/router';
 import {useAPIStore} from "@/stores/API";
@@ -15,7 +16,7 @@ export default {
             resp: {
                 unknown_words: [],
                 known_words: [],
-                count: 0,
+                count: useUserTextStoreV().count,
                 context_sentences: []
             },
             sentences: []
