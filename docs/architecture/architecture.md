@@ -15,8 +15,10 @@ Frontend: Runs in the user's browser, served via a static web server. Backend: F
 
 ### Tech Stack
 
+- **Languges:** Python, JavaScript, Vue
 - **Frontend:** Vue.js, JavaScript,Node.js
 - **Backend:** Python:FastAPI,spaCy,OpenAI
-- **Database:** SQLite
-- **Testing:** 
-- **Deployment:**Docker
+- **Database:** SQLite3
+- **Testing:** Pytest, unittest
+- **Version Control System:** GitHub
+- **Deployment:** Docker
