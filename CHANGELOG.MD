@@ -1,13 +1,11 @@
 
 ##MVP v2  
 ### Added:  
--[Final page](https://github.com/AnkiGen/anki_deck/issues/45)  
--[list page](https://github.com/AnkiGen/anki_deck/issues/55)  
--[UML component diagram](https://github.com/AnkiGen/anki_deck/issues/62)
--[deployment view](https://github.com/AnkiGen/anki_deck/issues/65)  
--[Tinder page](https://github.com/AnkiGen/anki_deck/issues/54), now user is able to select words in tinder style  
--[Docker integration](https://github.com/AnkiGen/anki_deck/issues/56).  
+-DES [45](https://github.com/AnkiGen/anki_deck/issues/45), Now user can explicitly download csv file  
+-DES [55](https://github.com/AnkiGen/anki_deck/issues/55), Now user is able to mark words without nowing the context.      
+-DES [54](https://github.com/AnkiGen/anki_deck/issues/54), now user is able to select words in tinder style  
+-SER [56](https://github.com/AnkiGen/anki_deck/issues/56), with docker user can open the site with one command instead of list of difficult actions
 
 ### Fixed:  
-- [Resolved issue with commits](https://github.com/AnkiGen/anki_deck/issues/52)  
-- [Set proper and tight format of cards](https://github.com/AnkiGen/anki_deck/issues/53)
+- SER [52](https://github.com/AnkiGen/anki_deck/issues/52, issue resolved  
+- GEN [53](https://github.com/AnkiGen/anki_deck/issues/53), set proper and tight format of cards
