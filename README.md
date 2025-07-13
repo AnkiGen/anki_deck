@@ -1,4 +1,5 @@
 
+
 <!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
 <!--
 *** Thanks for checking out the Best-README-Template. If you have a suggestion
@@ -53,7 +54,7 @@
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
+<li><a href="#hyperlinks-to-docs">Hyperlinks to docs</a></li>    <li><a href="#contact">Contact</a></li>
   </ol>
 </details>
 
@@ -74,6 +75,8 @@ With our project you can turn your *favorite songs* or *books* into **personaliz
 * [![spaCy][spaCy.com]][spaCy-url]  
 * [![FastAPI][FastAPI.com]][FastAPI-url]  
 * [![Node.js][Node.js.com]][Node.js-url]
+### Project Context Diagram
+<img src="./images/9.png" alt="context diagram" width="800" height="650">
 
 <!-- GETTING STARTED -->
 ## Getting Started
@@ -159,13 +162,15 @@ When everything is done, you can proceed further for the download in ```.csv``` 
 <img src = "./images/6.png" width = "1000" height = "1000"> <!--- Скачать колоду в формате ... -->
 <!-- ROADMAP -->
 ## Roadmap
-
+- [x] Review for the generated deck
+- [x] Change the design for the website
+- [x] Remove automatically redundant symbols, s.a. [1], the, a, an, etc...
+- [x] Finish the documentation
+ - [x] Improved deck generation logic
 - [ ] Multi-language Support
     - [ ] German
- - [ ] Improved deck generation logic
  - [ ] Make filter limitations work correctly
  - [ ] Add possibility to fetch text by writing author and song name
- - [ ] Remove automatically redundant symbols, s.a. [1], the, a, an, etc...
  
  See all our tasks [here](https://github.com/orgs/AnkiGen/projects/3)
 
@@ -198,15 +203,31 @@ Don't forget to give the project a **star**!
 
 Distributed under the MIT License. See `LICENSE.txt` for more information.
 
+<!-- LINKS -->
+##  Hyperlinks to Docs
+- ```Contributing.MD``` with the information about the project: [click me!](https://github.com/AnkiGen/anki_deck/blob/master/CONTRIBUTING.md)
+- ```Git Graph``` with the information about the git process: [click me!](https://github.com/AnkiGen/anki_deck/blob/master/docs/GitGraph.png)
+- ```Quality Attribute Scenarios``` with the information about the user scenarios for quality: [click me!](https://github.com/AnkiGen/anki_deck/blob/master/docs/quality-attributes/quality-attribute-scenarios.md)
+- ```User Acceptance Tests``` with the information about the user tests: [click me!](https://github.com/AnkiGen/anki_deck/blob/master/docs/quality-assurance/user-acceptance-tests.md)
+- ```Architecture``` with the information of views: deployment, dynamic, static: [click me!](https://github.com/AnkiGen/anki_deck/tree/master/docs/architecture)
 
 
 
 <!-- CONTACT -->
 ## Contact
+Viktor K. – Team lead, Frontend developer
+telegram: @vitec_321 <br>
+Ivan K. – UX/UI designer, Frontend developer 
+telegram: @vanyaspapayas <br>
+Anastasia P. – 
+telegram: @anastayshaa_a <br>
+Ilya S. – Backend developer 
+telegram: @ISNJI <br>
+Albert M. – Backend developer 
+telegram: @NeuroticExistentialDissonance <br>
+Vadim G. – Backend developer 
+telegram: @FleshTeaml <br>
 
-Ivan K. – telegram: @vanyaspapayas
-Viktor K. – telegram: @vitec_321
-...
 
 
 
