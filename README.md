@@ -187,8 +187,6 @@ When everything is done, you can proceed further for the download in ```.csv``` 
  - [ ] Add possibility to fetch text by writing author and song name
  - [ ] Voicover for words
  - [ ] Teacher student system
- - [ ] Add possibility to fetch text by writing author and song name
- - [ ] Remove automatically redundant symbols, s.a. [1], the, a, an, etc...
  See all our tasks [here](https://github.com/orgs/AnkiGen/projects/3)
 
 
