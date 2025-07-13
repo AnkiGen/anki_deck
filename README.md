@@ -166,7 +166,14 @@ When everything is done, you can proceed further for the download in ```.csv``` 
  - [ ] Make filter limitations work correctly
  - [ ] Add possibility to fetch text by writing author and song name
  - [ ] Remove automatically redundant symbols, s.a. [1], the, a, an, etc...
- 
+ - [ ] Working website run with docker
+ - [ ] User can mark words as known/unknown to improve quality of sentences
+ - [ ] Tinder-style selecting is provided
+ - [ ] User can choose number of words he want to learn and length of generated sentence
+ - [ ] Sentences are generated considering context
+ - [ ] On the final page user can download csv file with proper fields
+ - [ ] Voicover for words
+ - [ ] Teacher student system
  See all our tasks [here](https://github.com/orgs/AnkiGen/projects/3)
 
 
