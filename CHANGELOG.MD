@@ -1,4 +1,9 @@
-
+## PROJECTNAMES
+- API - changes related to the API service
+- DES - changes related to the UI/UX
+- AI - changes related to the interaction with LLM
+- SER - changes related to server
+- GEN - changes related to card generation
 ##MVP v2  
 ### Added:  
 -DES [45](https://github.com/AnkiGen/anki_deck/issues/45), Now user can explicitly download csv file  
