@@ -7,5 +7,5 @@
 -SER [56](https://github.com/AnkiGen/anki_deck/issues/56), with docker user can open the site with one command instead of list of difficult actions
 
 ### Fixed:  
-- SER [52](https://github.com/AnkiGen/anki_deck/issues/52, issue resolved  
+- SER [52](https://github.com/AnkiGen/anki_deck/issues/52), issue resolved  
 - GEN [53](https://github.com/AnkiGen/anki_deck/issues/53), set proper and tight format of cards
