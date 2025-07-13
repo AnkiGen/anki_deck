@@ -11,7 +11,8 @@ export const useUserTextStoreV = defineStore('userTextV', {
         countLearn: 0, // max amount of words in text
         known: [], // list of already known words
         unknown: 0, // max amount of unknown words in sentence
-        context: [] //source sentences from original text
+        context: [], //source sentences from original text
+        csvData: [] // final CSV data for the deck
     }),
     actions: {
         setText(text) {
@@ -34,6 +35,10 @@ export const useUserTextStoreV = defineStore('userTextV', {
         },
         setContext(context) {
             this.context = context;
+        },
+        setCsv(csvData) {
+            // Store the final CSV data
+            this.csvData = csvData;
         },
         resetStore() {
             this.words = [];

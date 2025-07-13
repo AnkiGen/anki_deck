@@ -75,7 +75,7 @@ def parse_response_to_dicts(response_text):
 def write_cards_to_csv(response_text):
     csv_in_memory = io.StringIO(newline="")
     fieldnames = ["word","lemma","context_sentence","word_translation","sentence1","sentence1_translation"]
-    writer = csv.DictWriter(csv_in_memory, fieldnames=fieldnames)
+    writer = csv.DictWriter(csv_in_memory, fieldnames=fieldnames, delimiter=";")
     writer.writeheader()
     for row in response_text:
         lemma = nlp(row["word"])[0].lemma_

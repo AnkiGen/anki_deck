@@ -2,6 +2,7 @@
 import Basebutton from '@/components/Basebutton.vue';
 import arrowSVG from '@/components/icons/buttonArrowFinalPage.vue';
 import { useAPIStore } from '@/stores/API';
+import { useUserTextStoreV } from '@/stores/userTextV';
 export default {
     components: {
         Basebutton,
@@ -13,31 +14,36 @@ export default {
             isGetResp: false,
             isErr: false,
             button: null,
-            url: null
+            url: null,
+            csvData: null
         }
     },
     mounted() {
         this.resp = useAPIStore().data;
         this.button = this.$refs.buttonRef;
-        this.fatchdata();
+        
+        // Get CSV data from userTextV store
+        const userTextStore = useUserTextStoreV();
+        this.csvData = userTextStore.csvData;
+        
+        // If we have CSV data, create download URL
+        if (this.csvData && this.csvData.length > 0) {
+            this.createDownloadUrl();
+            this.isGetResp = true;
+        } else {
+            this.isErr = true;
+        }
     },
     methods: {
-        async fatchdata() {
+        createDownloadUrl() {
             try {
-                const response = await fetch("http://127.0.0.1:8000/wordlist/post", {
-                    method: "POST",
-                    headers: {
-                        'Content-Type' : 'application/json'
-                    },
-                    body: JSON.stringify(this.resp),
-                });
-                if (!response.ok) throw new Error(`Err: ${response.status}`)
-                const blob = await response.blob();
+                // Convert CSV data to CSV string
+                const csvContent = this.csvData.map(row => row.join(';')).join('\n');
+                
+                // Create blob and URL
+                const blob = new Blob([csvContent], { type: 'text/csv' });
                 this.url = window.URL.createObjectURL(blob);
-                this.isGetResp = true;
-        
-
-            }catch (err) {
+            } catch (err) {
                 this.isErr = true;
                 console.log(err);
             }
@@ -50,7 +56,6 @@ export default {
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
-
         }
     }
 }
