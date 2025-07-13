@@ -229,7 +229,7 @@ Viktor K. – Team lead, Frontend developer <br>
 telegram: @vitec_321 <br> <br>
 Ivan K. – UX/UI designer, Frontend developer  <br>
 telegram: @vanyaspapayas <br> <br>
-Anastasia P. <br>
+Anastasia P. – Designer, Tester <br>
 telegram: @anastayshaa_a <br> <br>
 Ilya S. – Backend developer <br>
 telegram: @ISNJI <br> <br>
