@@ -80,6 +80,7 @@ export default {
                 this.isLoading = true;
                 const apiData = this.apiStore.data;
                 console.log('start')
+                console.log(apiData)
                 const response = await fetch("http://127.0.0.1:8000/wordlist/post", {
                     method: "POST",
                     headers: {
@@ -92,6 +93,7 @@ export default {
                     console.log('ok')
                     const blob = await response.blob();
                     const csvText = await blob.text();
+                    console.log(csvText);
                     this.parseCSVToWords(csvText);
                 } else {
                     alert('Ошибка при получении списка слов');
@@ -116,14 +118,14 @@ export default {
                     console.log(`Row ${i}:`, columns);
                     console.log(`Columns length: ${columns.length}`);
                     
-                    if (columns.length >= 5) {
+                    if (columns.length >= 6) {
                         this.words.push([
-                            columns[1] || '', // Original word (skip index column)
-                            columns[2] || '', // Lemma version
-                            columns[3] || '', // Original sentence
-                            columns[4] || '', // Russian translation
-                            columns[5] || '', // Generated sentence
-                            columns[6] || ''  // Generated sentence in Russian (might be empty)
+                            columns[0] || '', // Original word
+                            columns[1] || '', // Lemma version
+                            columns[2] || '', // Original sentence
+                            columns[3] || '', // Russian translation
+                            columns[4] || '', // Generated sentence
+                            columns[5] || ''  // Generated sentence in Russian
                         ]);
                     }
                 }
