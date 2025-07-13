@@ -8,7 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from decryptors import *
 from pydantic import BaseModel
 from typing import List
-from Appearance import is_word_in_generated_sentences,validate_response_sentences
+from Appearance import is_word_in_generated_sentences,merge_phrasal_verbs_from_words,load_phrasal_verbs
 import json
 
 app = FastAPI()
@@ -141,11 +141,13 @@ class WordListRequest(BaseModel):
 @app.post("/wordlist/post")
 async def post_text(payload: WordListRequest):
     unknown_words = payload.unknown_words
+    phrasal_verbs = load_phrasal_verbs("phrasal_verbs.txt")
+    unknown_words = merge_phrasal_verbs_from_words(unknown_words, phrasal_verbs)
     known_words = payload.known_words
     count = payload.count
     context_sentences = payload.context_sentences
     words_to_generate = unknown_words.copy()
-    correct_rows = []
+    correct_rows = [] 
     while words_to_generate:
         response_text = request_sentences(words_to_generate, known_words, count,context_sentences)
         rows = parse_response_to_dicts(response_text)
@@ -164,3 +166,5 @@ async def post_text(payload: WordListRequest):
 @app.options("/wordlist/post")
 async def options_wordlist_post(request: Request):
     return JSONResponse(status_code=200)
+
+
