@@ -76,7 +76,7 @@ With our project you can turn your *favorite songs* or *books* into **personaliz
 * [![FastAPI][FastAPI.com]][FastAPI-url]  
 * [![Node.js][Node.js.com]][Node.js-url]
 ### Project Context Diagram
-<img src="./images/9.png" alt="context diagram" width="800" height="650">
+<img src="./images/Context Diagram.jpg" alt="context diagram" width="800" height="650">
 
 <!-- GETTING STARTED -->
 ## Getting Started
