@@ -8,11 +8,11 @@ export const useUserTextStoreV = defineStore('userTextV', {
         words: [],  // to choose from in tinder and etc
         yesLearn: [], // want to learn
         noLearn: [], // dont want to learn
-        countLearn: 0, // max amount of words in text
+        count: 0, // max amount of words in text
         known: [], // list of already known words
         unknown: 0, // max amount of unknown words in sentence
         context: [], //source sentences from original text
-        csvData: [] // final CSV data for the deck
+        csvData: [], // final CSV data for the deck
     }),
     actions: {
         setText(text) {
@@ -25,7 +25,7 @@ export const useUserTextStoreV = defineStore('userTextV', {
             this.noLearn = no;
         },
         setCount(count) {
-            this.countLearn = count;
+            this.count = count;
         },
         setKnown(known) {
             this.known = known;
@@ -44,14 +44,14 @@ export const useUserTextStoreV = defineStore('userTextV', {
             this.words = [];
             this.yesLearn = [];
             this.noLearn = [];
-            this.countLearn = 0;
+            this.countLearn = 7;
             this.known = [];
         },
         startAgain() {
             this.yesLearn = [];
             this.noLearn = [];
             this.known = [];
-        }
+        },
     },
     persist: {
         enabled: true,

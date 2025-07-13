@@ -20,8 +20,8 @@ export default {
             currentPage: 1,
             pageSize: 20,
             copySuccess: false,
-            markedForRegeneration: new Set(), // Set to track marked sentences
             isLoading: false, // Loading state for animations
+            rows: null
         }
     },
     mounted() { 
@@ -106,93 +106,81 @@ export default {
             }
         },
         parseCSVToWords(csvText) {
-            console.log(csvText)
-            const lines = csvText.split('\n');
-            this.words = [];
-            
-            // Skip the first row (header) and start from index 1
-            for (let i = 1; i < lines.length; i++) {
-                const line = lines[i];
-                if (line.trim()) {
-                    const columns = line.split(';');
-                    console.log(`Row ${i}:`, columns);
-                    console.log(`Columns length: ${columns.length}`);
-                    
-                    if (columns.length >= 6) {
-                        this.words.push([
-                            columns[0] || '', // Original word
-                            columns[1] || '', // Lemma version
-                            columns[2] || '', // Original sentence
-                            columns[3] || '', // Russian translation
-                            columns[4] || '', // Generated sentence
-                            columns[5] || ''  // Generated sentence in Russian
-                        ]);
-                    }
-                }
+        const lines = csvText.split('\n').filter(l => l.trim() !== '');
+        const headers = lines[0].split(';');
+
+        this.words = [];
+
+        for (let i = 1; i < lines.length; i++) {
+            const columns = lines[i].split(';');
+            if (columns.length >= 6) {
+            this.words.push({
+                word: columns[0] || '',
+                lemma: columns[1] || '',
+                context_sentence: columns[2] || '',
+                word_translation: columns[3] || '',
+                sentence1: columns[4] || '',
+                sentence1_translation: columns[5] || '',
+                marked: false
+            });
             }
+        }
+
             
             console.log('Parsed words:', this.words);
             // Reset to first page
             this.currentPage = 1;
         },
         async regenerateDeck() {
+            const marked = this.words.filter(w => w.marked);
+
+            if (marked.length === 0) {
+                alert('Вы не отметили ни одного предложения для регенерации.');
+                return;
+            }
+
+            const csvLines = [
+                'word;lemma;context_sentence;word_translation;sentence1;sentence1_translation',
+                ...this.words.map(w =>
+                [w.word, w.lemma, w.context_sentence, w.word_translation, w.sentence1, w.sentence1_translation].join(';')
+                )
+            ];
+
+            const payload = {
+                csv_text: csvLines.join('\n'),
+                marked_words: marked.map(w => w.word),
+                known_words: [], // если нужно — добавь
+                count: 10,
+                context_sentences: marked.map(w => w.context_sentence)
+            };
+
             try {
                 this.isLoading = true;
-                // Get data from API store
-                const apiData = this.apiStore.data;
-                
-                // Get current sentences for marked indices
-                const currentStuff = {};
-                this.markedForRegeneration.forEach(index => {
-                    if (this.words[index]) {
-                        currentSentences[index] = {
-                            originalWord: this.words[index][0],
-                            lemmaVersion: this.words[index][1],
-                            originalSentence: this.words[index][2],
-                            russianTranslation: this.words[index][3],
-                            generatedSentence: this.words[index][4],
-                            generatedSentenceRussian: this.words[index][5]
-                        };
-                    }
+
+                const response = await fetch("http://127.0.0.1:8000/regenerate_patch", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
                 });
-                
-                // Add marked sentences and current data to the request
-                const requestData = {
-                    currentStuff: currentStuff
-                };
-                
-                const response = await fetch("http://127.0.0.1:8000/wordlist/regenerate/post", {
-                    method: "POST",
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(requestData)
-                });
-                
-                if (response.ok) {
-                    const blob = await response.blob();
-                    const csvText = await blob.text();
-                    this.parseCSVToWords(csvText);
-                    // Clear marked sentences after regeneration
-                    this.markedForRegeneration.clear();
-                    alert('Колода успешно перегенерирована!');
-                } else {
-                    alert('Ошибка при перегенерации колоды');
-                }
+
+                if (!response.ok) throw new Error("Ошибка при регенерации");
+
+                const csvText = await response.text();
+                this.parseCSVToWords(csvText);
+                alert('Колода успешно перегенерирована!');
             } catch (error) {
-                console.error('Error regenerating deck:', error);
-                alert('Ошибка при перегенерации колоды');
+                console.error("Ошибка при регенерации:", error);
+                alert("Ошибка при перегенерации");
             } finally {
                 this.isLoading = false;
             }
-        },
-        toggleMarkForRegeneration(wordIndex) {
-            const globalIndex = (this.currentPage - 1) * this.pageSize + wordIndex;
-            if (this.markedForRegeneration.has(globalIndex)) {
-                this.markedForRegeneration.delete(globalIndex);
-            } else {
-                this.markedForRegeneration.add(globalIndex);
-            }
+            },
+
+        toggleMarkForRegeneration(index) {
+            const globalIndex = (this.currentPage - 1) * this.pageSize + index;
+            this.words[globalIndex].marked = !this.words[globalIndex].marked;
         },
     },
     watch: {
@@ -248,10 +236,10 @@ export default {
       -->
   </thead>
   <tbody>
-    <tr v-for="(word, idx) in paginatedWords" :key="word[0]">
+    <tr v-for="(word, idx) in paginatedWords" :key="word.word">
       <td>
         <input
-          v-model="words[(currentPage-1)*pageSize+idx][0]"
+          v-model="words[(currentPage-1)*pageSize+idx].word"
           class="edit-input"
           type="text"
           :placeholder="'Исходное слово'"
@@ -259,7 +247,7 @@ export default {
       </td>
       <td>
         <input
-          v-model="words[(currentPage-1)*pageSize+idx][1]"
+          v-model="words[(currentPage-1)*pageSize+idx].lemma"
           class="edit-input"
           type="text"
           :placeholder="'Лемм. версия слова'"
@@ -267,7 +255,7 @@ export default {
       </td>
       <td>
         <input
-          v-model="words[(currentPage-1)*pageSize+idx][2]"
+          v-model="words[(currentPage-1)*pageSize+idx].context_sentence"
           class="edit-input"
           type="text"
           :placeholder="'Исходное предложение'"
@@ -275,7 +263,7 @@ export default {
       </td>
       <td>
         <input
-          v-model="words[(currentPage-1)*pageSize+idx][3]"
+          v-model="words[(currentPage-1)*pageSize+idx].word_translation"
           class="edit-input"
           type="text"
           :placeholder="'Перевод слова на русский'"
@@ -284,23 +272,22 @@ export default {
       <td>
         <div class="sentence-cell">
           <input
-            v-model="words[(currentPage-1)*pageSize+idx][4]"
+            v-model="words[(currentPage-1)*pageSize+idx].sentence1"
             class="edit-input"
             type="text"
             :placeholder="'Сгенерированное предложение'"
           />
-          <button 
+            <button
             @click="toggleMarkForRegeneration(idx)"
-            :class="['mark-btn', { 'marked': markedForRegeneration.has((currentPage-1)*pageSize+idx) }]"
-            :title="markedForRegeneration.has((currentPage-1)*pageSize+idx) ? 'Убрать отметку' : 'Отметить для регенерации'"
-          >
-            {{ markedForRegeneration.has((currentPage-1)*pageSize+idx) ? '✓' : '!' }}
-          </button>
+            :class="['mark-btn', { 'marked': paginatedWords[idx].marked }]"
+            >
+            {{ paginatedWords[idx].marked ? '✓' : '!' }}
+            </button>
         </div>
       </td>
       <td>
         <input
-          v-model="words[(currentPage-1)*pageSize+idx][5]"
+          v-model="words[(currentPage-1)*pageSize+idx].sentence1_translation"
           class="edit-input"
           type="text"
           :placeholder="'Сгенерированное предложение на русском'"
