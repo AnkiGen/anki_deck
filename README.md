@@ -215,17 +215,17 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 <!-- CONTACT -->
 ## Contact
-Viktor K. – Team lead, Frontend developer
+Viktor K. – Team lead, Frontend developer <br>
 telegram: @vitec_321 <br>
-Ivan K. – UX/UI designer, Frontend developer 
+Ivan K. – UX/UI designer, Frontend developer  <br>
 telegram: @vanyaspapayas <br>
-Anastasia P. – 
+Anastasia P. <br>
 telegram: @anastayshaa_a <br>
-Ilya S. – Backend developer 
+Ilya S. – Backend developer <br>
 telegram: @ISNJI <br>
-Albert M. – Backend developer 
+Albert M. – Backend developer <br>
 telegram: @NeuroticExistentialDissonance <br>
-Vadim G. – Backend developer 
+Vadim G. – Backend developer <br>
 telegram: @FleshTeaml <br>
 
 
