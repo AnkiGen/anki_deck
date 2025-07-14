@@ -301,7 +301,7 @@ export default {
           <span>Страница {{ currentPage }} из {{ totalPages }}</span>
           <button @click="nextPage" :disabled="currentPage === totalPages">Вперёд</button>
         </div>
-        <BaseButton :onClick="goToFilter" class = "submit">Перейти к генерации деки</BaseButton>
+        <BaseButton :onClick="goToFilter" class = "submit">Утвердить сгенерированную колоду</BaseButton>
    </main>
 </template>
 
