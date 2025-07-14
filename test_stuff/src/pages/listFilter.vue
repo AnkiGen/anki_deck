@@ -12,7 +12,7 @@ export default {
         return {
             isVisible: false,
             cardNumStart: 1,
-            cardNumTotal: 0,
+            cardNumTotal: useUserTextStoreV.unknown,
             counter: 0,
             wordList: [],
             scrollerWidth: 0,
@@ -153,7 +153,7 @@ export default {
             </span>
         </h1>
         <div class="nested-container">
-            <span class="card-number">Слова {{cardNumStart}}-{{cardNumStart+4}} из {{cardNumTotal}}</span>
+            <!-- <span class="card-number">Слова {{cardNumStart}}-{{cardNumStart+4}} из {{cardNumTotal}}</span> -->
             <div class="card-container">
                 <div class="scroller" ref="scroller">
                     <div ref="card"
@@ -166,7 +166,7 @@ export default {
                 </div>
             </div>
             <div class="bottom-contaiter">
-                <span class="card-picked">Выбрано слов {{counter}} из {{cardNumTotal}}</span>
+                <!-- <span class="card-picked">Выбрано слов {{counter}} из {{cardNumTotal}}</span> -->
                 <div class="router-buttons-container">
                     <Basebutton class="router-button" @click="moveBack"> Прокрутка назад</Basebutton>
                     <Basebutton class="router-button" @click="moveForward">Прокрутка вперед</Basebutton>

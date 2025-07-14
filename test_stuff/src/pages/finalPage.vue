@@ -28,7 +28,7 @@ export default {
         
         // If we have CSV data, create download URL
         if (this.csvData && this.csvData.length > 0) {
-            this.createDownloadUrl();
+            // this.createDownloadUrl();
             this.isGetResp = true;
         } else {
             this.isErr = true;

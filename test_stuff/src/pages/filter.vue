@@ -75,7 +75,7 @@ export default {
                 </div>
             </div>
             <div class = "max-words">
-                <h2 id = "header">Кол-во символов в сгенерированном предложении</h2>
+                <h2 id = "header">Кол-во слов в сгенерированных предложениях</h2>
                 <div class = "slider-container">
                     <input type="range" min = "5" max = "180" v-model = "lenword" value = "90" class = "slider" @input="progressScript">
                     <div class = "number-list">
