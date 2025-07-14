@@ -38,7 +38,7 @@ export default {
         createDownloadUrl() {
             try {
                 // Convert CSV data to CSV string
-                const csvContent = this.csvData.map(row => row.join(';')).join('\n');
+                const csvContent = this.csvData.map(row => Object.values(row).join(';')).join('\n');
                 
                 // Create blob and URL
                 const blob = new Blob([csvContent], { type: 'text/csv' });
