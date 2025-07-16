@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Query
 from sqlite3 import connect
-
+from lyricsgenius import Genius
 from starlette.responses import JSONResponse
 
 # from fastapi.staticfiles import StaticFiles

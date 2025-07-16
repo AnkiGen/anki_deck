@@ -13,7 +13,7 @@ def setup_and_teardown():
 def test_root():
     response = client.get("/")
     assert response.status_code == 200
-    assert response.json() == {"message": "FastAPI работает!"}
+    assert response.json() == {"message": "FastAPI is working!"}
 
 
 def test_post_and_get_user():

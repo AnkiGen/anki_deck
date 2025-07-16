@@ -4,7 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="222a644d-2c41-450d-9c06-d2446119ffae" name="Changes" comment="" />
+    <list default="true" id="222a644d-2c41-450d-9c06-d2446119ffae" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/api/genius.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docs/architecture/architecture.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docs/quality-assurance/automated-tests.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/fast_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/fast_api.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/integration_tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/integration_tests.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -77,7 +84,10 @@
       <option name="presentableId" value="Default" />
       <updated>1752149137166</updated>
       <workItem from="1752149138158" duration="12812000" />
-      <workItem from="1752331384320" duration="16210000" />
+      <workItem from="1752331384320" duration="16967000" />
+      <workItem from="1752416704587" duration="14887000" />
+      <workItem from="1752620293196" duration="742000" />
+      <workItem from="1752647993409" duration="1330000" />
     </task>
     <servers />
   </component>
