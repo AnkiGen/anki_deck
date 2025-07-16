@@ -10,6 +10,7 @@ def is_word_in_generated_sentences(word, sentences):
         if word_lemma not in sentence_lemmas:
             return False
     return True
+
 def validate_response_sentences(response_text):
     for line in response_text.strip().split('\n'):
         parts = line.split(';')
@@ -22,13 +23,12 @@ def validate_response_sentences(response_text):
 
 
 def load_phrasal_verbs(phrasal_verbs: str) -> set[tuple[str, ...]]:
-    """Load phrasal verbs from a text file and return a set of lemmatized tuples."""
     phrasal_set = set()
     with open(phrasal_verbs, "r", encoding="utf-8") as f:
         for line in f:
             words = line.strip().split()
             if not words or line.startswith("#"):
-                continue  # skip empty lines or comments
+                continue 
             lemmas = tuple(nlp(" ".join(words))[i].lemma_.lower() for i in range(len(words)))
             phrasal_set.add(lemmas)
     return phrasal_set
