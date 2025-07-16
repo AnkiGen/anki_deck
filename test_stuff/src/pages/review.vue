@@ -22,6 +22,8 @@ export default {
             copySuccess: false,
             markedForRegeneration: new Set(), // Set to track marked sentences
             isLoading: false, // Loading state for animations
+            regenerationMode: false, // Controls regeneration mode
+            collapsedOriginalSentences: new Set(), // Tracks collapsed state per row
         }
     },
     mounted() { 
@@ -29,9 +31,16 @@ export default {
         this.textStore = useUserTextStore();
         this.apiStore = useAPIStore();
         this.userTextStoreV = useUserTextStoreV();
-        
-        // Fetch initial data from API
+        // Prebuilt array of words (example data)
+        this.words = [
+        ];
         this.fetchWordList();
+        this.currentPage = 1;
+        // Ensure all rows are uncollapsed by default
+        this.collapsedOriginalSentences = new Set();
+        this.words.forEach((_, index) => {
+        this.collapsedOriginalSentences.add(index);
+    });
     },
     components: {
         BaseButton
@@ -132,15 +141,22 @@ export default {
             console.log('Parsed words:', this.words);
             // Reset to first page
             this.currentPage = 1;
+            this.words.forEach((_, index) => {
+            this.collapsedOriginalSentences.add(index);
+    });
         },
         async regenerateDeck() {
             try {
                 this.isLoading = true;
+                // Save current marks
+                const prevMarked = new Set(this.markedForRegeneration);
+                // Temporarily clear marks/styles
+                this.markedForRegeneration.clear();
                 // Get data from API store
                 const apiData = this.apiStore.data;
                 
                 const currentStuff = {};
-                this.markedForRegeneration.forEach(index => {
+                prevMarked.forEach(index => {
                     if (this.words[index]) {
                         currentStuff[index] = {
                             originalWord: this.words[index][0],
@@ -170,8 +186,8 @@ export default {
                     const blob = await response.blob();
                     const csvText = await blob.text();
                     this.parseCSVToWords(csvText);
-                    // Clear marked sentences after regeneration
-                    this.markedForRegeneration.clear();
+                    // Restore marked sentences after regeneration
+                    this.markedForRegeneration = prevMarked;
                     alert('Колода успешно перегенерирована!');
                 } else {
                     alert('Ошибка при перегенерации колоды');
@@ -191,10 +207,21 @@ export default {
                 this.markedForRegeneration.add(globalIndex);
             }
         },
+        enterRegenerationMode() {
+            this.regenerationMode = true;
+        },
+        toggleOriginalSentenceRow(rowIdx) {
+        if (this.collapsedOriginalSentences.has(rowIdx)) {
+            this.collapsedOriginalSentences.delete(rowIdx);
+        } else {
+            this.collapsedOriginalSentences.add(rowIdx);
+        }
+}
     },
     watch: {
         isDone(newIsDone) {
-
+            // Reset collapse state on page change if needed
+            this.collapsedOriginalSentences = new Set();
         }
     }
 }
@@ -204,7 +231,8 @@ export default {
    <main>
     <div class="copy-csv-row">
       <button class="copy-csv-btn" @click="copyWordsToCSV">Скопировать как CSV</button>
-      <button class="regenerate-btn" @click="regenerateDeck">Перегенерировать колоду</button>
+      <button v-if="!regenerationMode" class="regenerate-btn" @click="enterRegenerationMode">Войти в режим регенерации</button>
+      <button v-else class="regenerate-btn" @click="regenerateDeck">Перегенерировать колоду</button>
       <span v-if="copySuccess" class="copy-success">Скопировано!</span>
     </div>
     <header>
@@ -222,10 +250,11 @@ export default {
         <table class="word-table">
   <thead>
     <tr>
+      <th style="width: 180px; min-width: 120px; max-width: 300px; position: relative;">Исходное предложение</th>
       <th>Исходное слово</th>
       <th>Лемм. версия слова</th>
-      <th>Исходное предложение</th>
       <th>Перевод слова на русский</th>
+      <th v-if="regenerationMode" style="width: 100px; min-width: 100px; max-width: 100px; margin: 0 auto;">Отметить для регенерации</th>
       <th>Сгенерированное предложение</th>
       <th>Сгенерированное предложение на русском</th>
     </tr>
@@ -246,6 +275,24 @@ export default {
   </thead>
   <tbody>
     <tr v-for="(word, idx) in paginatedWords" :key="word[0]">
+        <td style="position: relative;">
+        <template v-if="!collapsedOriginalSentences.has((currentPage-1)*pageSize+idx)">
+            <input
+                v-model="words[(currentPage-1)*pageSize+idx][2]"
+                class="edit-input"
+                type="text"
+                :placeholder="'Исходное предложение'"
+            />
+        </template>
+        <button 
+            v-if="collapsedOriginalSentences.has((currentPage-1)*pageSize+idx)"
+            class="expand-row-btn" 
+            @click="toggleOriginalSentenceRow((currentPage-1)*pageSize+idx)" 
+            title="Показать"
+        >
+            <svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentColor" d="M7 14l5-5 5 5z"/></svg>
+        </button>
+        </td>
       <td>
         <input
           v-model="words[(currentPage-1)*pageSize+idx][0]"
@@ -264,41 +311,33 @@ export default {
       </td>
       <td>
         <input
-          v-model="words[(currentPage-1)*pageSize+idx][2]"
-          class="edit-input"
-          type="text"
-          :placeholder="'Исходное предложение'"
-        />
-      </td>
-      <td>
-        <input
           v-model="words[(currentPage-1)*pageSize+idx][3]"
           class="edit-input"
           type="text"
           :placeholder="'Перевод слова на русский'"
         />
       </td>
+      <td v-if="regenerationMode" class="regen-btn-cell">
+        <button 
+          @click="toggleMarkForRegeneration(idx)"
+          :class="['mark-btn', { 'marked': markedForRegeneration.has((currentPage-1)*pageSize+idx) }]"
+          :title="markedForRegeneration.has((currentPage-1)*pageSize+idx) ? 'Убрать отметку' : 'Отметить для регенерации'"
+        >
+          {{ markedForRegeneration.has((currentPage-1)*pageSize+idx) ? '✓' : '!' }}
+        </button>
+      </td>
       <td>
-        <div class="sentence-cell">
-          <input
-            v-model="words[(currentPage-1)*pageSize+idx][4]"
-            class="edit-input"
-            type="text"
-            :placeholder="'Сгенерированное предложение'"
-          />
-          <button 
-            @click="toggleMarkForRegeneration(idx)"
-            :class="['mark-btn', { 'marked': markedForRegeneration.has((currentPage-1)*pageSize+idx) }]"
-            :title="markedForRegeneration.has((currentPage-1)*pageSize+idx) ? 'Убрать отметку' : 'Отметить для регенерации'"
-          >
-            {{ markedForRegeneration.has((currentPage-1)*pageSize+idx) ? '✓' : '!' }}
-          </button>
-        </div>
+        <input
+          v-model="words[(currentPage-1)*pageSize+idx][4]"
+          :class="['edit-input', { 'marked-for-regen': markedForRegeneration.has((currentPage-1)*pageSize+idx) }]"
+          type="text"
+          :placeholder="'Сгенерированное предложение'"
+        />
       </td>
       <td>
         <input
           v-model="words[(currentPage-1)*pageSize+idx][5]"
-          class="edit-input"
+          :class="['edit-input', { 'marked-for-regen': markedForRegeneration.has((currentPage-1)*pageSize+idx) }]"
           type="text"
           :placeholder="'Сгенерированное предложение на русском'"
         />
@@ -424,7 +463,7 @@ export default {
         width: 100%;
         background: rgba(255,255,255,0.1);
         color: #fff;
-        border: 1px solid #ccc;
+        border: 2px solid #ccc;
         border-radius: 4px;
         padding: 4px 8px;
         font-size: 15px;
@@ -433,6 +472,11 @@ export default {
     .edit-input:focus {
         outline: 1.5px solid #fff;
         background: rgba(255,255,255,0.2);
+    }
+    .edit-input.marked-for-regen {
+        border-color: #ff0000 !important;
+        color: #ff0000 !important;
+        background: rgba(255,0,0,0.08);
     }
     td input{
         text-align: center;
@@ -526,8 +570,8 @@ export default {
         background: #555;
     }
     .mark-btn.marked {
-        background: #d32f2f;
-        border-color: #f44336;
+        background: #ff0000;
+        border-color: #ff1100;
         color: #fff;
     }
     .mark-btn.marked:hover {
@@ -567,4 +611,32 @@ export default {
         margin: 0;
         opacity: 0.9;
     }
-</style>
+    .regenerate {
+        width: 40px !important;
+        min-width: 40px !important;
+        max-width: 40px !important;
+    }
+    .regen-btn-cell {
+        text-align: center;
+        vertical-align: middle;
+    }
+    .regen-btn-cell .mark-btn {
+        display: inline-block;
+        margin: 0 auto;
+        float: none;
+    }
+    .expand-row-btn {
+    background: none;
+    border: none;
+    padding: 0 4px 0 0;
+    cursor: pointer;
+    vertical-align: middle;
+    outline: none;
+    color: #fff;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+.expand-row-btn:hover {
+    opacity: 1;
+}
+</style>    
