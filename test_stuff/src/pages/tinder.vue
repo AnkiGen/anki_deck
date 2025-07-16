@@ -2,7 +2,7 @@
 import BaseButton from '@/components/Basebutton.vue';
 import router from '@/router';
 import {shuffle} from '@/scripts/shuffle'
-
+import { useAPIStore } from '@/stores/API';
 import { useUserTextStoreV } from '@/stores/userTextV';
 
 export default {
@@ -16,10 +16,10 @@ export default {
             resp: {
                 unknown_words: [],
                 known_words: [],
-                count: 0,
+                count: useUserTextStoreV().count,
                 context_sentences: []
             },
-            skips: 0
+            skips: 0,
         }
     },
     computed: {
@@ -50,8 +50,10 @@ export default {
             }
         },
         likeWord() {
+            let contextSentences = useUserTextStoreV().context;
             if (this.currentIndex < this.words.length) {
                 this.resp.unknown_words.push(this.currentWord);
+                this.resp.context_sentences.push(contextSentences[this.words[this.currentIndex].sentenceIndex]);
                 this.countadded++;
                 this.nextWord();
             }
@@ -64,7 +66,8 @@ export default {
         },
         starWord() {
             if (this.currentIndex < this.words.length) {
-                // this.store.known.push(this.currentWord);
+                // Add skipped words to known_words as well
+                this.resp.known_words.push(this.currentWord);
                 this.skips++;
                 this.nextWord();
             }
@@ -88,8 +91,6 @@ export default {
                     this.countadded--;
                 } else if (this.resp.known_words.length > 0 && this.resp.known_words[this.resp.known_words.length - 1] === prevWord) {
                     this.resp.known_words.pop();
-                } else if (this.store.known.length > 0 && this.store.known[this.store.known.length - 1] === prevWord) {
-                    this.store.known.pop();
                 }
                 this.updateCurrentWord();
             } else {
@@ -98,12 +99,16 @@ export default {
         },
         finishGame() {
             // Save lists to store explicitly (in case of reactivity issues)
-            this.store.setYes(this.store.yesLearn);
+            this.store.setYes(this.resp.unknown_words);
             this.store.setNo(this.resp.known_words);
-            this.store.setKnown(this.store.known);
+            this.store.setKnown(this.resp.known_words);
         },
         redirect() {
-            router.push({name: 'FinalPage'});
+            // Store all words in the API store
+            const apiStore = useAPIStore();
+            this.resp.count = 10;
+            apiStore.setState(this.resp);
+            router.push({name: 'Review'});
         },
         goFilter() {
             router.push({name: "Filter"})

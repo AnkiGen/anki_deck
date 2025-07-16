@@ -1,5 +1,6 @@
 <script>
 import { useUserTextStore } from '@/stores/userText';
+import { useUserTextStoreV } from '@/stores/userTextV';
 import Basebutton from '@/components/Basebutton.vue';
 import router from '@/router';
 import {useAPIStore} from "@/stores/API";
@@ -15,7 +16,7 @@ export default {
             resp: {
                 unknown_words: [],
                 known_words: [],
-                count: 0,
+                count: useUserTextStoreV().count,
                 context_sentences: []
             },
             sentences: []
@@ -94,14 +95,17 @@ export default {
                         this.resp.context_sentences.push(this.sentences[word.sentenceIndex]);
                         break;
                     case "neverLearn":
-
                         this.resp.known_words.push(word.word);
-                    break;
+                        break;
                 }
             }
-            let API = useAPIStore();
-            API.setState(this.resp);
-            router.push({name: "FinalPage"});
+            
+            // Store data in API store like tinder.vue
+            const apiStore = useAPIStore();
+            apiStore.setState(this.resp);
+            
+            // Redirect to review page instead of final page
+            router.push({name: "Review"});
         }
     }
 }

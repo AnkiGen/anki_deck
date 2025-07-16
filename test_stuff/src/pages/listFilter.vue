@@ -12,7 +12,7 @@ export default {
         return {
             isVisible: false,
             cardNumStart: 1,
-            cardNumTotal: 0,
+            cardNumTotal: useUserTextStoreV.unknown,
             counter: 0,
             wordList: [],
             scrollerWidth: 0,
@@ -24,7 +24,7 @@ export default {
             resp: {
                 unknown_words: [],
                 known_words: [],
-                count: 0,
+                count: useUserTextStoreV().count,
                 context_sentences: []
             },
         }
@@ -121,9 +121,13 @@ export default {
                         break;
                 }
             }
-            let API = useAPIStore();
-            API.setState(this.resp);
-            router.push({name: "FinalPage"});
+            
+            // Store data in API store like tinder.vue
+            const apiStore = useAPIStore();
+            apiStore.setState(this.resp);
+            
+            // Redirect to review page instead of final page
+            router.push({name: "Review"});
         },
     },
     mounted() {
@@ -149,7 +153,7 @@ export default {
             </span>
         </h1>
         <div class="nested-container">
-            <span class="card-number">Слова {{cardNumStart}}-{{cardNumStart+4}} из {{cardNumTotal}}</span>
+            <!-- <span class="card-number">Слова {{cardNumStart}}-{{cardNumStart+4}} из {{cardNumTotal}}</span> -->
             <div class="card-container">
                 <div class="scroller" ref="scroller">
                     <div ref="card"
@@ -162,7 +166,7 @@ export default {
                 </div>
             </div>
             <div class="bottom-contaiter">
-                <span class="card-picked">Выбрано слов {{counter}} из {{cardNumTotal}}</span>
+                <!-- <span class="card-picked">Выбрано слов {{counter}} из {{cardNumTotal}}</span> -->
                 <div class="router-buttons-container">
                     <Basebutton class="router-button" @click="moveBack"> Прокрутка назад</Basebutton>
                     <Basebutton class="router-button" @click="moveForward">Прокрутка вперед</Basebutton>

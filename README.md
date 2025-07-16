@@ -1,4 +1,5 @@
 
+
 <!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
 <!--
 *** Thanks for checking out the Best-README-Template. If you have a suggestion
@@ -22,7 +23,7 @@
 <br />
 <div align="center">
     <img src="./images/danko.png" alt="Logo" width="350" height="350">
-  <h3 align="center">DANIL DANKO'S<br> Anki Deck Generator</h3>
+  <h3 align="center"> Anki Deck Generator<br></h3>
 
   <p align="center">
     What if you could learn a new language with Anki cards—using your favorite songs or book passages, in the easy and creative way?<br/><br>
@@ -53,7 +54,7 @@
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
+<li><a href="#hyperlinks-to-docs">Hyperlinks to docs</a></li>    <li><a href="#contact">Contact</a></li>
   </ol>
 </details>
 
@@ -62,7 +63,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-Whether you're a language enthusiast, a curious learner, or a developer exploring NLP-powered tools,  **DANIL DANKO's Anki Deck Generator**  helps you learn languages in context—sentence by sentence. 
+Whether you're a language enthusiast, a curious learner, or a developer exploring NLP-powered tools,  **Anki Deck Generator**  helps you learn languages in context—sentence by sentence. 
 
 With our project you can turn your *favorite songs* or *books* into **personalized Anki flashcards.** 
 
@@ -74,6 +75,8 @@ With our project you can turn your *favorite songs* or *books* into **personaliz
 * [![spaCy][spaCy.com]][spaCy-url]  
 * [![FastAPI][FastAPI.com]][FastAPI-url]  
 * [![Node.js][Node.js.com]][Node.js-url]
+### Project Context Diagram
+<img src="./images/Context Diagram.jpg" alt="context diagram" width="800" height="650">
 
 <!-- GETTING STARTED -->
 ## Getting Started
@@ -86,20 +89,30 @@ Just access this [link.](https://github.com/AnkiGen/anki_deck/deployments/github
 ### 2. Run with Docker (Recommended)
 #### Prerequisites
 * docker
-* git
 
 #### Installation
-
-1. Clone our repository: ```git clone https://github.com/AnkiGen/anki_deck```
-2. Get into the directory: ```cd anki_deck```
-3.  Create ``.env`` with ``OPENAI_API_KEY=TOKEN`` and replace ``TOKEN`` with your GPT token.
-4. ```docker pull dkddjdjjfjdj/anki-deck```
-5. ```docker run --env-file .env -p 8000:8000 dkddjdjjfjdj/anki-deck```
-
+1. Download docker deskop on your computer.
+2. Launch docker desktop application.
+3.  Create ``.env`` with
+```python
+OPENAI_API_KEY=TOKEN
+```
+and replace ``TOKEN`` with your GPT token.
+4. Open terminal in directory with `.env` file.
+5. 
+```bash
+docker pull dkddjdjjfjdj/anki-deck
+```
+6.
+```bash
+docker run --env-file .env -p 8000:8000 dkddjdjjfjdj/anki-deck
+```
+7. After that in browser go to https://localhost:8000/
 ### 3. Run Locally with Node.js (Dev. Mode)
 #### Prerequisites
 * npm
 * node.js
+* git
 #### Installation
 1. Clone our repository: ```git clone https://github.com/AnkiGen/anki_deck.git```
 2. Get into the directory: ```cd anki_deck```
@@ -118,11 +131,14 @@ You have the opportunity to choose the way of creating an Anki deck!
 1) Create deck using the most common and must-known words in English (Great for beginners!)
 2) Create deck using the text from your book or song.
 (Good for learners who know the basics and want to move further!)
+<img src = "./images/1.png" width = "1000" height = "1000"> <!--- Основная вкладка -->
 
 If you go with the **first choice**, the deck is automatically generated and you are welcome to download the deck in ```.csv``` or ```.apkg``` format
 
 If you choose the **second choice**, you need to submit the text in raw format.
+<img src = "./images/2.png" width = "1000" height = "1000"> <!--- Ввод текста -->
 Then proceed to *filters*, choose maximal count of words in text and the amount of unknown words in deck.
+<img src = "./images/7.png" width = "1000" height = "1000"> <!--- Фильтр -->
 Then you have these ways of choosing words into the deck:
 1) Tinder
 2) Manual
@@ -133,29 +149,44 @@ Very simple to use, mobile, but does not let you control every word in the propo
 - Swipe to the **left** to mark the word as don't want to learn (won't be added to deck)
 - Swipe to the **right** to make the word as want to learn (will be added to deck)
 - Click on the **top-right** to mark the word as already known.
+<img src = "./images/3.png" width = "1000" height = "1000"> <!--- Тиндер -->
 #### Manual 
 Somewhat complex, but yet, very powerful way of choosing words for the deck.
 You are presented with the whole text you've submitted.
 - By **one-time clicking** the word, you mark it green as want to learn
 - By **double clicking** the word, you mark it as read as don't want to learn
 - By **clicking thrice** you unmark the word
+- <img src = "./images/8.png" width = "1000" height = "1000"> <!--- Ручной ввод -->
 #### Word List
 Presents list of multiple word cards!
 Same as in manual:
 - By **one-time clicking** the card, you mark it green as want to learn
 - By **double clicking** the card, you mark it as read as don't want to learn
 - By **clicking thrice** you unmark the card
+<img src = "./images/4.png" width = "1000" height = "1000"> <!--- Список слов -->
 
 After finishing choosing words, you are presented to the preliminary view of your generated Anki deck card. You could manually change the word translation and context if needed. 
 Also, there is a possibility to **copy** the table in ```.csv``` format for manual change.
+<img src = "./images/5.png" width = "1000" height = "1000"> <!--- Предварительный просмотр карт -->
 When everything is done, you can proceed further for the download in ```.csv``` or ```.apkg``` formats!
+<img src = "./images/6.png" width = "1000" height = "1000"> <!--- Скачать колоду в формате ... -->
 <!-- ROADMAP -->
 ## Roadmap
-
-- [ ] Multi-language Support
-    - [ ] German
- - [ ] Improved deck generation logic
- 
+ - [x] Working website run with docker
+ - [x] User can mark words as known/unknown to improve quality of sentences
+ - [x] Tinder-style selecting is provided
+ - [x] User can choose number of words he want to learn and length of generated sentence
+ - [x] Sentences are generated considering context
+ - [x] On the final page user can download csv file with proper fields
+ - [x] Review for the generated deck
+ - [x] Change the design for the website
+ - [x] Remove automatically redundant symbols, s.a. [1], the, a, an, etc...
+ - [x] Finish the documentation
+ - [x] Improved deck generation logic
+ - [ ] Make filter limitations work correctly
+ - [ ] Add possibility to fetch text by writing author and song name
+ - [ ] Voicover for words
+ - [ ] Teacher student system
  See all our tasks [here](https://github.com/orgs/AnkiGen/projects/3)
 
 
@@ -187,15 +218,31 @@ Don't forget to give the project a **star**!
 
 Distributed under the MIT License. See `LICENSE.txt` for more information.
 
+<!-- LINKS -->
+##  Hyperlinks to Docs
+- ```Contributing.MD``` with the information about the project: [click me!](https://github.com/AnkiGen/anki_deck/blob/master/CONTRIBUTING.md)
+- ```Git Graph``` with the information about the git process: [click me!](https://github.com/AnkiGen/anki_deck/blob/master/docs/GitGraph.png)
+- ```Quality Attribute Scenarios``` with the information about the user scenarios for quality: [click me!](https://github.com/AnkiGen/anki_deck/blob/master/docs/quality-attributes/quality-attribute-scenarios.md)
+- ```User Acceptance Tests``` with the information about the user tests: [click me!](https://github.com/AnkiGen/anki_deck/blob/master/docs/quality-assurance/user-acceptance-tests.md)
+- ```Architecture``` with the information of views: deployment, dynamic, static: [click me!](https://github.com/AnkiGen/anki_deck/tree/master/docs/architecture)
 
 
 
 <!-- CONTACT -->
 ## Contact
+Viktor K. – Team lead, Frontend developer <br>
+telegram: @vitec_321 <br> <br>
+Ivan K. – UX/UI designer, Frontend developer  <br>
+telegram: @vanyaspapayas <br> <br>
+Anastasia P. – Designer, Tester <br>
+telegram: @anastayshaa_a <br> <br>
+Ilya S. – Backend developer <br>
+telegram: @ISNJI <br> <br>
+Albert M. – Backend developer <br>
+telegram: @NeuroticExistentialDissonance <br> <br>
+Vadim G. – Backend developer <br>
+telegram: @FleshTeaml <br>
 
-Ivan K. – telegram: @vanyaspapayas
-Viktor K. – telegram: @vitec_321
-...
 
 
 

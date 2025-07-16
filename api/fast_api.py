@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Query,Request
 # from fastapi.staticfiles import StaticFiles
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, PlainTextResponse
 from sqlite3 import connect
 from gpt import request_sentences, write_cards_to_csv, parse_response_to_dicts
 import os
@@ -10,6 +10,9 @@ from pydantic import BaseModel
 from typing import List
 from Appearance import is_word_in_generated_sentences,merge_phrasal_verbs_from_words,load_phrasal_verbs
 import json
+from io import StringIO
+import csv
+import spacy
 
 app = FastAPI()
 basedir = os.path.abspath(os.path.dirname(__file__))

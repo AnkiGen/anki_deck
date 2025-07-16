@@ -29,7 +29,8 @@ export default {
     //this function is not need and should be deleted later
     //when all features on this page will be finished
         async fatchdata() {
-            this.pickWords();            const resp = { // add
+            this.pickWords();            
+            const resp = { // add
                 unknown_words: ["give","survive","climb"],
                 known_words:["dog","cat","emansipation","Russia"],
                 count:6,

@@ -6,10 +6,10 @@ services:
       - "8000:8000"
     environment:
       - OPENAI_API_KEY=${OPENAI_API_KEY}
-      - HTTP_PROXY=http://110.136.114.93:8080
-      - HTTPS_PROXY=http://110.136.114.93:8080
-      - http_proxy=http://110.136.114.93:8080
-      - https_proxy=http://110.136.114.93:8080
+      - HTTP_PROXY=user235092:ws16r4@176.101.58.200:2095
+      - HTTPS_PROXY=user235092:ws16r4@176.101.58.200:2095
+      - http_proxy=user235092:ws16r4@176.101.58.200:2095
+      - https_proxy=user235092:ws16r4@176.101.58.200:2095
 
   frontend:
     build:

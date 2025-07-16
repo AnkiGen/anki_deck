@@ -3,7 +3,8 @@ import BaseButton from '@/components/Basebutton.vue';
 import router from '@/router';
 
 import { useUserTextStore } from '@/stores/userText';
-
+import { useUserTextStoreV } from '@/stores/userTextV';
+import { useAPIStore } from '@/stores/API';
 
 export default {
     data() {
@@ -15,52 +16,22 @@ export default {
             store: null,
             validatedText: '',
             textStore: null,
-            // Sample data. Fetch from API the csv file and format it like this
-            words: [
-                [0, "made", "сделать", "she made a cake", "она сделала торт", "she made a cake"],
-                [1, "run", "бегать", "he can run fast", "он может быстро бегать", "he can run fast"],
-                [2, "see", "видеть", "I see the stars", "Я вижу звезды", "I see the stars"],
-                [3, "eat", "есть", "They eat apples", "Они едят яблоки", "They eat apples"],
-                [4, "read", "читать", "I read books", "Я читаю книги", "I read books"],
-                [5, "write", "писать", "He writes letters", "Он пишет письма", "He writes letters"],
-                [6, "go", "идти", "We go to school", "Мы идём в школу", "We go to school"],
-                [7, "come", "приходить", "She comes home", "Она приходит домой", "She comes home"],
-                [8, "drink", "пить", "I drink water", "Я пью воду", "I drink water"],
-                [9, "sleep", "спать", "They sleep well", "Они хорошо спят", "They sleep well"],
-                [10, "walk", "гулять", "We walk in the park", "Мы гуляем в парке", "We walk in the park"],
-                [11, "talk", "разговаривать", "He talks a lot", "Он много разговаривает", "He talks a lot"],
-                [12, "listen", "слушать", "She listens to music", "Она слушает музыку", "She listens to music"],
-                [13, "watch", "смотреть", "I watch TV", "Я смотрю телевизор", "I watch TV"],
-                [14, "play", "играть", "They play football", "Они играют в футбол", "They play football"],
-                [15, "study", "учиться", "We study English", "Мы учим английский", "We study English"],
-                [16, "buy", "покупать", "He buys bread", "Он покупает хлеб", "He buys bread"],
-                [17, "sell", "продавать", "She sells flowers", "Она продаёт цветы", "She sells flowers"],
-                [18, "open", "открывать", "I open the door", "Я открываю дверь", "I open the door"],
-                [19, "close", "закрывать", "They close the window", "Они закрывают окно", "They close the window"],
-                [20, "draw", "рисовать", "We draw pictures", "Мы рисуем картинки", "We draw pictures"],
-                [21, "cook", "готовить", "She cooks dinner", "Она готовит ужин", "She cooks dinner"],
-                [22, "drive", "водить", "He drives a car", "Он водит машину", "He drives a car"],
-                [23, "ride", "ездить", "I ride a bike", "Я катаюсь на велосипеде", "I ride a bike"],
-                [24, "swim", "плавать", "They swim in the pool", "Они плавают в бассейне", "They swim in the pool"],
-                [25, "sing", "петь", "We sing songs", "Мы поём песни", "We sing songs"],
-                [26, "dance", "танцевать", "She dances well", "Она хорошо танцует", "She dances well"],
-                [27, "help", "помогать", "He helps his friend", "Он помогает своему другу", "He helps his friend"],
-                [28, "find", "находить", "I find my keys", "Я нахожу свои ключи", "I find my keys"],
-                [29, "lose", "терять", "They lose the game", "Они проигрывают игру", "They lose the game"],
-                [30, "build", "строить", "We build a house", "Мы строим дом", "We build a house"],
-                [31, "break", "ломать", "He breaks the glass", "Он разбивает стакан", "He breaks the glass"],
-                [32, "fix", "чинить", "She fixes the car", "Она чинит машину", "She fixes the car"],
-                [33, "teach", "учить", "I teach children", "Я учу детей", "I teach children"],
-                [34, "learn", "изучать", "They learn new words", "Они изучают новые слова", "They learn new words"],
-            ],
+            words: [], // Will be populated from API response
             currentPage: 1,
             pageSize: 20,
             copySuccess: false,
+            isLoading: false, // Loading state for animations
+            rows: null
         }
     },
     mounted() { 
         //this variable represents store, you can use all its actions as methods
         this.textStore = useUserTextStore();
+        this.apiStore = useAPIStore();
+        this.userTextStoreV = useUserTextStoreV();
+        
+        // Fetch initial data from API
+        this.fetchWordList();
     },
     components: {
         BaseButton
@@ -80,7 +51,9 @@ export default {
             router.push({name: "Filter"});
         },
         goToFilter() {
-                router.push({name: "FinalPage"})
+            // Store the final words in userTextV store
+            this.userTextStoreV.setCsv(this.words);
+            router.push({name: "FinalPage"})
         },
         goBack() {
             this.textStore.startAgain();
@@ -102,6 +75,113 @@ export default {
                 setTimeout(() => { this.copySuccess = false; }, 1500);
             });
         },
+        async fetchWordList() {
+            try {
+                this.isLoading = true;
+                const apiData = this.apiStore.data;
+                console.log('start')
+                console.log(apiData)
+                const response = await fetch("http://127.0.0.1:8000/wordlist/post", {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(apiData),
+                });
+                console.log('end')
+                if (response.ok) {
+                    console.log('ok')
+                    const blob = await response.blob();
+                    const csvText = await blob.text();
+                    console.log(csvText);
+                    this.parseCSVToWords(csvText);
+                } else {
+                    alert('Ошибка при получении списка слов');
+                }
+            } catch (error) {
+                console.error('Error fetching word list:', error);
+                alert('Ошибка при получении списка слов');
+            } finally {
+                this.isLoading = false;
+            }
+        },
+        parseCSVToWords(csvText) {
+        const lines = csvText.split('\n').filter(l => l.trim() !== '');
+        const headers = lines[0].split(';');
+
+        this.words = [];
+
+        for (let i = 1; i < lines.length; i++) {
+            const columns = lines[i].split(';');
+            if (columns.length >= 6) {
+            this.words.push({
+                word: columns[0] || '',
+                lemma: columns[1] || '',
+                context_sentence: columns[2] || '',
+                word_translation: columns[3] || '',
+                sentence1: columns[4] || '',
+                sentence1_translation: columns[5] || '',
+                marked: false
+            });
+            }
+        }
+
+            
+            console.log('Parsed words:', this.words);
+            // Reset to first page
+            this.currentPage = 1;
+        },
+        async regenerateDeck() {
+            const marked = this.words.filter(w => w.marked);
+
+            if (marked.length === 0) {
+                alert('Вы не отметили ни одного предложения для регенерации.');
+                return;
+            }
+
+            const csvLines = [
+                'word;lemma;context_sentence;word_translation;sentence1;sentence1_translation',
+                ...this.words.map(w =>
+                [w.word, w.lemma, w.context_sentence, w.word_translation, w.sentence1, w.sentence1_translation].join(';')
+                )
+            ];
+
+            const payload = {
+                csv_text: csvLines.join('\n'),
+                marked_words: marked.map(w => w.word),
+                known_words: [], // если нужно — добавь
+                count: 10,
+                context_sentences: marked.map(w => w.context_sentence)
+            };
+
+            try {
+                this.isLoading = true;
+
+                const response = await fetch("http://127.0.0.1:8000/regenerate_patch", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) throw new Error("Ошибка при регенерации");
+
+                const csvText = await response.text();
+                this.parseCSVToWords(csvText);
+                alert('Колода успешно перегенерирована!');
+            } catch (error) {
+                console.error("Ошибка при регенерации:", error);
+                alert("Ошибка при перегенерации");
+            } finally {
+                this.isLoading = false;
+            }
+            },
+
+        toggleMarkForRegeneration(index) {
+            const globalIndex = (this.currentPage - 1) * this.pageSize + index;
+            this.words[globalIndex].marked = !this.words[globalIndex].marked;
+        },
     },
     watch: {
         isDone(newIsDone) {
@@ -115,38 +195,104 @@ export default {
    <main>
     <div class="copy-csv-row">
       <button class="copy-csv-btn" @click="copyWordsToCSV">Скопировать как CSV</button>
+      <button class="regenerate-btn" @click="regenerateDeck">Перегенерировать колоду</button>
       <span v-if="copySuccess" class="copy-success">Скопировано!</span>
     </div>
     <header>
         <h2 @click="goBack"><-- Вернуться к подбору слов</h2>
     </header>
         <div class = "header">Предварительный просмотр деки</div>
+        
+        <!-- Loading overlay -->
+        <div v-if="isLoading" class="loading-overlay">
+            <div class="loading-spinner">
+                <div class="spinner"></div>
+                <p>Генерация колоды...</p>
+            </div>
+        </div>
         <table class="word-table">
   <thead>
     <tr>
-      <th>Индекс слова</th>
-      <th>Слово на англ</th>
-      <th>Слово на русском</th>
-      <th>Предложение на англ</th>
-      <th>Предложение на русском</th>
+      <th>Исходное слово</th>
+      <th>Лемм. версия слова</th>
       <th>Исходное предложение</th>
+      <th>Перевод слова на русский</th>
+      <th>Сгенерированное предложение</th>
+      <th>Сгенерированное предложение на русском</th>
     </tr>
+    <!-- 
+      слово ориг
+      лемм. версия слова (н.ф)
+      исходное предложение
+      перевод слова на русское
+      сгенерированное предложение
+      перевод сгенерированного предложения
+
+      сделать все инпутами
+      отметка перегенирации колоды
+
+      передавать в стор измененный массив words
+      сделать отметку для предложений которые были плохо сделаны, отмечать эту отметку в
+      -->
   </thead>
   <tbody>
-    <tr v-for="(word, idx) in paginatedWords" :key="word[0]">
-      <td>{{ word[0] }}</td>
+    <tr v-for="(word, idx) in paginatedWords" :key="word.word">
       <td>
         <input
-          v-model="words[(currentPage-1)*pageSize+idx][1]"
+          v-model="words[(currentPage-1)*pageSize+idx].word"
           class="edit-input"
           type="text"
-          :placeholder="'Слово на англ'"
+          :placeholder="'Исходное слово'"
         />
       </td>
-      <td>{{ word[2] }}</td>
-      <td>{{ word[3] }}</td>
-      <td>{{ word[4] }}</td>
-      <td>{{ word[5] }}</td>
+      <td>
+        <input
+          v-model="words[(currentPage-1)*pageSize+idx].lemma"
+          class="edit-input"
+          type="text"
+          :placeholder="'Лемм. версия слова'"
+        />
+      </td>
+      <td>
+        <input
+          v-model="words[(currentPage-1)*pageSize+idx].context_sentence"
+          class="edit-input"
+          type="text"
+          :placeholder="'Исходное предложение'"
+        />
+      </td>
+      <td>
+        <input
+          v-model="words[(currentPage-1)*pageSize+idx].word_translation"
+          class="edit-input"
+          type="text"
+          :placeholder="'Перевод слова на русский'"
+        />
+      </td>
+      <td>
+        <div class="sentence-cell">
+          <input
+            v-model="words[(currentPage-1)*pageSize+idx].sentence1"
+            class="edit-input"
+            type="text"
+            :placeholder="'Сгенерированное предложение'"
+          />
+            <button
+            @click="toggleMarkForRegeneration(idx)"
+            :class="['mark-btn', { 'marked': paginatedWords[idx].marked }]"
+            >
+            {{ paginatedWords[idx].marked ? '✓' : '!' }}
+            </button>
+        </div>
+      </td>
+      <td>
+        <input
+          v-model="words[(currentPage-1)*pageSize+idx].sentence1_translation"
+          class="edit-input"
+          type="text"
+          :placeholder="'Сгенерированное предложение на русском'"
+        />
+      </td>
     </tr>
   </tbody>
 </table>
@@ -155,7 +301,7 @@ export default {
           <span>Страница {{ currentPage }} из {{ totalPages }}</span>
           <button @click="nextPage" :disabled="currentPage === totalPages">Вперёд</button>
         </div>
-        <BaseButton :onClick="goToFilter" class = "submit">Перейти к генерации деки</BaseButton>
+        <BaseButton :onClick="goToFilter" class = "submit">Утвердить сгенерированную колоду</BaseButton>
    </main>
 </template>
 
@@ -325,9 +471,90 @@ export default {
     .copy-csv-btn:hover {
         background: #444;
     }
+    .regenerate-btn {
+        background: #2a4a2a;
+        color: #fff;
+        border: 1px solid #4a7c4a;
+        border-radius: 4px;
+        padding: 6px 16px;
+        font-size: 15px;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+    .regenerate-btn:hover {
+        background: #3a5a3a;
+    }
     .copy-success {
         color: #7fff7f;
         font-size: 15px;
         font-weight: 500;
+    }
+    .sentence-cell {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .sentence-cell .edit-input {
+        flex: 1;
+    }
+    .mark-btn {
+        background: #444;
+        color: #fff;
+        border: 1px solid #666;
+        border-radius: 4px;
+        padding: 4px 8px;
+        font-size: 12px;
+        cursor: pointer;
+        transition: all 0.2s;
+        min-width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .mark-btn:hover {
+        background: #555;
+    }
+    .mark-btn.marked {
+        background: #d32f2f;
+        border-color: #f44336;
+        color: #fff;
+    }
+    .mark-btn.marked:hover {
+        background: #b71c1c;
+    }
+    .loading-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+    .loading-spinner {
+        text-align: center;
+        color: white;
+    }
+    .spinner {
+        width: 50px;
+        height: 50px;
+        border: 4px solid rgba(255, 255, 255, 0.3);
+        border-top: 4px solid #fff;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 20px;
+    }
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    .loading-spinner p {
+        font-size: 18px;
+        margin: 0;
+        opacity: 0.9;
     }
 </style>
