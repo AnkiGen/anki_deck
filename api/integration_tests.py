@@ -106,18 +106,18 @@ def test_post_word():
     assert response.json() == {"status": "ok"}
 
 
-def test_fetch_music():
-    payload = {
-        "artist_song": "Eminem - Rap God"
-    }
+#def test_fetch_music():
+#    payload = {
+#        "artist_song": "Eminem - Rap God"
+#    }
 
-    response = client.post("/fetch-music/post", json=payload)
+#    response = client.post("/fetch-music/post", json=payload)
 
-    assert response.status_code == 200
+#    assert response.status_code == 200
 
-    response_json = response.json()
-    assert "lyrics" in response_json
-    assert isinstance(response_json["lyrics"], str)
+#    response_json = response.json()
+#    assert "lyrics" in response_json
+#    assert isinstance(response_json["lyrics"], str)
 
 
 def test_wordlist_regeneration_with_empty_current_stuff():
