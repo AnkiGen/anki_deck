@@ -140,7 +140,7 @@ class WordListRequest(BaseModel):
     known_words:List[str]
     count: int
     context_sentences: List[str]  
-
+correct_rows = [] 
 @app.post("/wordlist/post")
 async def post_text(payload: WordListRequest):
     unknown_words = payload.unknown_words
@@ -170,4 +170,9 @@ async def post_text(payload: WordListRequest):
 async def options_wordlist_post(request: Request):
     return JSONResponse(status_code=200)
 
-
+@app.post("/generate-cards-apkg/")
+async def generate_cards_apkg():
+    rows = correct_rows
+    from gpt import write_cards_to_apkg
+    apkg_bytes = write_cards_to_apkg(rows)
+    return apkg_bytes
