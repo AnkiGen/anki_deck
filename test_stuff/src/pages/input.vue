@@ -10,6 +10,7 @@ export default {
         return {
             pickedWords: new Array(),
             userText: '',
+            userText2: '',
             isDone: true,
             valid: true,
             store: null,
@@ -26,8 +27,61 @@ export default {
         BaseButton
     },
     methods: {
-    //this function is not need and should be deleted later
-    //when all features on this page will be finished
+        async fetchMusicAndDownload() {
+            if (!this.userText2) return;
+            const params = { query: this.userText2 };
+            const response = await fetch("http://127.0.0.1:8000/fetch-music/post", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(params),
+            });
+            // Get plain text from response
+            const text = await response.text();
+            // Parse text into words and sentences (same as goToFilter)
+            const regex = /[a-zA-Z'`’-]+/;
+            const endSentenctRegexp = /[!?\.]+/;
+            let sentenceIndex = 0;
+            let prevWord = "";
+            let words = text.split(/(\s+|\n)/)
+                .map((word) => {
+                    let currentIndex = sentenceIndex;
+                    let endOfSentance = endSentenctRegexp.exec(word);
+                    if (endOfSentance != null) {
+                        sentenceIndex++;
+                    }
+                    if (word == "\n" && endSentenctRegexp.exec(prevWord) == null) {
+                        sentenceIndex++;
+                    }
+                    let newWord = regex.exec(word);
+                    prevWord = word
+                    if (newWord != null) {
+                        return {
+                            word: newWord[0],
+                            sentenceIndex: currentIndex,
+                            class: "default"
+                        }
+                    } else {
+                        return {word: ''};
+                    }
+                })
+                .filter((word) =>  word.word.length > 2);
+            words = this.toSet(words);
+            const wordCount = words.length;
+            let sentences = text.split(/[\.!?\n]+/)
+                .filter((sentance) => sentance.length > 0)
+                .map((sentance) => {
+                    return sentance.trim();
+                });
+            // Set in stores and route, like goToFilter
+            this.textStoreV.setText(words);
+            this.textStore.setText(text);
+            this.textStoreV.setContext(sentences);
+            router.push({name: "Filter"});
+        },
+        //this function is not need and should be deleted later
+        //when all features on this page will be finished
         async fatchdata() {
             this.pickWords();            
             const resp = { // add
@@ -51,6 +105,13 @@ export default {
             document.body.appendChild(a);
             a.click();
             a.remove();
+        },
+        async handleSubmit() {
+            if (this.userText) {
+                this.goToFilter();
+            } else if (this.userText2) {
+                await this.fetchMusicAndDownload();
+            }
         },
         pickWords() {
             this.pickedWords = [];
@@ -157,8 +218,16 @@ To be, or not to be, that is the question.
 Whether..."></textarea>
             </form>
         </div>
+        <div class ="choice">Или...</div>
+        <div class = "header">Введите название песни и имя автора</div>
+        <div class = "form-container">
+            <form>
+                <textarea id = "text2" v-model="userText2" placeholder="Например:
+Black Sabbath – Black Sabbath (from Black Sabbath)"></textarea>
+            </form>
+        </div>
         <!-- <BaseButton class = "submit" @click="fatchdata()">Сгенерировать деку</BaseButton> -->
-        <BaseButton :onClick="goToFilter" class = "submit">Перейти к генерации деки</BaseButton>
+        <BaseButton :onClick="handleSubmit" class = "submit">Перейти к генерации деки</BaseButton>
    </main>
 </template>
 
@@ -234,7 +303,37 @@ Whether..."></textarea>
         opacity: 0.8;
         font-size: 15px;
     }
+    .choice {
+        text-align: center;
+        margin: 25px 0 25px 0;
+    }
     #text:focus {
+        outline: none;
+        box-shadow: none;
+    }
+    #text2 {
+        background-color: transparent;
+        border-radius: 4px;
+        padding-top:0.5em;
+        height: 4em;
+        border: 2px solid whitesmoke;
+        width: 100%;
+        color: white;
+        box-sizing: border-box;
+        padding-left: 0.5em;
+        font-size: 14px;
+        resize: vertical;
+        scrollbar-width: thin;
+        scrollbar-color: #888 var(--color-background);
+        font-size: 15px;
+    }
+    #text2::placeholder {
+        text-align: left;
+        color: white;
+        opacity: 0.8;
+        font-size: 15px;
+    }
+    #text2:focus {
         outline: none;
         box-shadow: none;
     }
