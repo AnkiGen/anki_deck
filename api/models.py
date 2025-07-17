@@ -9,8 +9,11 @@ class WordListRequest(BaseModel):
     context_sentences: List[str]
 
 
-
 class WordListRegeneration(BaseModel):
     known_words: List[str]
     count: int
     currentStuff: Dict[int, Dict[str, str]]
+
+
+class GeniusRequest(BaseModel):
+    artist_song: str

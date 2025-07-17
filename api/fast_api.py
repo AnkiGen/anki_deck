@@ -1,8 +1,8 @@
+import uvicorn
 from fastapi import FastAPI, Query
 from sqlite3 import connect
-from lyricsgenius import Genius
 from starlette.responses import JSONResponse
-
+#from genius import get_genius_text
 # from fastapi.staticfiles import StaticFiles
 from gpt import request_sentences, write_cards_to_csv, parse_response_to_dicts
 import os
@@ -25,7 +25,7 @@ app.add_middleware(
 
 @app.get("/")
 def root():
-    return {"message": "FastAPI работает!"}
+    return {"message": "FastAPI is working!"}
 
 
 @app.get("/user/get")
@@ -218,18 +218,27 @@ async def post_text(payload: WordListRequest):
     context_sentences = payload.context_sentences
     con = connect(data_file)
     cur = con.cursor()
+    ids = cur.execute("SELECT word_id FROM words").fetchall()
+    if ids:
+        ids = ids[-1][0] + 1
+    else:
+        ids = 1
     for word in range(len(known_words)):
-        ids = cur.execute("SELECT word_id FROM words").fetchone()
-        if ids:
-            ids = ids[-1][0] + 1
-        else:
-            ids = 1
         cur.execute("INSERT INTO words (word, context_sentence, user_id) VALUES (?, ?, ?)",
                     (known_words[word], "", 0))
         con.commit()
-        cur.execute("INSERT INTO known_words (word_id) VALUES (?)", (known_words[word],))
+        print(known_words[word])
+        cur.execute("INSERT INTO known_words (word_id) VALUES (?)", (ids,))
         con.commit()
-        con.close()
+        ids += 1
+    for word in range(len(unknown_words)):
+        cur.execute("INSERT INTO words (word, context_sentence, user_id) VALUES (?, ?, ?)",
+                    (unknown_words[word], "", 0))
+        con.commit()
+        cur.execute("INSERT INTO unknown_words (word_id) VALUES (?)", (ids,))
+        con.commit()
+        ids += 1
+    con.close()
     return write_cards_to_csv(csv_generation(unknown_words, known_words, count, context_sentences))
 
 
@@ -254,3 +263,12 @@ async def wordlist_regeneration(payload: WordListRegeneration):
         ans["currentStuff"][dict1[row['originalWord']]]["generatedSentenceRussian"] = row["sentence1_translation"]
 
     return JSONResponse(ans)
+
+
+#@app.post("/fetch-music/post", response_model=GeniusRequest)
+#async def fetch_music(payload: GeniusRequest):
+#    artist, song = payload.artist_song.split(' - ')
+#    return JSONResponse({"lyrics": get_genius_text(artist, song)})
+
+#if __name__ == "__main__":
+#    uvicorn.run(app, host="127.0.0.1", port=8000)

@@ -1,6 +1,7 @@
 import json
 import pickle
 
+
 def decode_blob(blob_data):
     try:
         decoded_data = json.loads(blob_data.decode('utf-8'))
