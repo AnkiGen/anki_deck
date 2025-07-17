@@ -126,7 +126,7 @@ def test_wordlist_regeneration_with_empty_current_stuff():
         "count": 1,
         "currentStuff": {}
     }
-    response = client.post("/wordlist/regenerate/post", json=payload)
+    response = client.post("/regenerate_patch", json=payload)
     assert response.status_code == 200
     data = response.json()
     assert data["currentStuff"] == {}
