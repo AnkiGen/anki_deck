@@ -136,7 +136,7 @@ def test_wordlist_regeneration_invalid_payload():
         "known_words": ["слово1"],
         "currentStuff": {}
     }
-    response = client.post("/wordlist/regenerate/post", json=payload)
+    response = client.post("/regenerate_patch", json=payload)
     assert response.status_code == 422
 
 
