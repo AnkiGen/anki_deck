@@ -1,19 +1,25 @@
 import uvicorn
-from fastapi import FastAPI, Query
+from fastapi import FastAPI, Query,Request
+from fastapi.responses import JSONResponse, PlainTextResponse
 from sqlite3 import connect
-from starlette.responses import JSONResponse
-#from genius import get_genius_text
-# from fastapi.staticfiles import StaticFiles
 from gpt import request_sentences, write_cards_to_csv, parse_response_to_dicts
 import os
+from starlette.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from decryptors import *
-from Appearance import is_word_in_generated_sentences
+from pydantic import BaseModel
+from typing import List
+from Appearance import is_word_in_generated_sentences,validate_response_sentences
+import json
+from io import StringIO
+import csv
+import spacy
 from models import *
 
 app = FastAPI()
 basedir = os.path.abspath(os.path.dirname(__file__))
 data_file = os.path.join(basedir, 'anki_deck.db')
+
 
 app.add_middleware(
     CORSMiddleware,
@@ -242,27 +248,60 @@ async def post_text(payload: WordListRequest):
     return write_cards_to_csv(csv_generation(unknown_words, known_words, count, context_sentences))
 
 
-@app.post("/wordlist/regenerate/post", response_model=WordListRegeneration)
-async def wordlist_regeneration(payload: WordListRegeneration):
-    unknown_words = []
-    dict1 = {}
-    known_words = payload.known_words
-    count = payload.count
-    context_sentences = []
-    stuff = payload.currentStuff
-    for index in stuff.keys():
-        data = stuff[index]
-        dict1[data["originalWord"]] = index
-        unknown_words.append(data['originalWord'])
-        context_sentences.append(data['originalSentence'])
-    rows = csv_generation(unknown_words, known_words, count, context_sentences)
-    ans = {"currentStuff": {}}
-    for row in rows:
-        ans["currentStuff"][dict1[row['originalWord']]] = stuff[dict1[row['originalWord']]]
-        ans["currentStuff"][dict1[row['originalWord']]]["generatedSentence"] = row["sentence1"]
-        ans["currentStuff"][dict1[row['originalWord']]]["generatedSentenceRussian"] = row["sentence1_translation"]
+class RegenerationPatchRequest(BaseModel):
+    csv_text: str
+    marked_words: List[str]
+    known_words: List[str]
+    count: int
+    context_sentences: List[str]
 
-    return JSONResponse(ans)
+@app.post("/regenerate_patch")
+async def regenerate_patch(payload: RegenerationPatchRequest):
+    reader = csv.DictReader(StringIO(payload.csv_text), delimiter=";")
+    rows = list(reader)
+
+    words_to_generate = payload.marked_words.copy()
+    correct_rows = []
+
+    while words_to_generate:
+        response_text = request_sentences(words_to_generate, payload.known_words, payload.count, payload.context_sentences)
+        generated = parse_response_to_dicts(response_text)
+        still_incorrect = []
+
+        for row in generated:
+            if is_word_in_generated_sentences(row["word"], [row["sentence1"]]):
+                correct_rows.append(row)
+            else:
+                still_incorrect.append(row["word"])
+
+        words_to_generate = still_incorrect
+
+    replacements = {}
+    nlp = spacy.load("en_core_web_sm")
+    for row in correct_rows:
+        replacements[row["word"]] = {
+            "word": row["word"],
+            "lemma": nlp(row["word"])[0].lemma_,
+            "context_sentence": row["context_sentence"],
+            "word_translation": row["word_translation"],
+            "sentence1": row["sentence1"],
+            "sentence1_translation": row["sentence1_translation"]
+        }
+
+    updated_rows = []
+    for row in rows:
+        word = row["word"]
+        if word in replacements:
+            updated_rows.append(replacements[word])
+        else:
+            updated_rows.append(row)
+
+    output = StringIO(newline="")
+    writer = csv.DictWriter(output, fieldnames=["word","lemma","context_sentence","word_translation","sentence1","sentence1_translation"], delimiter=";")
+    writer.writeheader()
+    writer.writerows(updated_rows)
+
+    return PlainTextResponse(output.getvalue())
 
 
 #@app.post("/fetch-music/post", response_model=GeniusRequest)
