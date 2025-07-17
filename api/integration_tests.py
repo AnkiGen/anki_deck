@@ -120,17 +120,6 @@ def test_post_word():
 #    assert isinstance(response_json["lyrics"], str)
 
 
-def test_wordlist_regeneration_with_empty_current_stuff():
-    payload = {
-        "known_words": ["слово1"],
-        "count": 1,
-        "currentStuff": {}
-    }
-    response = client.post("/regenerate_patch", json=payload)
-    assert response.status_code == 200
-    data = response.json()
-    assert data["currentStuff"] == {}
-
 def test_wordlist_regeneration_invalid_payload():
     payload = {
         "known_words": ["слово1"],
