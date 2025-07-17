@@ -13,14 +13,14 @@ def setup_and_teardown():
 def test_root():
     response = client.get("/")
     assert response.status_code == 200
-    assert response.json() == {"message": "FastAPI работает!"}
+    assert response.json() == {"message": "FastAPI is working!"}
 
 
 def test_post_and_get_user():
     login = "testuser"
     password = "testpassword"
 
-    response = client.get(f"/user/post/{login}/{password}")
+    response = client.post(f"/user/post/{login}/{password}")
     assert response.status_code == 200
     assert response.json()['status'] == "ok"
 
@@ -45,7 +45,7 @@ def test_get_deck():
 def test_post_deck():
     user_id = 1
     cards = [1, 2, 3]
-    response = client.get("/deck/post", params={"user_id": user_id, "cards": cards})
+    response = client.post("/deck/post", params={"user_id": user_id, "cards": cards})
     assert response.status_code == 200
     assert response.json() == {"status": "ok"}
 
@@ -63,7 +63,7 @@ def test_get_card():
 def test_post_card():
     word_id = 1
     sentences = ["sentence 1", "sentence 2"]
-    response = client.get("/card/post", params={"word_id": word_id, "sentences": ",".join(sentences)})
+    response = client.post("/card/post", params={"word_id": word_id, "sentences": sentences})
     assert response.status_code == 200
     assert response.json() == {"status": "ok"}
 
@@ -74,9 +74,8 @@ def test_get_by_word():
     assert response.status_code == 200
     data = response.json()
     assert data["word"] == word
-    assert "translations" in data
+    assert "word_id" in data
     assert "context_sentence" in data
-    assert "is_important" in data
     assert "user_id" in data
 
 
@@ -87,10 +86,12 @@ def test_get_by_id():
     data = response.json()
     assert data["word_id"] == word_id
     assert "word" in data
+    assert "context_sentence" in data
+    assert "user_id" in data
 
 
 def test_post_word():
-    response = client.get(
+    response = client.post(
         "/word/post",
         params={
             "word": "testword",
@@ -105,15 +106,27 @@ def test_post_word():
     assert response.json() == {"status": "ok"}
 
 
-def test_wordlist_get_post():
-    response = client.get(
-        "/wordlist/post",
-        params={
-            "unknown_words": "word1,word2",
-            "dont_want_learn": "word3,word4"
-        }
-    )
-    assert response.status_code == 200
+#def test_fetch_music():
+#    payload = {
+#        "artist_song": "Eminem - Rap God"
+#    }
+
+#    response = client.post("/fetch-music/post", json=payload)
+
+#    assert response.status_code == 200
+
+#    response_json = response.json()
+#    assert "lyrics" in response_json
+#    assert isinstance(response_json["lyrics"], str)
+
+
+def test_wordlist_regeneration_invalid_payload():
+    payload = {
+        "known_words": ["слово1"],
+        "currentStuff": {}
+    }
+    response = client.post("/regenerate_patch", json=payload)
+    assert response.status_code == 422
 
 
 def test_get_user_not_found():

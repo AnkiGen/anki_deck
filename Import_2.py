@@ -14,15 +14,11 @@ def lemmatization(json_data):
     for word in json_data["unknown_words"]:
         doc = nlp(word)
         lemma = doc[0].lemma_
-
         json_data["unknown_words"][word].append(lemma)
-
 
     for word in json_data["unwanted_words"]:
         doc = nlp(word)
         lemma = doc[0].lemma_
-
         json_data["unwanted_words"][word].append(lemma)
 
     return json_data
-
