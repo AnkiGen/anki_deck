@@ -9,7 +9,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from decryptors import *
 from pydantic import BaseModel
 from typing import List
-from Appearance import is_word_in_generated_sentences,merge_phrasal_verbs_from_words,load_phrasal_verbs
+from Appearance import *
 import json
 from io import StringIO
 import csv
