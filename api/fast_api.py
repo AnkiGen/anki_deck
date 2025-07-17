@@ -233,7 +233,6 @@ async def post_text(payload: WordListRequest):
         cur.execute("INSERT INTO words (word, context_sentence, user_id) VALUES (?, ?, ?)",
                     (known_words[word], "", 0))
         con.commit()
-        print(known_words[word])
         cur.execute("INSERT INTO known_words (word_id) VALUES (?)", (ids,))
         con.commit()
         ids += 1
