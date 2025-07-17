@@ -147,55 +147,49 @@ export default {
     });
         },
         async regenerateDeck() {
+            // Get the global indices of marked rows
+            const markedIndices = Array.from(this.markedForRegeneration);
+            if (markedIndices.length === 0) {
+                alert('Вы не отметили ни одного предложения для регенерации.');
+                return;
+            }
+
+            // Build the CSV lines from the current words
+            const csvLines = [
+                'word;lemma;context_sentence;word_translation;sentence1;sentence1_translation',
+                ...this.words.map(row =>
+                    [row[0], row[1], row[2], row[3], row[4], row[5]].join(';')
+                )
+            ];
+
+            // Build the payload
+            const payload = {
+                csv_text: csvLines.join('\n'),
+                marked_words: markedIndices.map(idx => this.words[idx][0]), // word column
+                known_words: [], // add if needed
+                count: 10,
+                context_sentences: markedIndices.map(idx => this.words[idx][2]) // context_sentence column
+            };
+
             try {
                 this.isLoading = true;
-                // Save current marks
-                const prevMarked = new Set(this.markedForRegeneration);
-                // Temporarily clear marks/styles
-                this.markedForRegeneration.clear();
-                // Get data from API store
-                const apiData = this.apiStore.data;
-                
-                const currentStuff = {};
-                prevMarked.forEach(index => {
-                    if (this.words[index]) {
-                        currentStuff[index] = {
-                            originalWord: this.words[index][0],
-                            lemmaVersion: this.words[index][1],
-                            originalSentence: this.words[index][2],
-                            russianTranslation: this.words[index][3],
-                            generatedSentence: this.words[index][4],
-                            generatedSentenceRussian: this.words[index][5]
-                        };
-                    }
-                });
-                const requestData = {
-                    known_words: apiData.known_words || [],
-                    count: apiData.count || 10, // я не ебу схуяли 10, но от багов иногда спасает
-                    currentStuff: currentStuff
-                };
-                
+
                 const response = await fetch("http://127.0.0.1:8000/regenerate_patch", {
                     method: "POST",
                     headers: {
-                        'Content-Type': 'application/json',
+                        'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify(requestData)
+                    body: JSON.stringify(payload)
                 });
-                
-                if (response.ok) {
-                    const blob = await response.blob();
-                    const csvText = await blob.text();
-                    this.parseCSVToWords(csvText);
-                    // Restore marked sentences after regeneration
-                    this.markedForRegeneration = prevMarked;
-                    alert('Колода успешно перегенерирована!');
-                } else {
-                    alert('Ошибка при перегенерации колоды');
-                }
+
+                if (!response.ok) throw new Error("Ошибка при регенерации");
+
+                const csvText = await response.text();
+                this.parseCSVToWords(csvText);
+                alert('Колода успешно перегенерирована!');
             } catch (error) {
-                console.error('Error regenerating deck:', error);
-                alert('Ошибка при перегенерации колоды');
+                console.error("Ошибка при регенерации:", error);
+                alert("Ошибка при перегенерации");
             } finally {
                 this.isLoading = false;
             }
