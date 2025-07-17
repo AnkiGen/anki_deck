@@ -2,27 +2,21 @@
   <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_06_2025_16_08_[Changes]/shelved.patch" />
   <option name="DESCRIPTION" value="Uncommitted changes before Update at 28.06.2025 16:08 [Changes]" />
   <binary>
-    <option name="BEFORE_PATH" />
     <option name="AFTER_PATH" value="test_stuff/public/like.png" />
     <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_06_2025_16_08_[Changes]/like.png" />
   </binary>
   <binary>
-    <option name="BEFORE_PATH" />
     <option name="AFTER_PATH" value="test_stuff/src/assets/like.jpeg" />
     <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_06_2025_16_08_[Changes]/like.jpeg" />
   </binary>
   <binary>
-    <option name="BEFORE_PATH" />
     <option name="AFTER_PATH" value="test_stuff/public/dislike.png" />
     <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_06_2025_16_08_[Changes]/dislike.png" />
   </binary>
   <binary>
     <option name="BEFORE_PATH" value="test_stuff/src/pages/pasteTextPage.vue" />
-    <option name="AFTER_PATH" />
-    <option name="SHELVED_PATH" />
   </binary>
   <binary>
-    <option name="BEFORE_PATH" />
     <option name="AFTER_PATH" value="test_stuff/public/star.png" />
     <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_06_2025_16_08_[Changes]/star.png" />
   </binary>
