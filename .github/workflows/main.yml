@@ -6,11 +6,13 @@ on:
       - main
       - master
       - tests
+      - fix-context-sentence
   pull_request:
     branches:
       - main
       - master
       - tests
+      - fix-context-sentence
 
 jobs:
   build:

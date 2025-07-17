@@ -21,3 +21,36 @@ def validate_response_sentences(response_text):
             if not is_word_in_generated_sentences(word, sentences):
                 return False
     return True
+
+
+def load_phrasal_verbs():
+    phrasal_set = set()
+    with open("phrasal_verbs.txt") as f:
+        for line in f:
+            words = line.strip().split()
+            if not words or line.startswith("#"):
+                continue
+            lemmas = tuple(nlp(" ".join(words))[i].lemma_.lower() for i in range(len(words)))
+            phrasal_set.add(lemmas)
+    return phrasal_set
+
+def merge_phrasal_verbs_from_words(words: list[str], phrasal_set: set[tuple[str]]) -> list[str]:
+    doc = nlp(" ".join(words))
+    lemmas = [t.lemma_.lower() for t in doc]
+    merged_tokens = []
+    i = 0
+    while i < len(lemmas):
+        matched = False
+        for length in range(3, 0, -1):
+            if i + length <= len(lemmas):
+                window = tuple(lemmas[i:i+length])
+                if window in phrasal_set:
+                    phrase = " ".join(words[i:i+length])
+                    merged_tokens.append(phrase)
+                    i += length
+                    matched = True
+                    break
+        if not matched:
+            merged_tokens.append(words[i])
+            i += 1
+    return merged_tokens

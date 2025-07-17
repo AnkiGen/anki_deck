@@ -6,6 +6,10 @@ from dotenv import load_dotenv
 import csv
 import os
 from time import sleep
+import random
+import genanki
+import tempfile
+from gtts import gTTS
 
 nlp = spacy.load("en_core_web_sm")
 
@@ -21,7 +25,8 @@ You are a language tutor helping create flashcards for learning English.
 Task:
 For each word in the list of unknown words, create
  **translation of this word,natural English sentence and translation into Russian** that:
-- Clearly shows the meaning of the unknown word through context(context is defined by context_sentence list where index of context sentence is the same as index of word from uknown words.
+- Clearly shows the meaning of the unknown word through context(context is defined by context_sentene from the context_sentences list.index of context_sentence should be the same as index of unknown word in unknown_words list).
+- Be awared that word from the unknown_words list may be first word in phrasal verb, so consider it and if it is the case, put phrasal verb as a whole word in the output and its translation and then don`t consider word from uknown_words list as a separate word.
 - Sentences must sound natural and be understandable to a learner.
 - Do NOT define the word; use it in context.
 - Consider the meaning of the word attaching it`s translation to the word_translation.
@@ -85,3 +90,77 @@ def write_cards_to_csv(response_text):
             **row}
         writer.writerow(row_with_lemma)
     return PlainTextResponse(csv_in_memory.getvalue())
+
+
+def write_cards_to_apkg(response_text, deck_name="kuda_мы_лeзeмboжe"):
+
+
+    def get_word_audio(word):
+        # Generate TTS audio for the word and return (filename, bytes)
+        tts = gTTS(word, lang='en')
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".mp3") as f:
+            tts.write_to_fp(f)
+            f.seek(0)
+            audio_bytes = f.read()
+            filename = f"{word}.mp3"
+        return filename, audio_bytes
+
+    deck = genanki.Deck(
+        random.randint(1 << 30, 1 << 31),
+        deck_name
+    )
+
+    model = genanki.Model(
+        random.randint(1 << 30, 1 << 31),
+        'Simple Model',
+        fields=[
+            {'name': 'Word'},
+            {'name': 'Lemma'},
+            {'name': 'Word Translation'},
+            {'name': 'Context Sentence'},
+            {'name': 'Sentence'},
+            {'name': 'Sentence Translation'},
+            {'name': 'Audio'}
+        ],
+        templates=[
+            {
+                'name': 'Card 1',
+                'qfmt': '{{Word}}<br>{{Audio}}<br>{{Context Sentence}}',
+                'afmt': '{{FrontSide}}<hr id="answer">{{Word Translation}}<br>{{Lemma}}<br>{{Sentence}}<br>{{Sentence Translation}}',
+            }
+        ]
+    )
+
+    media_files = []
+    for row in response_text:
+        lemma = row.get("lemma") or nlp(row["word"])[0].lemma_
+        audio_filename, audio_bytes = get_word_audio(row["word"])
+        media_files.append((audio_filename, audio_bytes))
+        note = genanki.Note(
+            model=model,
+            fields=[
+                row["word"],
+                lemma,
+                row["word_translation"],
+                row["context_sentence"],
+                row["sentence1"],
+                row["sentence1_translation"],
+                f"[sound:{audio_filename}]"
+            ]
+        )
+        deck.add_note(note)
+
+    # Write media files to temp dir and collect paths
+    with tempfile.TemporaryDirectory() as tmpdir:
+        media_paths = []
+        for fname, fbytes in media_files:
+            path = os.path.join(tmpdir, fname)
+            with open(path, "wb") as f:
+                f.write(fbytes)
+            media_paths.append(path)
+        package = genanki.Package(deck)
+        package.media_files = media_paths
+        apkg_bytes = io.BytesIO()
+        package.write_to_file(apkg_bytes)
+        apkg_bytes.seek(0)
+        return apkg_bytes.getvalue()

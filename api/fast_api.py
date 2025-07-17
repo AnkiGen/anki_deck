@@ -9,7 +9,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from decryptors import *
 from pydantic import BaseModel
 from typing import List
-from Appearance import is_word_in_generated_sentences,validate_response_sentences
+from Appearance import *
 import json
 from io import StringIO
 import csv
@@ -28,6 +28,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+correct_rows = []
 
 @app.get("/")
 def root():
@@ -200,7 +202,6 @@ async def get_wordlist():
 
 def csv_generation(unknown_words, known_words, count, context_sentences):
     words_to_generate = unknown_words.copy()
-    correct_rows = []
     while words_to_generate:
         response_text = request_sentences(words_to_generate, known_words, count, context_sentences)
         rows = parse_response_to_dicts(response_text)
@@ -213,8 +214,8 @@ def csv_generation(unknown_words, known_words, count, context_sentences):
             else:
                 still_incorrect.append(word)
         words_to_generate = still_incorrect
-    return correct_rows
 
+    return write_cards_to_csv(correct_rows)
 
 @app.post("/wordlist/post", response_model=WordListRequest)
 async def post_text(payload: WordListRequest):
@@ -302,6 +303,12 @@ async def regenerate_patch(payload: RegenerationPatchRequest):
 
     return PlainTextResponse(output.getvalue())
 
+@app.post("/generate-cards-apkg/")
+async def generate_cards_apkg():
+    rows = correct_rows
+    from gpt import write_cards_to_apkg
+    apkg_bytes = write_cards_to_apkg(rows)
+    return apkg_bytes
 
 #@app.post("/fetch-music/post", response_model=GeniusRequest)
 #async def fetch_music(payload: GeniusRequest):
