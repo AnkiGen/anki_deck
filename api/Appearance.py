@@ -23,7 +23,7 @@ def validate_response_sentences(response_text):
     return True
 
 
-def load_phrasal_verbs() -> set[tuple[str, ...]]:
+def load_phrasal_verbs():
     phrasal_set = set()
     with open("phrasal_verbs.txt") as f:
         for line in f:
