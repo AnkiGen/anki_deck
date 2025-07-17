@@ -4,14 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="222a644d-2c41-450d-9c06-d2446119ffae" name="Changes" comment="">
+    <list default="true" id="222a644d-2c41-450d-9c06-d2446119ffae" name="Changes" comment="Genius endpoint update">
       <change beforePath="$PROJECT_DIR$/api/anki_deck.db" beforeDir="false" afterPath="$PROJECT_DIR$/api/anki_deck.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/decryptors.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/decryptors.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/fast_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/fast_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/genius.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/genius.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/integration_tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/integration_tests.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -90,10 +84,23 @@
       <workItem from="1752620293196" duration="742000" />
       <workItem from="1752647993409" duration="1330000" />
     </task>
+    <task id="LOCAL-00001" summary="Genius endpoint update">
+      <option name="closed" value="true" />
+      <created>1752739021239</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1752739021239</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Genius endpoint update" />
+    <option name="LAST_COMMIT_MESSAGE" value="Genius endpoint update" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
