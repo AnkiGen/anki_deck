@@ -4,7 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="222a644d-2c41-450d-9c06-d2446119ffae" name="Changes" comment="Genius endpoint update">
+    <list default="true" id="222a644d-2c41-450d-9c06-d2446119ffae" name="Changes" comment="Genius endpoint update 2">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/anki_deck.db" beforeDir="false" afterPath="$PROJECT_DIR$/api/anki_deck.db" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -92,7 +93,23 @@
       <option name="project" value="LOCAL" />
       <updated>1752739021239</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Genius endpoint update 2">
+      <option name="closed" value="true" />
+      <created>1752739221015</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1752739221015</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Genius endpoint update 2">
+      <option name="closed" value="true" />
+      <created>1752739500408</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1752739500408</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -100,7 +117,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Genius endpoint update" />
-    <option name="LAST_COMMIT_MESSAGE" value="Genius endpoint update" />
+    <MESSAGE value="Genius endpoint update 2" />
+    <option name="LAST_COMMIT_MESSAGE" value="Genius endpoint update 2" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -113,7 +131,7 @@
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/anki_deck$fast_api.coverage" NAME="fast_api Coverage Results" MODIFIED="1752737931719" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/api" />
+    <SUITE FILE_PATH="coverage/anki_deck$fast_api.coverage" NAME="fast_api Coverage Results" MODIFIED="1752739414604" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/api" />
     <SUITE FILE_PATH="coverage/anki_deck$genius.coverage" NAME="genius Coverage Results" MODIFIED="1752715701010" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/api" />
     <SUITE FILE_PATH="coverage/anki_deck$.coverage" NAME=" Coverage Results" MODIFIED="1752717896367" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/api" />
   </component>
