@@ -34,8 +34,6 @@ def load_phrasal_verbs() -> set[tuple[str, ...]]:
             phrasal_set.add(lemmas)
     return phrasal_set
 
-phrasal_set = load_phrasal_verbs()
-
 def merge_phrasal_verbs_from_words(words: list[str], phrasal_set: set[tuple[str]]) -> list[str]:
     doc = nlp(" ".join(words))
     lemmas = [t.lemma_.lower() for t in doc]
