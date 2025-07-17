@@ -302,6 +302,12 @@ async def regenerate_patch(payload: RegenerationPatchRequest):
 
     return PlainTextResponse(output.getvalue())
 
+@app.post("/generate-cards-apkg/")
+async def generate_cards_apkg():
+    rows = correct_rows
+    from gpt import write_cards_to_apkg
+    apkg_bytes = write_cards_to_apkg(rows)
+    return apkg_bytes
 
 #@app.post("/fetch-music/post", response_model=GeniusRequest)
 #async def fetch_music(payload: GeniusRequest):
