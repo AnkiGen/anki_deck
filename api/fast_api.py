@@ -29,6 +29,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+correct_rows = []
+
 @app.get("/")
 def root():
     return {"message": "FastAPI is working!"}
@@ -200,7 +202,6 @@ async def get_wordlist():
 
 def csv_generation(unknown_words, known_words, count, context_sentences):
     words_to_generate = unknown_words.copy()
-    correct_rows = []
     while words_to_generate:
         response_text = request_sentences(words_to_generate, known_words, count, context_sentences)
         rows = parse_response_to_dicts(response_text)
