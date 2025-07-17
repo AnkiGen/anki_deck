@@ -11,11 +11,12 @@ def is_word_in_generated_sentences(word, sentences):
             return False
     return True
 
+
 def validate_response_sentences(response_text):
     for line in response_text.strip().split('\n'):
         parts = line.split(';')
         if len(parts) == 8:
-            word = parts[0] 
+            word = parts[0]
             sentences = [parts[2], parts[4], parts[6]]
             if not is_word_in_generated_sentences(word, sentences):
                 return False
@@ -28,7 +29,7 @@ def load_phrasal_verbs(phrasal_verbs: str) -> set[tuple[str, ...]]:
         for line in f:
             words = line.strip().split()
             if not words or line.startswith("#"):
-                continue 
+                continue
             lemmas = tuple(nlp(" ".join(words))[i].lemma_.lower() for i in range(len(words)))
             phrasal_set.add(lemmas)
     return phrasal_set

@@ -1,10 +1,11 @@
-from openai import OpenAI
+from openai import OpenAI, Timeout
 import io
 import spacy
 from fastapi.responses import PlainTextResponse
 from dotenv import load_dotenv
 import csv
 import os
+from time import sleep
 import random
 import genanki
 import tempfile
@@ -15,9 +16,8 @@ nlp = spacy.load("en_core_web_sm")
 load_dotenv()
 openai_key = os.getenv("OPENAI_API_KEY")
 
-client = OpenAI(
-    api_key=openai_key
-)
+
+client = OpenAI(api_key=openai_key)
 
 def generate_prompt(unknown_words,known_words,count,context_sentences):
     return f"""
@@ -25,10 +25,7 @@ You are a language tutor helping create flashcards for learning English.
 Task:
 For each word in the list of unknown words, create
  **translation of this word,natural English sentence and translation into Russian** that:
-- Clearly shows the meaning of the unknown word through context(context is defined by context_sentene from the context_sentences list.
-    to find the context sentence of the word just find the sentence from the {context_sentences} list that consist current word.
-    notice that words from {unknown_words} list may repeat and you have to consider it defining the context sentence)
-- Be awared that word from the unknown_words list may be first word in phrasal verb, so consider it and if it is the case, put phrasal verb as a whole word in the output and its translation and then don`t consider word from uknown_words list as a separate word.
+- Clearly shows the meaning of the unknown word through context(context is defined by context_sentence list where index of context sentence is the same as index of word from uknown words.
 - Sentences must sound natural and be understandable to a learner.
 - Do NOT define the word; use it in context.
 - Consider the meaning of the word attaching it`s translation to the word_translation.
@@ -50,17 +47,19 @@ word;word_translation;context_sentence;sentence1;sentence1_translation
 
 
 def request_sentences(unknown_words,known_words,count,context_sentences):#add arguements
-    prompt = generate_prompt(unknown_words,known_words,count,context_sentences)# add arguements
+    while True:
+        try:
+            prompt = generate_prompt(unknown_words,known_words,count, context_sentences)# add arguements
 
-    completion = client.chat.completions.create(
-        model="gpt-4o-mini",  # Или "gpt-4o-mini", если хочешь
-        messages=[
-            {"role": "user", "content": prompt}
-        ],
-        temperature=0.7
-    )
+            completion = client.chat.completions.create(
+                model="gpt-4o-mini",  # Или "gpt-4o-mini", если хочешь
+                messages=[{"role": "user", "content": prompt}],
+                temperature=0.7
+            )
+            return completion.choices[0].message.content
+        except Timeout:
+             sleep(5)
 
-    return completion.choices[0].message.content
 
 def parse_response_to_dicts(response_text):
     rows = []
@@ -93,7 +92,7 @@ def write_cards_to_csv(response_text):
 
 
 def write_cards_to_apkg(response_text, deck_name="kuda_мы_лeзeмboжe"):
-    
+
 
     def get_word_audio(word):
         # Generate TTS audio for the word and return (filename, bytes)

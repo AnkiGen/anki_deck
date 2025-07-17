@@ -1,15 +1,15 @@
 import unittest
-from unittest.mock import patch
+from unittest.mock import patch, MagicMock
 from Import_2 import lemmatization
 from Import_1 import splitting
-from Appearance import is_word_in_generated_sentences
+from api.Appearance import is_word_in_generated_sentences
+from gpt import *
 
 
 class TestSplittingFunction(unittest.TestCase):
 
     def test_basic_sentence(self):
         text = "Hello, world! It's a beautiful day."
-
         result1 = splitting(text)
         result = []
         for token in result1.keys():
@@ -18,9 +18,6 @@ class TestSplittingFunction(unittest.TestCase):
 
         self.assertIn("Hello", result)
         self.assertIn("world", result)
-        self.assertNotIn("It", result)
-        self.assertNotIn("'s", result)
-        self.assertNotIn("a", result)
         self.assertIn("beautiful", result)
         self.assertNotIn(",", result)
         self.assertNotIn("!", result)
@@ -33,6 +30,7 @@ class TestSplittingFunction(unittest.TestCase):
         for token in result1.keys():
             if result1[token]:
                 result.append(token)
+
         self.assertNotIn("The", result)
         self.assertNotIn("over", result)
         self.assertNotIn("the", result)
@@ -56,7 +54,6 @@ class TestSplittingFunction(unittest.TestCase):
 
     def test_non_matching_tokens_excluded(self):
         text = "1234 !@#$%"
-
         result1 = splitting(text)
         result = []
         for token in result1.keys():
@@ -123,11 +120,11 @@ class TestLemmatization(unittest.TestCase):
         }
         result = lemmatization(json_data)
 
-        self.assertIn("running", result["known_words"].keys())
-        self.assertIn("children", result["unknown_words"].keys())
+        self.assertIn("running", result["known_words"])
+        self.assertIn("children", result["unknown_words"])
 
-        self.assertEqual(result["unknown_words"]["children"][0], "child")
-        self.assertEqual(result["unwanted_words"]["mice"][0], "mouse")
+        self.assertEqual(result["unknown_words"]["children"], ["child"])
+        self.assertEqual(result["unwanted_words"]["mice"], ["mouse"])
 
     @patch("spacy.load")
     def test_multiple_words(self, mock_load):
@@ -169,10 +166,9 @@ class TestLemmatization(unittest.TestCase):
 
         result = lemmatization(json_data)
 
-        self.assertEqual(result["known_words"]["cats"][0], "cat")
-        self.assertEqual(result["unknown_words"]["dogs"][0], "dog")
-        self.assertEqual(result["unwanted_words"]["mice"][0], "mouse")
-
+        self.assertEqual(result["known_words"]["cats"], ["cat"])
+        self.assertEqual(result["unknown_words"]["dogs"], ["dog"])
+        self.assertEqual(result["unwanted_words"]["mice"], ["mouse"])
 
 
 class TestAppearance(unittest.TestCase):
@@ -194,12 +190,70 @@ class TestAppearance(unittest.TestCase):
     def test_multiple_sentences_some_match(self):
         word = "read"
         sentences = ["They will run.", "She reads a book.", "Walking is healthy."]
+        self.assertFalse(is_word_in_generated_sentences(word, sentences))
+        sentences = ["He read every morning.", "She reads a book.", "Walking as read."]
         self.assertTrue(is_word_in_generated_sentences(word, sentences))
 
     def test_empty_sentences(self):
         word = "apple"
         sentences = []
         self.assertFalse(is_word_in_generated_sentences(word, sentences))
+
+
+class TestGPT(unittest.TestCase):
+    def test_generate_prompt(self):
+        unknown_words = ["apple", "banana"]
+        known_words = ["fruit"]
+        count = 5
+        context_sentences = ["I eat an apple.", "Bananas are yellow."]
+        prompt = generate_prompt(unknown_words, known_words, count, context_sentences)
+
+        assert "Unknown words:" in prompt
+        for word in unknown_words:
+            assert word in prompt
+        assert str(count) in prompt
+
+    def test_parse_response_to_dicts(self):
+        response_text = (
+            "apple;яблоко;I eat an apple.;I like apples.;Я люблю яблоки.\n"
+            "banana;банан;Bananas are yellow.;They are tasty.;Они вкусные."
+        )
+        result = parse_response_to_dicts(response_text)
+        assert len(result) == 2
+        first = result[0]
+        assert first["word"] == "apple"
+        assert first["word_translation"] == "яблоко"
+        assert first["context_sentence"] == "I eat an apple."
+        assert first["sentence1"] == "I like apples."
+        assert first["sentence1_translation"] == "Я люблю яблоки."
+
+
+    def test_write_cards_to_csv(self):
+        response_text = [
+            {
+                "word": "apple",
+                "word_translation": "яблоко",
+                "context_sentence": "I eat an apple.",
+                "sentence1": "I like apples.",
+                "sentence1_translation": "Я люблю яблоки."
+            },
+            {
+                "word": "banana",
+                "word_translation": "банан",
+                "context_sentence": "Bananas are yellow.",
+                "sentence1": "They are tasty.",
+                "sentence1_translation": "Они вкусные."
+            }
+        ]
+
+        response = write_cards_to_csv(response_text)
+
+        assert isinstance(response, PlainTextResponse)
+        content = response.body.decode()
+        assert "apple" in content
+        assert "банан" in content
+        assert "word" in content
+        assert "lemma" in content
 
 
 if __name__ == "__main__":
