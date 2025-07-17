@@ -1,6 +1,4 @@
 import unittest
-from unittest.mock import patch
-from unittest.mock import mock_open, patch
 from api.Appearance import is_word_in_generated_sentences, load_phrasal_verbs
 from gpt import *
 
