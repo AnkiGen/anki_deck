@@ -34,27 +34,10 @@ class TestAppearance(unittest.TestCase):
         self.assertFalse(is_word_in_generated_sentences(word, sentences))
 
     def test_load_phrasal_verbs_basic(self):
-        result = load_phrasal_verbs("phrasal_verbs.txt")
+        result = load_phrasal_verbs()
         self.assertIn(("stand", "up"), result)
         self.assertIn(("cut", "down"), result)
         self.assertNotIn((), result)
-
-    def test_load_phrasal_verbs_with_real_file(self):
-        test_content = """# comment line
-    walked out of
-    gives up
-    # another comment
-    pick up
-    """
-        with tempfile.NamedTemporaryFile("w+", delete=False, encoding="utf-8") as tmpfile:
-            tmpfile_name = tmpfile.name
-            tmpfile.write(test_content)
-            tmpfile.flush()
-            result = load_phrasal_verbs(tmpfile_name)
-            self.assertIn(("walk", "out", "of"), result)
-            self.assertIn(("give", "up"), result)
-            self.assertIn(("pick", "up"), result)
-            self.assertNotIn((), result)
 
 
 class TestGPT(unittest.TestCase):
