@@ -25,7 +25,7 @@ def validate_response_sentences(response_text):
 
 def load_phrasal_verbs() -> set[tuple[str, ...]]:
     phrasal_set = set()
-    with open("phrasal_verbs.txt", "r", encoding="utf-8") as f:
+    with open("phrasal_verbs.txt") as f:
         for line in f:
             words = line.strip().split()
             if not words or line.startswith("#"):
