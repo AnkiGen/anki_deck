@@ -20,6 +20,7 @@ export default {
             currentPage: 1,
             pageSize: 20,
             copySuccess: false,
+            markedForRegeneration: new Set(), // Set to track marked sentences
             isLoading: false, // Loading state for animations
             regenerationMode: false, // Controls regeneration mode
             collapsedOriginalSentences: new Set(), // Tracks collapsed state per row
@@ -88,7 +89,6 @@ export default {
                 this.isLoading = true;
                 const apiData = this.apiStore.data;
                 console.log('start')
-                console.log(apiData)
                 const response = await fetch("http://127.0.0.1:8000/wordlist/post", {
                     method: "POST",
                     headers: {
@@ -101,7 +101,6 @@ export default {
                     console.log('ok')
                     const blob = await response.blob();
                     const csvText = await blob.text();
-                    console.log(csvText);
                     this.parseCSVToWords(csvText);
                 } else {
                     alert('Ошибка при получении списка слов');
@@ -139,8 +138,6 @@ export default {
                     }
                 }
             }
-        }
-
             
             console.log('Parsed words:', this.words);
             // Reset to first page
@@ -196,11 +193,14 @@ export default {
             } finally {
                 this.isLoading = false;
             }
-            },
-
-        toggleMarkForRegeneration(index) {
-            const globalIndex = (this.currentPage - 1) * this.pageSize + index;
-            this.words[globalIndex].marked = !this.words[globalIndex].marked;
+        },
+        toggleMarkForRegeneration(wordIndex) {
+            const globalIndex = (this.currentPage - 1) * this.pageSize + wordIndex;
+            if (this.markedForRegeneration.has(globalIndex)) {
+                this.markedForRegeneration.delete(globalIndex);
+            } else {
+                this.markedForRegeneration.add(globalIndex);
+            }
         },
         enterRegenerationMode() {
             this.regenerationMode = true;
@@ -290,7 +290,7 @@ export default {
         </td>
       <td>
         <input
-          v-model="words[(currentPage-1)*pageSize+idx].word"
+          v-model="words[(currentPage-1)*pageSize+idx][0]"
           class="edit-input"
           type="text"
           :placeholder="'Исходное слово'"
@@ -298,7 +298,7 @@ export default {
       </td>
       <td>
         <input
-          v-model="words[(currentPage-1)*pageSize+idx].lemma"
+          v-model="words[(currentPage-1)*pageSize+idx][1]"
           class="edit-input"
           type="text"
           :placeholder="'Лемм. версия слова'"
@@ -345,7 +345,7 @@ export default {
           <span>Страница {{ currentPage }} из {{ totalPages }}</span>
           <button @click="nextPage" :disabled="currentPage === totalPages">Вперёд</button>
         </div>
-        <BaseButton :onClick="goToFilter" class = "submit">Утвердить сгенерированную колоду</BaseButton>
+        <BaseButton :onClick="goToFilter" class = "submit">Перейти к генерации деки</BaseButton>
    </main>
 </template>
 
