@@ -202,6 +202,8 @@ async def get_wordlist():
 
 def csv_generation(unknown_words, known_words, count, context_sentences):
     words_to_generate = unknown_words.copy()
+    local_correct_rows = []
+    
     while words_to_generate:
         response_text = request_sentences(words_to_generate, known_words, count, context_sentences)
         rows = parse_response_to_dicts(response_text)
@@ -210,12 +212,13 @@ def csv_generation(unknown_words, known_words, count, context_sentences):
             word = row["word"]
             sentences = [row["sentence1"]]
             if is_word_in_generated_sentences(word, sentences):
-                correct_rows.append(row)
+                local_correct_rows.append(row)
             else:
                 still_incorrect.append(word)
         words_to_generate = still_incorrect
 
-    return write_cards_to_csv(correct_rows)
+    return local_correct_rows
+
 
 @app.post("/wordlist/post", response_model=WordListRequest)
 async def post_text(payload: WordListRequest):
@@ -245,7 +248,8 @@ async def post_text(payload: WordListRequest):
         con.commit()
         ids += 1
     con.close()
-    return write_cards_to_csv(csv_generation(unknown_words, known_words, count, context_sentences))
+    correct_rows = csv_generation(unknown_words, known_words, count, context_sentences)
+    return write_cards_to_csv(correct_rows)
 
 
 class RegenerationPatchRequest(BaseModel):

@@ -1,161 +1,308 @@
 ﻿en_word;en_lemmatized_word;en_sentence_with_word;ru_word;en_another_sentence_with_word;ru_another_sentence_with_word
-apple;apple;They use the apple.;яблоко;Look at the apple.;Посмотри на яблоко.
-book;book;I want a book.;книга;This is my book.;Это мой книга.
-cat;cat;They use the cat.;кот;The cat is here.;кот здесь.
-dog;dog;I have a dog.;собака;This is my dog.;Это мой собака.
-house;house;This is my house.;дом;The house is here.;дом здесь.
-car;car;I want a car.;машина;This is my car.;Это мой машина.
-tree;tree;He found a tree.;дерево;They use the tree.;Они используют дерево.
-milk;milk;I have a milk.;молоко;The milk is here.;молоко здесь.
-water;water;The water is here.;вода;He found a water.;Он нашёл вода.
-sun;sun;Do you like the sun?;солнце;I want a sun.;Я хочу солнце.
-moon;moon;I have a moon.;луна;She likes the moon.;Ей нравится луна.
-star;star;They use the star.;звезда;Do you like the star?;Тебе нравится звезда?
-pen;pen;Do you like the pen?;ручка;The pen is here.;ручка здесь.
-pencil;pencil;This is my pencil.;карандаш;I want a pencil.;Я хочу карандаш.
-chair;chair;He found a chair.;стул;The chair is here.;стул здесь.
-table;table;She likes the table.;стол;The table is here.;стол здесь.
-door;door;Look at the door.;дверь;I have a door.;У меня есть дверь.
-window;window;This is my window.;окно;We see a window.;Мы видим окно.
-school;school;They use the school.;школа;I want a school.;Я хочу школа.
-teacher;teacher;They use the teacher.;учитель;He found a teacher.;Он нашёл учитель.
-student;student;He found a student.;ученик;She likes the student.;Ей нравится ученик.
-bag;bag;This is my bag.;сумка;Do you like the bag?;Тебе нравится сумка?
-ball;ball;We see a ball.;мяч;I want a ball.;Я хочу мяч.
-bird;bird;I want a bird.;птица;They use the bird.;Они используют птица.
-fish;fish;Do you like the fish?;рыба;They use the fish.;Они используют рыба.
-hat;hat;Do you like the hat?;шляпа;The hat is here.;шляпа здесь.
-shirt;shirt;I have a shirt.;рубашка;He found a shirt.;Он нашёл рубашка.
-shoes;shoes;I want a shoes.;обувь;Look at the shoes.;Посмотри на обувь.
-bed;bed;I have a bed.;кровать;We see a bed.;Мы видим кровать.
-phone;phone;They use the phone.;телефон;Look at the phone.;Посмотри на телефон.
-clock;clock;I want a clock.;часы;We see a clock.;Мы видим часы.
-bread;bread;This is my bread.;хлеб;Look at the bread.;Посмотри на хлеб.
-butter;butter;The butter is here.;масло;I want a butter.;Я хочу масло.
-cheese;cheese;Look at the cheese.;сыр;I want a cheese.;Я хочу сыр.
-egg;egg;Look at the egg.;яйцо;Do you like the egg?;Тебе нравится яйцо?
-rice;rice;We see a rice.;рис;He found a rice.;Он нашёл рис.
-soup;soup;He found a soup.;суп;The soup is here.;суп здесь.
-cake;cake;I want a cake.;торт;The cake is here.;торт здесь.
-coffee;coffee;This is my coffee.;кофе;He found a coffee.;Он нашёл кофе.
-tea;tea;We see a tea.;чай;She likes the tea.;Ей нравится чай.
-juice;juice;I have a juice.;сок;This is my juice.;Это мой сок.
-banana;banana;She likes the banana.;банан;He found a banana.;Он нашёл банан.
-orange;orange;Do you like the orange?;апельсин;I have a orange.;У меня есть апельсин.
-grape;grape;This is my grape.;виноград;I want a grape.;Я хочу виноград.
-lemon;lemon;They use the lemon.;лимон;I have a lemon.;У меня есть лимон.
-peach;peach;This is my peach.;персик;They use the peach.;Они используют персик.
-pear;pear;She likes the pear.;груша;The pear is here.;груша здесь.
-tomato;tomato;I want a tomato.;помидор;The tomato is here.;помидор здесь.
-potato;potato;I want a potato.;картошка;The potato is here.;картошка здесь.
-carrot;carrot;I want a carrot.;морковь;Do you like the carrot?;Тебе нравится морковь?
-bus;bus;We see a bus.;автобус;This is my bus.;Это мой автобус.
-train;train;Look at the train.;поезд;This is my train.;Это мой поезд.
-bike;bike;We see a bike.;велосипед;He found a bike.;Он нашёл велосипед.
-road;road;She likes the road.;дорога;I have a road.;У меня есть дорога.
-street;street;We see a street.;улица;I have a street.;У меня есть улица.
-city;city;This is my city.;город;We see a city.;Мы видим город.
-village;village;The village is here.;деревня;She likes the village.;Ей нравится деревня.
-friend;friend;I have a friend.;друг;Look at the friend.;Посмотри на друг.
-family;family;They use the family.;семья;I want a family.;Я хочу семья.
-mother;mother;The mother is here.;мама;This is my mother.;Это мой мама.
-father;father;They use the father.;папа;This is my father.;Это мой папа.
-brother;brother;Do you like the brother?;брат;We see a brother.;Мы видим брат.
-sister;sister;He found a sister.;сестра;She likes the sister.;Ей нравится сестра.
-baby;baby;We see a baby.;младенец;Look at the baby.;Посмотри на младенец.
-boy;boy;I have a boy.;мальчик;They use the boy.;Они используют мальчик.
-girl;girl;I have a girl.;девочка;The girl is here.;девочка здесь.
-man;man;I have a man.;мужчина;He found a man.;Он нашёл мужчина.
-woman;woman;Do you like the woman?;женщина;Look at the woman.;Посмотри на женщина.
-hand;hand;He found a hand.;рука;This is my hand.;Это мой рука.
-leg;leg;We see a leg.;нога;This is my leg.;Это мой нога.
-eye;eye;We see a eye.;глаз;He found a eye.;Он нашёл глаз.
-nose;nose;We see a nose.;нос;I have a nose.;У меня есть нос.
-mouth;mouth;They use the mouth.;рот;He found a mouth.;Он нашёл рот.
-ear;ear;The ear is here.;ухо;I have a ear.;У меня есть ухо.
-head;head;I want a head.;голова;They use the head.;Они используют голова.
-hair;hair;She likes the hair.;волосы;This is my hair.;Это мой волосы.
-face;face;This is my face.;лицо;She likes the face.;Ей нравится лицо.
-finger;finger;I have a finger.;палец;Do you like the finger?;Тебе нравится палец?
-foot;foot;I have a foot.;стопа;The foot is here.;стопа здесь.
-animal;animal;We see a animal.;животное;They use the animal.;Они используют животное.
-zoo;zoo;He found a zoo.;зоопарк;I want a zoo.;Я хочу зоопарк.
-park;park;I have a park.;парк;Do you like the park?;Тебе нравится парк?
-garden;garden;This is my garden.;сад;I want a garden.;Я хочу сад.
-flower;flower;I have a flower.;цветок;I want a flower.;Я хочу цветок.
-grass;grass;She likes the grass.;трава;They use the grass.;Они используют трава.
-tree;tree;We see a tree.;дерево;They use the tree.;Они используют дерево.
-cloud;cloud;They use the cloud.;облако;Do you like the cloud?;Тебе нравится облако?
-rain;rain;I want a rain.;дождь;She likes the rain.;Ей нравится дождь.
-snow;snow;I have a snow.;снег;Look at the snow.;Посмотри на снег.
-wind;wind;They use the wind.;ветер;Do you like the wind?;Тебе нравится ветер?
-cold;cold;We see a cold.;холодно;She likes the cold.;Ей нравится холодно.
-hot;hot;They use the hot.;жарко;Do you like the hot?;Тебе нравится жарко?
-happy;happy;I want a happy.;счастливый;The happy is here.;счастливый здесь.
-sad;sad;The sad is here.;грустный;I have a sad.;У меня есть грустный.
-angry;angry;She likes the angry.;сердитый;I have a angry.;У меня есть сердитый.
-funny;funny;I have a funny.;смешной;I want a funny.;Я хочу смешной.
-good;good;He found a good.;хороший;Do you like the good?;Тебе нравится хороший?
-bad;bad;I want a bad.;плохой;This is my bad.;Это мой плохой.
-big;big;They use the big.;большой;I have a big.;У меня есть большой.
-small;small;She likes the small.;маленький;They use the small.;Они используют маленький.
-long;long;I have a long.;длинный;She likes the long.;Ей нравится длинный.
-short;short;The short is here.;короткий;They use the short.;Они используют короткий.
-fast;fast;This is my fast.;быстрый;I have a fast.;У меня есть быстрый.
-slow;slow;Do you like the slow?;медленный;This is my slow.;Это мой медленный.
-new;new;He found a new.;новый;They use the new.;Они используют новый.
-old;old;They use the old.;старый;He found a old.;Он нашёл старый.
-clean;clean;Look at the clean.;чистый;I have a clean.;У меня есть чистый.
-dirty;dirty;I want a dirty.;грязный;This is my dirty.;Это мой грязный.
-open;open;He found a open.;открытый;This is my open.;Это мой открытый.
-close;close;Do you like the close?;закрытый;We see a close.;Мы видим закрытый.
-run;run;We see a run.;бежать;Do you like the run?;Тебе нравится бежать?
-walk;walk;I want a walk.;идти;This is my walk.;Это мой идти.
-jump;jump;I have a jump.;прыгать;She likes the jump.;Ей нравится прыгать.
-sit;sit;We see a sit.;сидеть;This is my sit.;Это мой сидеть.
-stand;stand;This is my stand.;стоять;They use the stand.;Они используют стоять.
-look;look;Do you like the look?;смотреть;I want a look.;Я хочу смотреть.
-see;see;He found a see.;видеть;The see is here.;видеть здесь.
-eat;eat;The eat is here.;есть;Look at the eat.;Посмотри на есть.
-drink;drink;They use the drink.;пить;I have a drink.;У меня есть пить.
-sleep;sleep;I have a sleep.;спать;The sleep is here.;спать здесь.
-wake;wake;Look at the wake.;просыпаться;We see a wake.;Мы видим просыпаться.
-read;read;We see a read.;читать;I want a read.;Я хочу читать.
-write;write;She likes the write.;писать;They use the write.;Они используют писать.
-listen;listen;He found a listen.;слушать;She likes the listen.;Ей нравится слушать.
-talk;talk;Look at the talk.;говорить;This is my talk.;Это мой говорить.
-sing;sing;Look at the sing.;петь;The sing is here.;петь здесь.
-dance;dance;Do you like the dance?;танцевать;He found a dance.;Он нашёл танцевать.
-play;play;I have a play.;играть;Do you like the play?;Тебе нравится играть?
-draw;draw;They use the draw.;рисовать;Do you like the draw?;Тебе нравится рисовать?
-color;color;The color is here.;раскрашивать;I have a color.;У меня есть раскрашивать.
-help;help;They use the help.;помогать;She likes the help.;Ей нравится помогать.
-love;love;I have a love.;любить;I want a love.;Я хочу любить.
-like;like;The like is here.;нравиться;This is my like.;Это мой нравиться.
-want;want;Do you like the want?;хотеть;I have a want.;У меня есть хотеть.
-need;need;Do you like the need?;нужно;This is my need.;Это мой нужно.
-have;have;The have is here.;иметь;I have a have.;У меня есть иметь.
-go;go;This is my go.;идти;She likes the go.;Ей нравится идти.
-come;come;Look at the come.;приходить;The come is here.;приходить здесь.
-make;make;Do you like the make?;делать;The make is here.;делать здесь.
-do;do;He found a do.;делать;I want a do.;Я хочу делать.
-say;say;This is my say.;сказать;They use the say.;Они используют сказать.
-tell;tell;We see a tell.;рассказать;Do you like the tell?;Тебе нравится рассказать?
-ask;ask;This is my ask.;спрашивать;Do you like the ask?;Тебе нравится спрашивать?
-answer;answer;He found a answer.;отвечать;They use the answer.;Они используют отвечать.
-think;think;They use the think.;думать;He found a think.;Он нашёл думать.
-know;know;They use the know.;знать;We see a know.;Мы видим знать.
-work;work;They use the work.;работать;Look at the work.;Посмотри на работать.
-live;live;Do you like the live?;жить;Look at the live.;Посмотри на жить.
-give;give;I want a give.;давать;I have a give.;У меня есть давать.
-take;take;He found a take.;брать;Look at the take.;Посмотри на брать.
-buy;buy;We see a buy.;покупать;Do you like the buy?;Тебе нравится покупать?
-sell;sell;They use the sell.;продавать;We see a sell.;Мы видим продавать.
-open;open;They use the open.;открытый;She likes the open.;Ей нравится открытый.
-close;close;Do you like the close?;закрытый;I want a close.;Я хочу закрытый.
-start;start;She likes the start.;начинать;Do you like the start?;Тебе нравится начинать?
-stop;stop;I want a stop.;останавливаться;This is my stop.;Это мой останавливаться.
-wait;wait;I have a wait.;ждать;She likes the wait.;Ей нравится ждать.
-watch;watch;I want a watch.;смотреть;The watch is here.;смотреть здесь.
-learn;learn;I have a learn.;учить;We see a learn.;Мы видим учить.
-study;study;He found a study.;изучать;I want a study.;Я хочу изучать.
+apple;apple;I ate a red apple for breakfast.;яблоко;Could you pass me that apple?;Передай мне то яблоко.
+book;book;She's reading an interesting book.;книга;I bought this book yesterday.;Я купил эту книгу вчера.
+cat;cat;The black cat is sleeping on the sofa.;кот;Do you see that cat over there?;Ты видишь того кота?
+dog;dog;My dog loves to play fetch.;собака;Their dog barks at strangers.;Их собака лает на незнакомцев.
+house;house;They bought a new house last month.;дом;Our house has three bedrooms.;В нашем доме три спальни.
+car;car;He drives a blue car to work.;машина;The car needs washing.;Машину нужно помыть.
+tree;tree;We planted a tree in our garden.;дерево;That old tree provides shade.;То старое дерево даёт тень.
+milk;milk;I put milk in my coffee every morning.;молоко;The milk in the fridge is fresh.;Молоко в холодильнике свежее.
+water;water;Can I have a glass of water?;вода;The water in this lake is clear.;Вода в этом озере прозрачная.
+sun;sun;The sun is shining brightly today.;солнце;Don't look directly at the sun.;Не смотри прямо на солнце.
+moon;moon;The full moon looks beautiful tonight.;луна;We saw the moon through the telescope.;Мы видели луну в телескоп.
+star;star;That star is particularly bright.;звезда;She wished upon a shooting star.;Она загадала желание на падающую звезду.
+pen;pen;Do you have a pen I could borrow?;ручка;This pen doesn't write well.;Эта ручка плохо пишет.
+pencil;pencil;I need to sharpen my pencil.;карандаш;He drew the picture with a pencil.;Он нарисовал картину карандашом.
+chair;chair;Please have a seat in that chair.;стул;The wooden chair is antique.;Деревянный стул антикварный.
+table;table;We gathered around the dinner table.;стол;She set the table for four.;Она накрыла на стол на четверых.
+door;door;Someone is knocking at the door.;дверь;Please close the door behind you.;Пожалуйста, закрой дверь.
+window;window;Open the window to let in fresh air.;окно;The window needs cleaning.;Окно нужно помыть.
+school;school;Children go to school on weekdays.;школа;Her school is nearby.;Её школа находится рядом.
+teacher;teacher;Our teacher explains things clearly.;учитель;The new teacher is very kind.;Новый учитель очень добрый.
+student;student;The student asked a good question.;ученик;She's a university student.;Она студентка университета.
+bag;bag;I packed my bag for the trip.;сумка;Her bag matches her shoes.;Её сумка сочетается с туфлями.
+ball;ball;The children are playing with a ball.;мяч;He caught the ball with one hand.;Он поймал мяч одной рукой.
+bird;bird;A beautiful bird landed on our balcony.;птица;We heard birds singing this morning.;Мы слышали пение птиц этим утром.
+fish;fish;We're having fish for dinner tonight.;рыба;He caught a big fish yesterday.;Вчера он поймал большую рыбу.
+hat;hat;She's wearing a stylish summer hat.;шляпа;My hat blew off in the wind.;Моя шляпа улетела на ветру.
+shirt;shirt;This cotton shirt is very comfortable.;рубашка;He spilled coffee on his white shirt.;Он пролил кофе на белую рубашку.
+shoes;shoes;I need new running shoes.;обувь;Her shoes got wet in the rain.;Её обувь промокла под дождём.
+bed;bed;I made my bed this morning.;кровать;The cat sleeps at the foot of my bed.;Кот спит в ногах у моей кровати.
+phone;phone;My phone battery is almost dead.;телефон;She left her phone at home.;Она оставила телефон дома.
+clock;clock;The clock on the wall is five minutes fast.;часы;I set my alarm clock for 7 AM.;Я поставил будильник на 7 утра.
+bread;bread;Freshly baked bread smells wonderful.;хлеб;Could you buy a loaf of bread?;Купишь буханку хлеба?
+butter;butter;Spread some butter on the toast.;масло;This butter is too hard to spread.;Это масло слишком твёрдое.
+cheese;cheese;The cheese platter looks delicious.;сыр;I prefer mild cheese over sharp.;Я предпочитаю мягкий сыр острому.
+egg;egg;She ordered scrambled eggs for breakfast.;яйцо;The recipe calls for three eggs.;По рецепту нужно три яйца.
+rice;rice;We're having rice with our meal tonight.;рис;Brown rice is healthier than white.;Коричневый рис полезнее белого.
+soup;soup;Homemade soup warms you up in winter.;суп;The soup needs more salt.;В суп нужно добавить соли.
+cake;cake;We baked a cake for her birthday.;торт;Would you like a piece of cake?;Хочешь кусочек торта?
+coffee;coffee;I drink two cups of coffee daily.;кофе;The coffee is too hot to drink.;Кофе слишком горячий, чтобы пить.
+tea;tea;Green tea has many health benefits.;чай;Would you prefer tea or coffee?;Ты предпочитаешь чай или кофе?
+juice;juice;Orange juice is rich in vitamin C.;сок;The kids drank all the apple juice.;Дети выпили весь яблочный сок.
+banana;banana;Bananas are a good source of potassium.;банан;She added banana to her smoothie.;Она добавила банан в свой смузи.
+orange;orange;I peeled an orange for my snack.;апельсин;Orange trees grow in warm climates.;Апельсиновые деревья растут в тёплом климате.
+grape;grape;These grapes are sweet and juicy.;виноград;She froze grapes for a cool snack.;Она заморозила виноград для прохладной закуски.
+lemon;lemon;Add lemon juice to the recipe.;лимон;The lemon tree in our yard is fruitful.;Лимонное дерево у нас во дворе плодоносит.
+peach;peach;Peaches are my favorite summer fruit.;персик;This peach isn't ripe yet.;Этот персик ещё не созрел.
+pear;pear;The pear tree is full of fruit.;груша;She prefers pears to apples.;Она предпочитает груши яблокам.
+tomato;tomato;Homegrown tomatoes taste better.;помидор;The tomato sauce needs more herbs.;В томатный соус нужно больше трав.
+potato;potato;Mashed potatoes go well with steak.;картошка;These potatoes are starting to sprout.;Эти картофелины начинают прорастать.
+carrot;carrot;Carrots are good for your eyesight.;морковь;The rabbit is nibbling a carrot.;Кролик грызёт морковку.
+bus;bus;We took the bus to the city center.;автобус;The school bus arrives at 8 AM.;Школьный автобус приезжает в 8 утра.
+train;train;The train arrives at platform three.;поезд;We missed our train by two minutes.;Мы опоздали на поезд на две минуты.
+bike;bike;I ride my bike to work when it's sunny.;велосипед;Her new bike has twenty gears.;У её нового велосипеда двадцать скоростей.
+road;road;The road was slippery after the rain.;дорога;They're repairing the main road.;Они ремонтируют главную дорогу.
+street;street;Our street gets decorated for holidays.;улица;There's a bakery down the street.;Внизу по улице есть пекарня.
+city;city;New York is a busy city.;город;The city center is always crowded.;Центр города всегда переполнен.
+village;village;My grandparents live in a small village.;деревня;This village has only 200 residents.;В этой деревне всего 200 жителей.
+friend;friend;She's been my friend since childhood.;друг;We're meeting friends for lunch.;Мы встречаемся с друзьями на ланч.
+family;family;Family is very important to me.;семья;Our family gathers every Sunday.;Наша семья собирается каждое воскресенье.
+mother;mother;My mother makes the best pancakes.;мама;Her mother is a doctor.;Её мама - врач.
+father;father;His father taught him to fish.;папа;The father carried his sleeping child.;Отец нёс своего спящего ребёнка.
+brother;brother;My younger brother started school.;брат;Her brothers are both engineers.;Её братья оба инженеры.
+sister;sister;My sister and I share a room.;сестра;His sister lives in Canada.;Его сестра живёт в Канаде.
+baby;baby;The baby is sleeping peacefully.;младенец;They're expecting a baby in June.;У них будет ребёнок в июне.
+boy;boy;The boy is playing with his toy cars.;мальчик;Their son is a polite young boy.;Их сын - вежливый мальчик.
+girl;girl;The girl won first prize in the contest.;девочка;Our daughter is a happy little girl.;Наша дочь - счастливая маленькая девочка.
+man;man;The man helped carry my groceries.;мужчина;An elderly man was sitting on the bench.;Пожилой мужчина сидел на скамейке.
+woman;woman;The woman at the counter was helpful.;женщина;She's a very intelligent woman.;Она очень умная женщина.
+hand;hand;Wash your hands before eating.;рука;He writes with his left hand.;Он пишет левой рукой.
+leg;leg;My legs are tired from hiking.;нога;She broke her leg skiing last winter.;Она сломала ногу, катаясь на лыжах прошлой зимой.
+eye;eye;She has beautiful green eyes.;глаз;I got something in my eye.;Мне что-то попало в глаз.
+nose;nose;His nose started bleeding.;нос;She has a small nose and full lips.;У неё маленький нос и полные губы.
+mouth;mouth;Close your mouth when you chew.;рот;The baby put the toy in his mouth.;Младенец засунул игрушку в рот.
+ear;ear;She whispered something in his ear.;ухо;My ears are ringing after the concert.;У меня звенит в ушах после концерта.
+head;head;I have a headache today.;голова;She nodded her head in agreement.;Она кивнула головой в знак согласия.
+hair;hair;She's brushing her long hair.;волосы;His hair is turning gray.;Его волосы седеют.
+face;face;Wash your face with warm water.;лицо;Her face lit up when she saw us.;Её лицо озарилось, когда она увидела нас.
+finger;finger;He cut his finger while cooking.;палец;She wears a ring on every finger.;Она носит кольцо на каждом пальце.
+foot;foot;My left foot fell asleep.;стопа;The baby's feet are so tiny!;Ножки младенца такие крошечные!
+animal;animal;Dogs are my favorite animal.;животное;We saw many animals at the zoo.;Мы видели много животных в зоопарке.
+zoo;zoo;Let's take the kids to the zoo.;зоопарк;The zoo has a new panda exhibit.;В зоопарке новая выставка панд.
+park;park;We had a picnic in the park.;парк;The park closes at sunset.;Парк закрывается на закате.
+garden;garden;She grows roses in her garden.;сад;We eat vegetables from our garden.;Мы едим овощи из нашего сада.
+flower;flower;These flowers smell wonderful.;цветок;He gave her a bouquet of flowers.;Он подарил ей букет цветов.
+grass;grass;The grass needs mowing.;трава;We sat on the soft grass.;Мы сидели на мягкой траве.
+cloud;cloud;That cloud looks like a rabbit.;облако;Dark clouds mean rain is coming.;Тёмные тучи означают, что будет дождь.
+rain;rain;Take an umbrella in case it rains.;дождь;The rain stopped around noon.;Дождь прекратился около полудня.
+snow;snow;Children love playing in the snow.;снег;We might get snow tomorrow.;Завтра может пойти снег.
+wind;wind;The wind is strong today.;ветер;The wind blew my hat off.;Ветер сдул мою шляпу.
+cold;cold;It's cold outside today.;холодно;I caught a cold last week.;Я простудился на прошлой неделе.
+hot;hot;Be careful, the coffee is hot.;жарко;It's too hot to go outside.;Слишком жарко, чтобы выходить.
+happy;happy;She has a happy smile.;счастливый;The children seem very happy.;Дети кажутся очень счастливыми.
+sad;sad;He looks sad today.;грустный;The movie had a sad ending.;У фильма был грустный конец.
+angry;angry;Why are you so angry?;сердитый;The angry customer demanded a refund.;Сердитый клиент потребовал возврата денег.
+funny;funny;That joke was really funny.;смешной;He tells funny stories.;Он рассказывает смешные истории.
+good;good;You did a good job.;хороший;This is a good place to relax.;Это хорошее место для отдыха.
+bad;bad;Smoking is bad for your health.;плохой;We had bad weather on vacation.;У нас была плохая погода в отпуске.
+big;big;They live in a big house.;большой;This project is a big responsibility.;Этот проект - большая ответственность.
+small;small;She has a small apartment.;маленький;The small details matter.;Имеют значение маленькие детали.
+long;long;She has long blonde hair.;длинный;We waited a long time.;Мы ждали долгое время.
+short;short;He's shorter than his brother.;короткий;It was just a short visit.;Это был всего лишь короткий визит.
+fast;fast;The train is very fast.;быстрый;He's a fast runner.;Он быстро бегает.
+slow;slow;The internet is slow today.;медленный;She speaks slow and clear.;Она говорит медленно и чётко.
+new;new;I bought a new phone.;новый;They moved to their new house.;Они переехали в свой новый дом.
+old;old;This is an old tradition.;старый;How old are you?;Сколько тебе лет?
+clean;clean;Keep your room clean.;чистый;The air is clean in the mountains.;В горах воздух чистый.
+dirty;dirty;Wash your dirty hands.;грязный;My shoes got dirty in the mud.;Мои туфли испачкались в грязи.
+open;open;The store opens at 9 AM.;открытый;Leave the door open, please.;Оставь дверь открытой, пожалуйста.
+close;close;Please close the window.;закрытый;The museum is closed on Mondays.;Музей закрыт по понедельникам.
+run;run;I run every morning for exercise.;бежать;He runs his own business.;Он управляет своим бизнесом.
+walk;walk;Let's walk to the park.;идти;She walks her dog twice a day.;Она выгуливает собаку дважды в день.
+jump;jump;The cat can jump very high.;прыгать;The children were jumping in puddles.;Дети прыгали по лужам.
+sit;sit;Please sit down and relax.;сидеть;The baby learned to sit up.;Младенец научился сидеть.
+stand;stand;Stand up when the teacher enters.;стоять;We stood in line for tickets.;Мы стояли в очереди за билетами.
+look;look;Look both ways before crossing.;смотреть;You look tired today.;Ты выглядишь уставшим сегодня.
+see;see;I can't see without my glasses.;видеть;Did you see that movie?;Ты видел тот фильм?
+eat;eat;We eat dinner at 7 PM.;есть;What would you like to eat?;Что бы ты хотел поесть?
+drink;drink;Drink plenty of water.;пить;Would you like something to drink?;Хочешь что-нибудь выпить?
+sleep;sleep;I need to sleep early tonight.;спать;The baby sleeps through the night.;Младенец спит всю ночь.
+wake;wake;I usually wake at 6:30 AM.;просыпаться;Don't wake the sleeping baby.;Не буди спящего младенца.
+read;read;She reads a book every week.;читать;I'm reading an interesting article.;Я читаю интересную статью.
+write;write;Please write your name here.;писать;He writes poetry in his free time.;Он пишет стихи в свободное время.
+listen;listen;Listen carefully to the instructions.;слушать;I like listening to jazz music.;Мне нравится слушать джаз.
+talk;talk;We need to talk about this.;говорить;They talked for hours.;Они говорили часами.
+sing;sing;She sings in the church choir.;петь;The birds were singing beautifully.;Птицы пели прекрасно.
+dance;dance;They dance very well together.;танцевать;Would you like to dance?;Хочешь потанцевать?
+play;play;Children learn through play.;играть;Do you play any instruments?;Ты играешь на каких-нибудь инструментах?
+draw;draw;Can you draw a cat for me?;рисовать;She draws amazing portraits.;Она рисует потрясающие портреты.
+color;color;What's your favorite color?;раскрашивать;The children are coloring pictures.;Дети раскрашивают картинки.
+help;help;Can I help you with that?;помогать;She helped me carry the bags.;Она помогла мне донести сумки.
+love;love;I love chocolate ice cream.;любить;They fell in love at first sight.;Они полюбили друг друга с первого взгляда.
+like;like;I like your new haircut.;нравиться;She likes to travel.;Ей нравится путешествовать.
+want;want;I want to learn Spanish.;хотеть;What do you want for dinner?;Что ты хочешь на ужин?
+need;need;You need to drink more water.;нужно;We need to leave soon.;Нам нужно скоро уходить.
+have;have;I have two sisters.;иметь;They have a beautiful garden.;У них красивый сад.
+go;go;Let's go to the beach.;идти;Where are you going?;Куда ты идёшь?
+come;come;Come here, please.;приходить;They're coming to visit next week.;Они приедут в гости на следующей неделе.
+make;make;She makes delicious cookies.;делать;Don't make so much noise.;Не шуми так сильно.
+do;do;What are you doing tonight?;делать;I have so much to do today.;У меня сегодня так много дел.
+say;say;What did he say?;сказать;She always says kind words.;Она всегда говорит добрые слова.
+tell;tell;Tell me about your trip.;рассказать;He told an interesting story.;Он рассказал интересную историю.
+ask;ask;Don't be afraid to ask questions.;спрашивать;She asked for directions.;Она спросила дорогу.
+answer;answer;Please answer the question.;отвечать;I'll answer your email tomorrow.;Я отвечу на твоё письмо завтра.
+think;think;I think it's going to rain.;думать;What do you think about this?;Что ты думаешь об этом?
+know;know;Do you know the answer?;знать;I know a great restaurant nearby.;Я знаю отличный ресторан рядом.
+work;work;She works at a hospital.;работать;The computer isn't working.;Компьютер не работает.
+live;live;I live in an apartment.;жить;They live near the school.;Они живут рядом со школой.
+give;give;Give me your hand.;давать;She gives great advice.;Она даёт прекрасные советы.
+take;take;Take one cookie, please.;брать;It takes time to learn.;Нужно время, чтобы научиться.
+buy;buy;I need to buy groceries.;покупать;He bought a new car.;Он купил новую машину.
+sell;sell;They sell fresh produce.;продавать;We sold our house last month.;Мы продали наш дом в прошлом месяце.
+start;start;Let's start the meeting.;начинать;The movie starts at 8 PM.;Фильм начинается в 8 вечера.
+stop;stop;Stop at the red light.;останавливаться;The rain finally stopped.;Дождь наконец прекратился.
+wait;wait;Wait here, please.;ждать;We're waiting for the bus.;Мы ждём автобус.
+watch;watch;Do you watch TV often?;смотреть;We watched the sunset.;Мы наблюдали закат.
+learn;learn;Children learn quickly.;учить;I'm learning to cook.;Я учусь готовить.
+study;study;He studies engineering.;изучать;She's studying for her exam.;Она готовится к экзамену.
+computer;computer;I use my computer for work.;компьютер;My computer crashed yesterday.;Мой компьютер вчера сломался.
+key;key;I lost my car keys.;ключ;The key doesn't fit the lock.;Ключ не подходит к замку.
+money;money;We need to save money.;деньги;How much money do you have?;Сколько у тебя денег?
+time;time;What time is it?;время;I don't have much time.;У меня не так много времени.
+food;food;Italian food is delicious.;еда;We need to buy more food.;Нам нужно купить больше еды.
+day;day;Have a nice day!;день;What day is today?;Какой сегодня день?
+year;year;Next year will be better.;год;Happy New Year!;С Новым Годом!
+week;week;I work five days a week.;неделя;See you next week!;Увидимся на следующей неделе!
+month;month;February is the shortest month.;месяц;My birthday is next month.;Мой день рождения в следующем месяце.
+hour;hour;The meeting lasted an hour.;час;I'll be ready in an hour.;Я буду готов через час.
+minute;minute;Wait a minute, please.;минута;I'll be back in five minutes.;Я вернусь через пять минут.
+second;second;She finished in second place.;секунда;Just a second, please.;Секундочку, пожалуйста.
+morning;morning;Good morning!;утро;I exercise every morning.;Я делаю зарядку каждое утро.
+afternoon;afternoon;See you this afternoon.;день;I take a nap in the afternoon.;Я сплю днём.
+evening;evening;Good evening!;вечер;We go for walks in the evening.;Мы гуляем вечером.
+night;night;Good night!;ночь;I work night shifts.;Я работаю в ночную смену.
+today;today;Today is Monday.;сегодня;What are your plans for today?;Какие у тебя планы на сегодня?
+tomorrow;tomorrow;Tomorrow will be sunny.;завтра;See you tomorrow!;Увидимся завтра!
+yesterday;yesterday;Yesterday was rainy.;вчера;I saw him yesterday.;Я видел его вчера.
+now;now;I'm busy right now.;сейчас;We need to leave now.;Нам нужно уходить сейчас.
+later;later;We'll talk later.;позже;See you later!;Увидимся позже!
+soon;soon;Dinner will be ready soon.;скоро;I hope to see you soon.;Надеюсь скоро увидеть тебя.
+always;always;She always arrives early.;всегда;I always drink coffee in the morning.;Я всегда пью кофе утром.
+often;often;How often do you exercise?;часто;We often go to the park.;Мы часто ходим в парк.
+sometimes;sometimes;Sometimes I take the bus.;иногда;He sometimes forgets things.;Он иногда забывает вещи.
+never;never;I never eat meat.;никогда;She never lies.;Она никогда не лжёт.
+usually;usually;I usually wake up early.;обычно;We usually eat out on Fridays.;Мы обычно едим вне дома по пятницам.
+maybe;maybe;Maybe we'll go tomorrow.;может быть;Maybe it will rain.;Может быть, будет дождь.
+probably;probably;She's probably at home.;вероятно;We'll probably be late.;Мы, вероятно, опоздаем.
+every;every;I exercise every day.;каждый;Every child is special.;Каждый ребёнок особенный.
+all;all;All students must attend.;все;All the cookies are gone.;Все печенья закончились.
+some;some;Would you like some tea?;несколько;Some people arrived early.;Несколько человек пришли рано.
+any;any;Do you have any questions?;любой;We don't have any milk.;У нас нет молока.
+many;many;How many apples do you need?;много;Many people think so.;Многие люди так думают.
+few;few;Only a few guests came.;немного;I have few friends here.;У меня здесь мало друзей.
+little;little;Add a little salt.;немного;She speaks little English.;Она говорит немного по-английски.
+more;more;I want more coffee.;больше;We need more time.;Нам нужно больше времени.
+less;less;Eat less sugar.;меньше;I have less free time now.;У меня теперь меньше свободного времени.
+most;most;Most people agree.;большинство;This is the most interesting book.;Это самая интересная книга.
+other;other;Do you have other colors?;другой;The other guests arrived late.;Другие гости пришли поздно.
+another;another;Would you like another cup?;ещё один;Let's meet another day.;Давай встретимся в другой день.
+same;same;We have the same birthday.;тот же;They think the same way.;Они думают одинаково.
+different;different;We have different opinions.;разный;Try a different approach.;Попробуй другой подход.
+important;important;This is very important.;важный;Education is important.;Образование важно.
+difficult;difficult;Math is difficult for me.;трудный;This is a difficult decision.;Это трудное решение.
+easy;easy;The test was easy.;лёгкий;It's easy to make mistakes.;Легко ошибиться.
+possible;possible;Is it possible to change?;возможный;Anything is possible.;Всё возможно.
+impossible;impossible;That's impossible!;невозможный;Nothing is impossible.;Нет ничего невозможного.
+right;right;You're absolutely right.;правильный;Turn right at the corner.;Поверни направо на углу.
+wrong;wrong;That's the wrong answer.;неправильный;Something is wrong here.;Здесь что-то не так.
+true;true;Is that story true?;правда;It's true that I was late.;Правда, что я опоздал.
+false;false;The rumor is false.;ложный;Don't spread false information.;Не распространяй ложную информацию.
+real;real;Is this real gold?;настоящий;This is a real problem.;Это настоящая проблема.
+fake;fake;That's a fake painting.;поддельный;The news turned out to be fake.;Новости оказались фейковыми.
+beautiful;beautiful;What a beautiful sunset!;красивый;She has a beautiful voice.;У неё красивый голос.
+ugly;ugly;That's an ugly building.;уродливый;The situation turned ugly.;Ситуация стала уродливой.
+clean;clean;Keep your room clean.;чистый;The air is clean here.;Здесь чистый воздух.
+dirty;dirty;Wash your dirty hands.;грязный;My clothes got dirty.;Моя одежда испачкалась.
+rich;rich;He became very rich.;богатый;The soil here is rich.;Здесь богатая почва.
+poor;poor;We help poor families.;бедный;The poor animal was hurt.;Бедное животное пострадало.
+young;young;She looks very young.;молодой;Young people love technology.;Молодые люди любят технологии.
+old;old;This is an old tradition.;старый;How old are you?;Сколько тебе лет?
+new;new;I bought a new phone.;новый;They moved to a new house.;Они переехали в новый дом.
+modern;modern;This is modern art.;современный;We live in a modern house.;Мы живём в современном доме.
+ancient;ancient;We saw ancient ruins.;древний;This is an ancient tradition.;Это древняя традиция.
+light;light;The room has good light.;свет;The box is very light.;Коробка очень лёгкая.
+dark;dark;It's too dark to see.;тёмный;She has dark brown eyes.;У неё тёмно-карие глаза.
+bright;bright;The sun is too bright today.;яркий;She has a bright future.;У неё светлое будущее.
+soft;soft;The blanket is very soft.;мягкий;She spoke in a soft voice.;Она говорила мягким голосом.
+hard;hard;This bread is too hard.;твёрдый;The exam was very hard.;Экзамен был очень трудным.
+sweet;sweet;The tea is too sweet.;сладкий;She has a sweet personality.;У неё сладкий характер.
+sour;sour;These lemons are very sour.;кислый;The milk tastes sour.;Молоко кислое на вкус.
+bitter;bitter;The medicine is bitter.;горький;She gave a bitter smile.;Она горько улыбнулась.
+salty;salty;The soup is too salty.;солёный;I love salty snacks.;Я люблю солёные закуски.
+spicy;spicy;This food is too spicy.;острый;Do you like spicy food?;Ты любишь острую еду?
+fresh;fresh;We need fresh vegetables.;свежий;The air is fresh after rain.;Воздух свежий после дождя.
+stale;stale;The bread became stale.;черствый;The room smells stale.;В комнате несвежий запах.
+full;full;The glass is full.;полный;I'm full, thank you.;Я сыт, спасибо.
+empty;empty;The bottle is empty.;пустой;The room was completely empty.;Комната была совершенно пустой.
+high;high;The mountain is very high.;высокий;Prices are too high.;Цены слишком высокие.
+low;low;The table is too low.;низкий;Her blood pressure is low.;У неё низкое давление.
+tall;tall;He's very tall for his age.;высокий;The building is 50 meters tall.;Здание высотой 50 метров.
+short;short;She's shorter than her sister.;низкий;The meeting was short.;Встреча была короткой.
+wide;wide;The river is very wide.;широкий;She has wide shoulders.;У неё широкие плечи.
+narrow;narrow;The street is too narrow.;узкий;The path became narrower.;Тропинка стала уже.
+thick;thick;This book is very thick.;толстый;The fog was thick.;Туман был густым.
+thin;thin;She's very thin.;худой;The paper is too thin.;Бумага слишком тонкая.
+heavy;heavy;This box is too heavy.;тяжёлый;The traffic was heavy.;Движение было интенсивным.
+light;light;The package is light.;лёгкий;She has a light touch.;У неё лёгкое прикосновение.
+strong;strong;He's very strong.;сильный;The coffee is too strong.;Кофе слишком крепкий.
+weak;weak;The signal is weak.;слабый;I feel weak today.;Я чувствую себя слабым сегодня.
+healthy;healthy;She's very healthy.;здоровый;Eat healthy food.;Ешь здоровую пищу.
+sick;sick;I feel sick today.;больной;She called in sick.;Она позвонила, что больна.
+hot;hot;Be careful, it's hot.;горячий;The weather is too hot.;Погода слишком жаркая.
+cold;cold;My hands are cold.;холодный;The soup got cold.;Суп остыл.
+warm;warm;The water is warm.;тёплый;Wear warm clothes.;Надень тёплую одежду.
+cool;cool;The evening is cool.;прохладный;That's a cool idea!;Это крутая идея!
+dry;dry;The clothes are dry.;сухой;My throat is dry.;У меня пересохло в горле.
+wet;wet;The floor is wet.;мокрый;Her hair is still wet.;Её волосы ещё мокрые.
+noisy;noisy;The classroom is too noisy.;шумный;It's noisy outside.;На улице шумно.
+quiet;quiet;Please be quiet.;тихий;The library is very quiet.;В библиотеке очень тихо.
+fast;fast;He's a fast runner.;быстрый;The internet is fast here.;Здесь быстрый интернет.
+slow;slow;The service was slow.;медленный;She speaks slow and clear.;Она говорит медленно и чётко.
+early;early;I woke up early today.;рано;We arrived too early.;Мы пришли слишком рано.
+late;late;Don't be late!;поздно;It's getting late.;Уже поздно.
+first;first;This is my first time.;первый;She won first prize.;Она выиграла первый приз.
+last;last;This is our last meeting.;последний;He was the last to arrive.;Он пришёл последним.
+next;next;See you next week.;следующий;What's the next step?;Какой следующий шаг?
+previous;previous;On the previous page.;предыдущий;My previous job was better.;Моя предыдущая работа была лучше.
+left;left;Turn left at the light.;левый;There's none left.;Ничего не осталось.
+right;right;You're absolutely right.;правый;Turn right here.;Поверни направо здесь.
+middle;middle;I'm in the middle of something.;середина;The middle seat is uncomfortable.;Среднее сиденье неудобное.
+center;center;There's a park in the center.;центр;She loves being the center of attention.;Она любит быть в центре внимания.
+front;front;The entrance is at the front.;передний;Please sit in the front.;Пожалуйста, сядь впереди.
+back;back;The exit is at the back.;задний;My back hurts.;У меня болит спина.
+top;top;The book is on top.;верх;She reached the top of the mountain.;Она достигла вершины горы.
+bottom;bottom;The pen rolled to the bottom.;низ;Sign at the bottom, please.;Подпишите внизу, пожалуйста.
+side;side;Park on the right side.;сторона;She stood by my side.;Она стояла рядом со мной.
+edge;edge;Be careful near the edge.;край;The glass is on the edge of the table.;Стакан на краю стола.
+inside;inside;It's warm inside.;внутри;Look inside the box.;Загляни внутрь коробки.
+outside;outside;It's raining outside.;снаружи;Let's play outside.;Давай поиграем на улице.
+north;north;Canada is to the north.;север;The wind is from the north.;Ветер с севера.
+south;south;We're driving south.;юг;South America is beautiful.;Южная Америка прекрасна.
+east;east;The sun rises in the east.;восток;They live on the east coast.;Они живут на восточном побережье.
+west;west;California is in the west.;запад;The sun sets in the west.;Солнце садится на западе.
+here;here;Come here, please.;здесь;Here's your book.;Вот твоя книга.
+there;there;Put it over there.;там;There's a cat on the roof.;Там кот на крыше.
+up;up;Look up at the sky.;вверх;Prices are going up.;Цены растут.
+down;down;Sit down, please.;вниз;Turn the volume down.;Убавь громкость.
+above;above;The picture hangs above the sofa.;над;The temperature is above freezing.;Температура выше нуля.
+below;below;Sign your name below.;под;The temperature dropped below zero.;Температура упала ниже нуля.
+near;near;The hotel is near the beach.;близко;Is there a bank near here?;Есть ли банк поблизости?
+far;far;The station is too far.;далеко;How far is your house?;Как далеко твой дом?
+away;away;Go away!;прочь;The beach is 2 miles away.;Пляж в двух милях отсюда.
+home;home;I'm going home.;дом;Make yourself at home.;Чувствуй себя как дома.
+country;country;I love my country.;страна;We live in the country.;Мы живём за городом.
+city;city;New York is a big city.;город;City life is busy.;Городская жизнь насыщенная.
+town;town;It's a small town.;городок;We're going to town.;Мы едем в город.
+village;village;My grandparents live in a village.;деревня;It's a fishing village.;Это рыбацкая деревня.
+world;world;We travel around the world.;мир;It's a small world.;Мир тесен.
+earth;earth;The Earth revolves around the Sun.;Земля;We must protect the Earth.;Мы должны защищать Землю.
+sun;sun;The sun is shining today.;солнце;Don't stare at the sun.;Не смотри прямо на солнце.
+moon;moon;The moon is full tonight.;луна;We saw the moon rising.;Мы видели, как восходит луна.
+star;star;That star is very bright.;звезда;She's a movie star.;Она кинозвезда.
+sky;sky;The sky is blue today.;небо;Look at those clouds in the sky.;Посмотри на те облака в небе.
+cloud;cloud;That cloud looks like a rabbit.;облако;Dark clouds mean rain.;Тёмные тучи означают дождь.
+rain;rain;Take an umbrella - it might rain.;дождь;The rain stopped.;Дождь прекратился.
+snow;snow;Children love playing in the snow.;снег;It's snowing outside.;На улице идёт снег.
+wind;wind;The wind is strong today.;ветер;The wind blew my hat off.;Ветер сдул мою шляпу.
+storm;storm;There's a storm coming.;шторм;We stayed inside during the storm.;Мы оставались внутри во время шторма.

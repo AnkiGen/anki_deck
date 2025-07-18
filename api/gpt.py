@@ -22,28 +22,29 @@ client = OpenAI(api_key=openai_key)
 def generate_prompt(unknown_words,known_words,count,context_sentences):
     return f"""
 You are a language tutor helping create flashcards for learning English.
-Task:
-For each word in the list of unknown words, create
- **translation of this word,natural English sentence and translation into Russian** that:
-- Clearly shows the meaning of the unknown word through context(context is defined by context_sentene from the context_sentences list.index of context_sentence should be the same as index of unknown word in unknown_words list).
-- Be awared that word from the unknown_words list may be first word in phrasal verb, so consider it and if it is the case, put phrasal verb as a whole word in the output and its translation and then don`t consider word from uknown_words list as a separate word.
-- Sentences must sound natural and be understandable to a learner.
-- Do NOT define the word; use it in context.
-- Consider the meaning of the word attaching it`s translation to the word_translation.
-- Try to use less words from the known words list in the sentences.
-- Length of each sentence should be exactly {count} words.
-- Each word, his translation and sentences with their translations should be on a new line,
- prefixed with the word itself like:
-  `word;word_translation;contenxt_sentence;sentence1;sentence1_translation;
+## Task:
+For each word in the **unknown_words** list, generate:
+1. The **translation of the word** into Russian.
+2. The provided **context sentence**, matched by index to the unknown word.
+3. One **natural English sentence** that demonstrates the meaning of the word.
+4. The **Russian translation** of this sentence.
 
+### Special Instructions:
+- If an unknown word is the **first word of a phrasal verb**, generate the **full phrasal verb**, its translation, and the example sentence for the phrasal verb instead of the standalone word.
+- Sentences must sound **natural** and be understandable to a language learner.
+- **Do NOT define** the word directly; convey its meaning through context.
+- Avoid using words from the **known_words** list in your generated sentence.
+- The generated sentence must be **exactly {count} words long**.
+- Every output for a word must be formatted as:
+    word_or_phrasal_verb;word_translation;context_sentence;generated_sentence;generated_sentence_translation
+### Data:   
 Unknown words: {', '.join(unknown_words)}
 Known words: {', '.join(known_words)}
 Context sentences: {', '.join(context_sentences)}
 
-Output:
-Translation and sentences with their translations for each unknown word, all per line, formatted as:
-word;word_translation;context_sentence;sentence1;sentence1_translation
-
+### Example Output:
+run into;столкнуться;I didn't expect to see her today.;I run into her after work today.;Я столкнулся с ней после работы сегодня.
+Please follow this format strictly.
 """.strip()
 
 
@@ -60,7 +61,6 @@ def request_sentences(unknown_words,known_words,count,context_sentences):#add ar
             return completion.choices[0].message.content
         except Timeout:
              sleep(5)
-
 
 def parse_response_to_dicts(response_text):
     rows = []
@@ -92,7 +92,7 @@ def write_cards_to_csv(response_text):
     return PlainTextResponse(csv_in_memory.getvalue())
 
 
-def write_cards_to_apkg(response_text, deck_name="kuda_мы_лeзeмboжe"):
+def write_cards_to_apkg(response_text, deck_name="name"):
 
 
     def get_word_audio(word):
