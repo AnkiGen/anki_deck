@@ -159,7 +159,7 @@ export default {
                                         .filter((word) =>  word.word.length > 2);
             words = this.toSet(words);
             const wordCount = words.length;
-            let sentences = this.userText.split(/[\.!?\n]+/)
+            let sentences = this.userText.split(/[\n]+/)
                                     .filter((sentance) => sentance.length > 0)
                                     .map((sentance) => {
                                     return sentance.trim();

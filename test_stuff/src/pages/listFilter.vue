@@ -27,49 +27,14 @@ export default {
                 count: useUserTextStoreV().count,
                 context_sentences: []
             },
+            contextSentences: null,
+            expandedSentences: [],
         }
     },
     components: {
         Basebutton
     },
     methods: {
-        translate() {
-            let distance = (this.cardWidth+this.gap)*4;
-            switch (this.direction) {
-                case 0:
-                    this.$refs.scroller.style.transform = `translateX(-${(this.currentPage)*distance}px)`;
-                    break;
-                case 1:
-                    this.$refs.scroller.style.transform = `translateX(-${(this.currentPage-1)*distance}px)`;
-                    break;
-                
-            }
-        },
-        moveForward(){
-            this.direction = 0;
-            if (this.currentPage < this.maxPage-1){
-                this.currentPage++;
-                this.translate();
-            }
-        },
-        moveBack(){
-            this.direction = 1;
-            if (this.currentPage > 0){
-                this.translate();
-                this.currentPage--;
-            }
-        },
-        updateSizes(){
-            if (!this.$refs.card[0] || !this.$refs.scroller || this.$refs.card[0].length === 0)
-                return;
-            this.gap = parseFloat(window.getComputedStyle(this.$refs.scroller).gap);
-            this.cardWidth = this.$refs.card[0].offsetWidth;
-            this.scrollerWidth = this.$refs.scroller.offsetWidth;
-            let cardNum = this.wordList.length;
-            // this.maxPage = Math.floor((this.cardWidth*cardNum+(cardNum-1)*this.gap) / ((this.cardWidth+this.gap)*4))
-            this.maxPage = Math.ceil(this.wordList.length/4)
-            
-        },
         changeClass(index){
             let classes = ["wantLearn", "dontWantLearn", "default"];
             let word = this.wordList[index];
@@ -77,36 +42,17 @@ export default {
             let nextClass = classes[(classNum+1)%3];
             word.class = nextClass;
         },
+        toggleSentence(index) {
+            if (this.expandedSentences.length === 0) {
+                this.expandedSentences = new Array(this.wordList.length).fill(false);
+            }
+
+            this.expandedSentences[index] = !this.expandedSentences[index];
+            this.expandedSentences = [...this.expandedSentences]; 
+        },
         validateWords() {
             this.wordList = useUserTextStoreV().words;
             this.wordList = shuffle(this.wordList);
-            // this.wordList.forEach(element => {
-            //     console.log(element)
-            // });
-            let sentenceIndex = 0;
-            // this.wordList = wordArr.map((word) => {
-            //     let currentIndex = sentenceIndex;
-            //     let regex = /[a-zA-Z'`’-]+/;
-            //     let newWord = regex.exec(word);
-            //     if (newWord != null) {
-            //         return {
-            //         word: newWord[0],
-            //         class: "default"
-            //         }
-            //     }else {
-            //         return {
-            //             word: "BAD WORD",
-            //             class: ""
-            //         }
-            //     }
-            // })
-        },
-        handleKeyDown(event){
-            if (event.key === "ArrowRight") {
-            this.moveForward();
-            } else if (event.key === "ArrowLeft") {
-            this.moveBack();
-            }
         },
         startGen() {
             let contextSentences = useUserTextStoreV().context;
@@ -132,13 +78,9 @@ export default {
     },
     mounted() {
         this.validateWords();
-        this.$nextTick(() => this.updateSizes());
-        window.addEventListener("resize", this.updateSizes);
-        window.addEventListener("keydown", this.handleKeyDown)
-    },
-    unmounted(){
-        window.removeEventListener('resize', this.updateSizes);
-        window.removeEventListener('keydown', this.handleKeyDown);
+        this.contextSentences = useUserTextStoreV().context;
+        // this.$nextTick(() => this.updateSizes());
+        this.expandedSentences = new Array(this.wordList.length).fill(false);
     },
 }
 </script>
@@ -152,31 +94,41 @@ export default {
                 <span style="background-color: #B74747;">Красные карточки:</span> слова, которые ты не хочешь учить</span>
             </span>
         </h1>
-        <div class="nested-container">
-            <!-- <span class="card-number">Слова {{cardNumStart}}-{{cardNumStart+4}} из {{cardNumTotal}}</span> -->
-            <div class="card-container">
-                <div class="scroller" ref="scroller">
-                    <div ref="card"
-                        @click="changeClass(index)" 
-                        v-for="word, index in wordList" 
-                        :key="index" 
-                        :class="['card', word.class]">
-                        {{word.word.toLowerCase()}}
-                    </div>
-                </div>
-            </div>
-            <div class="bottom-contaiter">
-                <!-- <span class="card-picked">Выбрано слов {{counter}} из {{cardNumTotal}}</span> -->
-                <div class="router-buttons-container">
-                    <Basebutton class="router-button" @click="moveBack"> Прокрутка назад</Basebutton>
-                    <Basebutton class="router-button" @click="moveForward">Прокрутка вперед</Basebutton>
-                </div>
-            </div>
-            <div class="generation-container">
-                <Basebutton class="start-generation" @click="startGen"> Начать генерацию </Basebutton> 
-            </div>
-        </div>
+    </div> 
+    <div class="table-container">
+        <table class="word-table">
+            <colgroup>
+                <col>
+                <col style="min-width: 400px">
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>Слово</th>
+                    <th>Предложение из текста</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="word, index in wordList" :key="index">
+                    <td>
+                        <div class="ceil" :class="word.class" @click="changeClass(index)">{{ word.word.toLowerCase() }}</div>
+                    </td>
+                    <td>
+                        <div 
+                            class="ceil sentence-cell" 
+                            :class="!expandedSentences[index] ? 'collapsed' : ''"
+                            @click="toggleSentence(index)"
+                        >
+                            {{ contextSentences[word.sentenceIndex] }}
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
+    <div class="generation-container">
+        <Basebutton class="start-generation" @click="startGen"> Начать генерацию </Basebutton> 
+    </div>
+    
 </template>
 
 <style scoped>
@@ -184,7 +136,7 @@ export default {
         display: flex;
         flex-direction: column;
         align-items: center;
-        height: 100%;
+        /* height: 100%; */
     }
     h1{
         flex: 0 0 auto;
@@ -219,61 +171,6 @@ export default {
         font-weight: 400;
         left: 30px;
     }
-    .nested-container{
-        display: flex;
-        align-content: start;
-        flex-direction: column;
-        width: 932px;
-    }
-    .card-container{
-        display: flex;
-        width:932px;
-        flex: 0 0 auto;
-        overflow: hidden;
-        /* transition: ; */
-
-    }
-    .card-number{
-        font-size: 20px;
-    }
-    .card{
-        height: 260px;
-        width: 214px;
-        box-sizing: border-box;
-        border-radius: 28px;
-        border: 2px solid #fff;
-        font-size: 40px;
-        flex-shrink: 0;
-    }
-    .scroller{
-        display: flex;
-        gap: 25px;
-        flex-wrap:nowrap;
-        width: 100%;
-        transition: transform 0.5s cubic-bezier(0.255, 0.765, 0.575, 0.925);
-
-    }
-    .wantLearn{
-        border-color: #71c686;
-    }
-    .dontWantLearn{
-        border-color: #B74747;
-    }
-    .default{
-        border-color: inherit;
-    }
-    .router-buttons-container{
-        display: flex;   
-        padding-top: 30px;
-        justify-content: space-around;
-    }
-    .card-picked{
-        flex-shrink: 0;
-    }
-    .router-button{
-        width: 240px;
-        height: auto;
-    }
     .start-generation{
         width: 280px;
         height: auto; 
@@ -281,7 +178,68 @@ export default {
     .generation-container{
         display: flex;
         justify-content: center;
-        padding-top: 40px;
     }
-
-</style>
+    .word-table {
+        /* width: 70%; */
+        table-layout: fixed;
+        border-collapse: collapse;
+        margin: 30px 0;
+        background: rgba(255,255,255,0.05);
+        color: white;
+        font-size: 32px;
+    }
+    .word-table th {
+        background: rgba(255,255,255,0.15);
+        font-weight: 500;
+    }
+    .word-table tr:nth-child(even) {
+        background: rgba(255,255,255,0.07);
+    }
+    .ceil {
+        /* width: 100%; */
+        background: rgba(255,255,255,0.1);
+        color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        padding: 4px 8px;
+        font-size: 25px;
+        box-sizing: border-box;
+    }
+    .word-table th, .word-table td {
+        border: 1px solid #fff;
+        padding: 8px 12px;
+        text-align: center;
+        width: 200px;
+    }
+    .sentence-cell {
+        cursor: pointer;
+        transition: all 0.3s ease;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    
+    .sentence-cell.collapsed {
+        max-width: 400px;
+    }
+    
+    .sentence-cell:not(.collapsed) {
+        max-height: none;
+        white-space: normal;
+        width: 430px;
+    }
+    .table-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .wantLearn{
+        background-color: #71c686;
+    }
+    .dontWantLearn{
+        background-color: #B74747;
+    }
+    .default{
+        background-color: inherit;
+    }
+    </style>
