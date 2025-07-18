@@ -53,33 +53,6 @@ export default {
         validateWords() {
             this.wordList = useUserTextStoreV().words;
             this.wordList = shuffle(this.wordList);
-            // this.wordList.forEach(element => {
-            //     console.log(element)
-            // });
-            let sentenceIndex = 0;
-            // this.wordList = wordArr.map((word) => {
-            //     let currentIndex = sentenceIndex;
-            //     let regex = /[a-zA-Z'`’-]+/;
-            //     let newWord = regex.exec(word);
-            //     if (newWord != null) {
-            //         return {
-            //         word: newWord[0],
-            //         class: "default"
-            //         }
-            //     }else {
-            //         return {
-            //             word: "BAD WORD",
-            //             class: ""
-            //         }
-            //     }
-            // })
-        },
-        handleKeyDown(event){
-            if (event.key === "ArrowRight") {
-            this.moveForward();
-            } else if (event.key === "ArrowLeft") {
-            this.moveBack();
-            }
         },
         startGen() {
             let contextSentences = useUserTextStoreV().context;
@@ -107,11 +80,7 @@ export default {
         this.validateWords();
         this.contextSentences = useUserTextStoreV().context;
         // this.$nextTick(() => this.updateSizes());
-        window.addEventListener("keydown", this.handleKeyDown)
         this.expandedSentences = new Array(this.wordList.length).fill(false);
-    },
-    unmounted(){
-        window.removeEventListener('keydown', this.handleKeyDown);
     },
 }
 </script>
@@ -201,52 +170,6 @@ export default {
         font-size: 18px;
         font-weight: 400;
         left: 30px;
-    }
-    .nested-container{
-        display: flex;
-        align-content: start;
-        flex-direction: column;
-        width: 932px;
-    }
-    .card-container{
-        display: flex;
-        width:932px;
-        flex: 0 0 auto;
-        overflow: hidden;
-        /* transition: ; */
-
-    }
-    .card-number{
-        font-size: 20px;
-    }
-    .card{
-        height: 260px;
-        width: 214px;
-        box-sizing: border-box;
-        border-radius: 28px;
-        border: 2px solid #fff;
-        font-size: 40px;
-        flex-shrink: 0;
-    }
-    .scroller{
-        display: flex;
-        gap: 25px;
-        flex-wrap:nowrap;
-        width: 100%;
-        transition: transform 0.5s cubic-bezier(0.255, 0.765, 0.575, 0.925);
-
-    }
-    .router-buttons-container{
-        display: flex;   
-        padding-top: 30px;
-        justify-content: space-around;
-    }
-    .card-picked{
-        flex-shrink: 0;
-    }
-    .router-button{
-        width: 240px;
-        height: auto;
     }
     .start-generation{
         width: 280px;
