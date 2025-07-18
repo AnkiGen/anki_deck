@@ -141,7 +141,7 @@ export default {
             <tbody>
                 <tr v-for="word, index in wordList" :key="index">
                     <td>
-                        <div class="ceil">{{ word.word.toLowerCase() }}</div>
+                        <div class="ceil" :class="word.class" @click="changeClass(index)">{{ word.word.toLowerCase() }}</div>
                     </td>
                     <td>
                         <div 
@@ -155,6 +155,9 @@ export default {
                 </tr>
             </tbody>
         </table>
+    </div>
+    <div class="generation-container">
+        <Basebutton class="start-generation" @click="startGen"> Начать генерацию </Basebutton> 
     </div>
     
 </template>
@@ -233,15 +236,6 @@ export default {
         transition: transform 0.5s cubic-bezier(0.255, 0.765, 0.575, 0.925);
 
     }
-    .wantLearn{
-        border-color: #71c686;
-    }
-    .dontWantLearn{
-        border-color: #B74747;
-    }
-    .default{
-        border-color: inherit;
-    }
     .router-buttons-container{
         display: flex;   
         padding-top: 30px;
@@ -261,7 +255,6 @@ export default {
     .generation-container{
         display: flex;
         justify-content: center;
-        padding-top: 40px;
     }
     .word-table {
         /* width: 70%; */
@@ -317,4 +310,13 @@ export default {
         align-items: center;
         justify-content: center;
     }
-</style>
+    .wantLearn{
+        background-color: #71c686;
+    }
+    .dontWantLearn{
+        background-color: #B74747;
+    }
+    .default{
+        background-color: inherit;
+    }
+    </style>
