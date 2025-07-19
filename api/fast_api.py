@@ -29,7 +29,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-correct_rows = []
 
 @app.get("/")
 def root():
@@ -219,7 +218,6 @@ def csv_generation(unknown_words, known_words, count, context_sentences):
 
     return local_correct_rows
 
-
 @app.post("/wordlist/post", response_model=WordListRequest)
 async def post_text(payload: WordListRequest):
     unknown_words = payload.unknown_words
@@ -248,6 +246,7 @@ async def post_text(payload: WordListRequest):
         con.commit()
         ids += 1
     con.close()
+    global correct_rows
     correct_rows = csv_generation(unknown_words, known_words, count, context_sentences)
     return write_cards_to_csv(correct_rows)
 
