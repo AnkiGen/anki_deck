@@ -12,11 +12,16 @@ from io import StringIO
 import csv
 import spacy
 from models import *
+from database_preparation import prepare_db
 
 app = FastAPI()
 basedir = os.path.abspath(os.path.dirname(__file__))
 data_file = os.path.join(basedir, 'anki_deck.db')
 
+if os.path.exists('anki_deck.db'):
+    pass
+else:
+    prepare_db()
 
 app.add_middleware(
     CORSMiddleware,

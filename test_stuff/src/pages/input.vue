@@ -44,29 +44,30 @@ export default {
             const endSentenctRegexp = /[!?\.]+/;
             let sentenceIndex = 0;
             let prevWord = "";
-            let words = text.split(/(\s+|\n)/)
-                .map((word) => {
-                    let currentIndex = sentenceIndex;
-                    let endOfSentance = endSentenctRegexp.exec(word);
-                    if (endOfSentance != null) {
-                        sentenceIndex++;
-                    }
-                    if (word == "\n" && endSentenctRegexp.exec(prevWord) == null) {
-                        sentenceIndex++;
-                    }
-                    let newWord = regex.exec(word);
-                    prevWord = word
-                    if (newWord != null) {
-                        return {
-                            word: newWord[0],
-                            sentenceIndex: currentIndex,
-                            class: "default"
-                        }
-                    } else {
-                        return {word: ''};
-                    }
-                })
-                .filter((word) =>  word.word.length > 2);
+            let words = this.splitWords(text);
+            // let words = text.split(/(\s+|\n)/)
+            //     .map((word) => {
+            //         let currentIndex = sentenceIndex;
+            //         let endOfSentance = endSentenctRegexp.exec(word);
+            //         if (endOfSentance != null) {
+            //             sentenceIndex++;
+            //         }
+            //         if (word == "\n" && endSentenctRegexp.exec(prevWord) == null) {
+            //             sentenceIndex++;
+            //         }
+            //         let newWord = regex.exec(word);
+            //         prevWord = word
+            //         if (newWord != null) {
+            //             return {
+            //                 word: newWord[0],
+            //                 sentenceIndex: currentIndex,
+            //                 class: "default"
+            //             }
+            //         } else {
+            //             return {word: ''};
+            //         }
+            //     })
+            //     .filter((word) =>  word.word.length > 2);
             words = this.toSet(words);
             const wordCount = words.length;
             let sentences = text.split(/[\.!?\n]+/)
@@ -130,33 +131,34 @@ export default {
             div.innerHTML = "Proccessing...";
         },
         goToFilter() {
-            const regex = /[a-zA-Z'`’-]+/;
-            const endSentenctRegexp = /[!?\.]+/;
-            let sentenceIndex = 0;
-            let prevWord = "";
-            let words = this.userText.split(/(\s+|\n)/)
-                                        .map((word) => {
-                                            let currentIndex = sentenceIndex;
-                                            let endOfSentance = endSentenctRegexp.exec(word);
-                                            if (endOfSentance != null) {
-                                                sentenceIndex++;
-                                            }
-                                            if (word == "\n" && endSentenctRegexp.exec(prevWord) == null) {
-                                                sentenceIndex++;
-                                            }
-                                            let newWord = regex.exec(word);
-                                            prevWord = word
-                                            if (newWord != null) {
-                                                return {
-                                                    word: newWord[0],
-                                                    sentenceIndex: currentIndex,
-                                                    class: "default"
-                                                    }
-                                            } else {
-                                                return {word: ''};
-                                            }
-                                        })
-                                        .filter((word) =>  word.word.length > 2);
+            // const regex = /[a-zA-Z'`’-]+/;
+            // const endSentenctRegexp = /[!?\.]+/;
+            // let sentenceIndex = 0;
+            // let prevWord = "";
+            let words = this.splitWords(this.userText);
+            // let words = this.userText.split(/(\s+|\n)/)
+            //                             .map((word) => {
+            //                                 let currentIndex = sentenceIndex;
+            //                                 let endOfSentance = endSentenctRegexp.exec(word);
+            //                                 if (endOfSentance != null) {
+            //                                     sentenceIndex++;
+            //                                 }
+            //                                 if (word == "\n" && endSentenctRegexp.exec(prevWord) == null) {
+            //                                     sentenceIndex++;
+            //                                 }
+            //                                 let newWord = regex.exec(word);
+            //                                 prevWord = word
+            //                                 if (newWord != null) {
+            //                                     return {
+            //                                         word: newWord[0],
+            //                                         sentenceIndex: currentIndex,
+            //                                         class: "default"
+            //                                         }
+            //                                 } else {
+            //                                     return {word: ''};
+            //                                 }
+            //                             })
+            //                             .filter((word) =>  word.word.length > 2);
             words = this.toSet(words);
             const wordCount = words.length;
             let sentences = this.userText.split(/[\n]+/)
@@ -195,6 +197,42 @@ export default {
                 map.set(word.word, 0);
             }
             return newArr;
+        },
+        async splitWords(words) {
+            const regex = /[a-zA-Z'`’-]+/;
+            const endSentenctRegexp = /[!?\.]+/;
+            let sentenceIndex = 0;
+            let prevWord = "";
+            return words.split(/(\s+|\n)/)
+                                        .map((word) => {
+                                            let currentIndex = sentenceIndex;
+                                            let endOfSentance = endSentenctRegexp.exec(word);
+                                            if (endOfSentance != null) {
+                                                sentenceIndex++;
+                                            }
+                                            if (word == "\n" && endSentenctRegexp.exec(prevWord) == null) {
+                                                sentenceIndex++;
+                                            }
+                                            let newWord = regex.exec(word);
+                                            prevWord = word
+                                            if (newWord != null) {
+                                                const response = await fetch("http://127.0.0.1:8000//word/get_by_word", {
+                                                    method: "GET",
+                                                    heders: {
+                                                        
+                                                    }
+                                                    
+                                                });
+                                                return {
+                                                    word: newWord[0],
+                                                    sentenceIndex: currentIndex,
+                                                    class: "default"
+                                                    }
+                                            } else {
+                                                return {word: ''};
+                                            }
+                                        })
+                                        .filter((word) =>  word.word.length > 2);
         }
     },
     watch: {
