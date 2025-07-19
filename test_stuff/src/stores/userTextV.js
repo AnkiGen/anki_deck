@@ -8,9 +8,9 @@ export const useUserTextStoreV = defineStore('userTextV', {
         words: [],  // to choose from in tinder and etc
         yesLearn: [], // want to learn
         noLearn: [], // dont want to learn
-        count: 0, // max amount of words in text
+        count: 0, // max amount of unknown words in sentence
         known: [], // list of already known words
-        unknown: 0, // max amount of unknown words in sentence
+        unknown: 0, // amount of words that user want to learn
         context: [], //source sentences from original text
         csvData: [], // final CSV data for the deck
     }),

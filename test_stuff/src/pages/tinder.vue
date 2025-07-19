@@ -20,6 +20,7 @@ export default {
                 context_sentences: []
             },
             skips: 0,
+            unknow: null
         }
     },
     computed: {
@@ -40,6 +41,7 @@ export default {
             this.countleft = this.words.length;
             this.countadded = 0;
             this.currentIndex = 0;
+            this.unknow = this.store.unknown;
             this.updateCurrentWord();
         },
         updateCurrentWord() {
@@ -144,7 +146,7 @@ export default {
             </div>
             <div v-if ="currentWord">
               <h2>Слов осталось: {{ countleft }}</h2>
-            <h2>Слов добавлено в деку: {{ countadded }}</h2>  
+            <h2>Слов добавлено в деку: {{ countadded }}/{{ unknow }}</h2>  
             </div>
             <div v-else>
                 <BaseButton class = "submit" @click="redirect">Начать генерацию</BaseButton>

@@ -29,6 +29,8 @@ export default {
             },
             contextSentences: null,
             expandedSentences: [],
+            countadded: 0,
+            unknown: 0
         }
     },
     components: {
@@ -41,6 +43,14 @@ export default {
             let classNum = classes.indexOf(word.class);
             let nextClass = classes[(classNum+1)%3];
             word.class = nextClass;
+            switch(nextClass) {
+                case "dontWantLearn": 
+                    this.countadded--;
+                    break;
+                case "wantLearn":
+                    this.countadded++;
+                    break;
+            }
         },
         toggleSentence(index) {
             if (this.expandedSentences.length === 0) {
@@ -84,6 +94,7 @@ export default {
         this.contextSentences = useUserTextStoreV().context;
         // this.$nextTick(() => this.updateSizes());
         this.expandedSentences = new Array(this.wordList.length).fill(false);
+        this.unknown = useUserTextStoreV().unknown;
     },
 }
 </script>
@@ -132,6 +143,7 @@ export default {
             </tbody>
         </table>
     </div>
+    <h2 style="text-align: center; font-weight: 200;">Слов добавлено в деку: {{ countadded }}/{{ unknown }}</h2>  
     <div class="generation-container">
         <Basebutton class="start-generation" @click="startGen"> Начать генерацию </Basebutton> 
     </div>

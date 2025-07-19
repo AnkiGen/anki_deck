@@ -19,11 +19,14 @@ export default {
                 count: useUserTextStoreV().count,
                 context_sentences: []
             },
-            sentences: []
+            sentences: [],
+            countadded: 0,
+            unknown: 0
         }
     },
     mounted() {
         this.textStore = useUserTextStore();
+        this.unknown = useUserTextStoreV().unknown;
         //after rendering get data from store
         this.text = this.textStore.text;
         console.log(this.text);
@@ -85,6 +88,14 @@ export default {
             let classes = ["default", "wantLearn", "neverLearn"];
             let current = classes.indexOf(word.class);
             let next = classes[(current+1)%3];
+            switch(next) {
+                case "neverLearn": 
+                    this.countadded--;
+                    break;
+                case "wantLearn":
+                    this.countadded++;
+                    break;
+            }
             word.class = next;
         },
         startGeneration() {
@@ -137,6 +148,7 @@ export default {
             <span>{{word.extrChars[1]}}</span>
             </span>
         </div>
+        <h2 style="font-weight: 200;">Слов добавлено в деку: {{ countadded }}/{{ unknown }}</h2> 
         <div class="button-container">
             <Basebutton class="start-generation" @click="startGeneration()">Начать генерацию</Basebutton>
         </div>
