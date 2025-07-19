@@ -15,6 +15,10 @@ from io import StringIO
 import csv
 import spacy
 from models import *
+import pandas as pd
+from fastapi import FastAPI, File, UploadFile
+from fastapi.responses import FileResponse
+import uuid
 
 app = FastAPI()
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -35,6 +39,40 @@ correct_rows = []
 def root():
     return {"message": "FastAPI is working!"}
 
+UPLOAD_DIR = "uploads"
+PROCESSED_DIR = "processed"
+os.makedirs(UPLOAD_DIR, exist_ok=True)
+os.makedirs(PROCESSED_DIR, exist_ok=True)
+
+@app.post("/upload/")
+async def upload_csv(file: UploadFile = File(...)):
+    if not file.filename.endswith(".csv"):
+        return {"error": "Только CSV файлы поддерживаются."}
+
+    unique_filename = f"{uuid.uuid4()}.csv"
+    upload_path = os.path.join(UPLOAD_DIR, unique_filename)
+
+    # Сохраняем файл
+    with open(upload_path, "wb") as f:
+        content = await file.read()
+        f.write(content)
+
+    # Обработка CSV (пример: просто добавим новую колонку)
+    df = pd.read_csv(upload_path)
+    df["Processed"] = "✅"
+
+    processed_path = os.path.join(PROCESSED_DIR, unique_filename)
+    df.to_csv(processed_path, index=False)
+
+    return {"message": "Файл обработан", "download_url": f"/download/{unique_filename}"}
+
+
+@app.get("/download/{filename}")
+async def download_file(filename: str):
+    file_path = os.path.join(PROCESSED_DIR, filename)
+    if not os.path.exists(file_path):
+        return {"error": "Файл не найден."}
+    return FileResponse(path=file_path, filename=filename, media_type='text/csv')
 
 @app.get("/user/get")
 async def get_user(login: str):
