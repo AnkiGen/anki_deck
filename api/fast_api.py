@@ -264,7 +264,7 @@ async def regenerate_patch(payload: RegenerationPatchRequest):
     rows = list(reader)
 
     words_to_generate = payload.marked_words.copy()
-    correct_rows = []
+    correct_ros = []
 
     while words_to_generate:
         response_text = request_sentences(words_to_generate, payload.known_words, payload.count, payload.context_sentences)
@@ -273,7 +273,7 @@ async def regenerate_patch(payload: RegenerationPatchRequest):
 
         for row in generated:
             if is_word_in_generated_sentences(row["word"], [row["sentence1"]]):
-                correct_rows.append(row)
+                correct_ros.append(row)
             else:
                 still_incorrect.append(row["word"])
 
@@ -281,7 +281,7 @@ async def regenerate_patch(payload: RegenerationPatchRequest):
 
     replacements = {}
     nlp = spacy.load("en_core_web_sm")
-    for row in correct_rows:
+    for row in correct_ros:
         replacements[row["word"]] = {
             "word": row["word"],
             "lemma": nlp(row["word"])[0].lemma_,
@@ -298,7 +298,8 @@ async def regenerate_patch(payload: RegenerationPatchRequest):
             updated_rows.append(replacements[word])
         else:
             updated_rows.append(row)
-
+    global correct_rows
+    correct_rows = updated_rows
     output = StringIO(newline="")
     writer = csv.DictWriter(output, fieldnames=["word","lemma","context_sentence","word_translation","sentence1","sentence1_translation"], delimiter=";")
     writer.writeheader()
