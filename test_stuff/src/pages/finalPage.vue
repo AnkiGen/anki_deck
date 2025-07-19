@@ -59,7 +59,31 @@ export default {
         },
         goToWelcome() {
             this.$router.push({ name: 'Welcom' });
+        },
+        async downloadApkg() {
+        const response = await fetch('http://127.0.0.1:8000/generate-cards-apkg/', {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error('Ошибка при генерации карточек');
         }
+
+        // Создаем ссылку для скачивания
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'cards.apkg';  // Имя файла
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+        }
+
     }
 }
 </script>
@@ -72,6 +96,12 @@ export default {
                 <div class="inner-button-flex">
                     <arrowSVG class="arrow-icon"/>
                     <span>Скачать в формате .csv</span>
+                </div>
+            </Basebutton>
+            <Basebutton  v-if="isGetResp" class="button-csv" @click="downloadApkg()">
+                <div class="inner-button-flex">
+                    <arrowSVG class="arrow-icon"/>
+                    <span>Скачать в формате .apkg</span>
                 </div>
             </Basebutton>
             <div v-else style="font-size: 50px;">Генерация...</div>
