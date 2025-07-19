@@ -1,16 +1,11 @@
-import uvicorn
-from fastapi import FastAPI, Query,Request
-from fastapi.responses import JSONResponse, PlainTextResponse
+from fastapi import FastAPI, Query
+from fastapi.responses import PlainTextResponse, JSONResponse
 from sqlite3 import connect
 from gpt import request_sentences, write_cards_to_csv, parse_response_to_dicts
-import os
-from starlette.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from decryptors import *
-from pydantic import BaseModel
-from typing import List
+from genius import *
 from Appearance import *
-import json
 from io import StringIO
 import csv
 import spacy
@@ -200,26 +195,6 @@ async def get_wordlist():
     return {"words": words}
 
 
-def csv_generation(unknown_words, known_words, count, context_sentences):
-    words_to_generate = unknown_words.copy()
-    local_correct_rows = []
-    
-    while words_to_generate:
-        response_text = request_sentences(words_to_generate, known_words, count, context_sentences)
-        rows = parse_response_to_dicts(response_text)
-        still_incorrect = []
-        for row in rows:
-            word = row["word"]
-            sentences = [row["sentence1"]]
-            if is_word_in_generated_sentences(word, sentences):
-                local_correct_rows.append(row)
-            else:
-                still_incorrect.append(word)
-        words_to_generate = still_incorrect
-
-    return local_correct_rows
-
-
 @app.post("/wordlist/post", response_model=WordListRequest)
 async def post_text(payload: WordListRequest):
     unknown_words = payload.unknown_words
@@ -248,7 +223,19 @@ async def post_text(payload: WordListRequest):
         con.commit()
         ids += 1
     con.close()
-    correct_rows = csv_generation(unknown_words, known_words, count, context_sentences)
+    words_to_generate = unknown_words.copy()
+    while words_to_generate:
+        response_text = request_sentences(words_to_generate, known_words, count, context_sentences)
+        rows = parse_response_to_dicts(response_text)
+        still_incorrect = []
+        for row in rows:
+            word = row["word"]
+            sentences = [row["sentence1"]]
+            if is_word_in_generated_sentences(word, sentences):
+                correct_rows.append(row)
+            else:
+                still_incorrect.append(word)
+        words_to_generate = still_incorrect
     return write_cards_to_csv(correct_rows)
 
 
@@ -314,10 +301,7 @@ async def generate_cards_apkg():
     apkg_bytes = write_cards_to_apkg(rows)
     return apkg_bytes
 
-#@app.post("/fetch-music/post", response_model=GeniusRequest)
-#async def fetch_music(payload: GeniusRequest):
-#    artist, song = payload.artist_song.split(' - ')
-#    return JSONResponse({"lyrics": get_genius_text(artist, song)})
-
-#if __name__ == "__main__":
-#    uvicorn.run(app, host="127.0.0.1", port=8000)
+@app.post("/fetch-music/post", response_model=GeniusRequest)
+async def fetch_music(payload: GeniusRequest):
+    artist, song = payload.query.split(' - ')
+    return PlainTextResponse(get_genius_text(artist, song))

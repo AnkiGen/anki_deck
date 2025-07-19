@@ -10,9 +10,6 @@ services:
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - GENIUS_ACCESS_TOKEN=${GENIUS_ACCESS_TOKEN}
       - HTTP_PROXY=user235092:ws16r4@176.101.58.200:2095
-      - HTTPS_PROXY=user235092:ws16r4@176.101.58.200:2095
-      - http_proxy=user235092:ws16r4@176.101.58.200:2095
-      - https_proxy=user235092:ws16r4@176.101.58.200:2095
 
   frontend:
     build:

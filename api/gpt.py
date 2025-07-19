@@ -1,4 +1,5 @@
-from openai import OpenAI, Timeout
+import openai
+from openai import OpenAI
 import io
 import spacy
 from fastapi.responses import PlainTextResponse
@@ -59,8 +60,9 @@ def request_sentences(unknown_words,known_words,count,context_sentences):#add ar
                 temperature=0.7
             )
             return completion.choices[0].message.content
-        except Timeout:
+        except openai.APITimeoutError as e:
              sleep(5)
+
 
 def parse_response_to_dicts(response_text):
     rows = []
@@ -150,7 +152,6 @@ def write_cards_to_apkg(response_text, deck_name="name"):
         )
         deck.add_note(note)
 
-    # Write media files to temp dir and collect paths
     with tempfile.TemporaryDirectory() as tmpdir:
         media_paths = []
         for fname, fbytes in media_files:
