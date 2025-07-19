@@ -30,7 +30,7 @@ export default {
         async fetchMusicAndDownload() {
             if (!this.userText2) return;
             const params = { query: this.userText2 };
-            const response = await fetch("http://127.0.0.1:8000/fetch-music/post", {
+            const response = await fetch("http://85.209.195.11:8000/fetch-music/post", {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
@@ -90,7 +90,7 @@ export default {
                 count:6,
                 context_sentences: ["I will never give up", "He will survive", "This mount is too high to climb"],
             };
-            const response = await fetch("http://127.0.0.1:8000/wordlist/post", {
+            const response = await fetch("http://85.209.195.11:8000/wordlist/post", {
                 method: "POST",
                 headers: {
                     'Content-Type' : 'application/json'

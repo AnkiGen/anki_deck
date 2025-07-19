@@ -88,7 +88,7 @@ export default {
                 this.isLoading = true;
                 const apiData = this.apiStore.data;
                 console.log('start')
-                const response = await fetch("http://127.0.0.1:8000/wordlist/post", {
+                const response = await fetch("http://85.209.195.11:8000/wordlist/post", {
                     method: "POST",
                     headers: {
                         'Content-Type': 'application/json'
@@ -173,7 +173,7 @@ export default {
             try {
                 this.isLoading = true;
 
-                const response = await fetch("http://127.0.0.1:8000/regenerate_patch", {
+                const response = await fetch("http://85.209.195.11:8000/regenerate_patch", {
                     method: "POST",
                     headers: {
                         'Content-Type': 'application/json'
