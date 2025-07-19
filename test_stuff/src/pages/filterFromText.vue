@@ -19,11 +19,14 @@ export default {
                 count: useUserTextStoreV().count,
                 context_sentences: []
             },
-            sentences: []
+            sentences: [],
+            countadded: 0,
+            unknown: 0
         }
     },
     mounted() {
         this.textStore = useUserTextStore();
+        this.unknown = useUserTextStoreV().unknown;
         //after rendering get data from store
         this.text = this.textStore.text;
         console.log(this.text);
@@ -85,6 +88,14 @@ export default {
             let classes = ["default", "wantLearn", "neverLearn"];
             let current = classes.indexOf(word.class);
             let next = classes[(current+1)%3];
+            switch(next) {
+                case "neverLearn": 
+                    this.countadded--;
+                    break;
+                case "wantLearn":
+                    this.countadded++;
+                    break;
+            }
             word.class = next;
         },
         startGeneration() {
@@ -106,12 +117,18 @@ export default {
             
             // Redirect to review page instead of final page
             router.push({name: "Review"});
-        }
+        },
+        goBack() {
+            router.push({name: 'Input'});
+        },
     }
 }
 </script>
 
 <template>
+    <header>
+        <h2 @click="goBack"><-- Вернуться назад</h2>
+    </header>
     <div class="main-container">
         <h1>Выделение слов <span class="question-mark" @mouseover="isVisiable = true" @mouseleave="isVisiable = false">?
             <span v-if="isVisiable" class="user-hint">Кликни по слову чтобы задать ему статус:<br><span style="background-color: #71c686;">Зеленые:</span>
@@ -131,6 +148,7 @@ export default {
             <span>{{word.extrChars[1]}}</span>
             </span>
         </div>
+        <h2 style="font-weight: 200;">Слов добавлено в деку: {{ countadded }}/{{ unknown }}</h2> 
         <div class="button-container">
             <Basebutton class="start-generation" @click="startGeneration()">Начать генерацию</Basebutton>
         </div>
@@ -146,6 +164,17 @@ export default {
     }
     .neverLearn{
         background-color: #B74747;
+    }
+    header h2 {
+        font-size: 15px;
+        font-weight: 100;
+        font-family: "Roboto", sans-serif;
+    }
+    header h2:hover {
+        cursor: pointer;
+        text-decoration: underline;
+        text-decoration-color: #fff;
+        text-underline-offset: 4px;
     }
     .main-container{
         display: flex;

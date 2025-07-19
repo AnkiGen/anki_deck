@@ -65,8 +65,7 @@ export default {
             router.push({name: "FinalPage"})
         },
         goBack() {
-            this.textStore.startAgain();
-            router.push({name: "Tinder"})
+            router.go(-1);
         },
         nextPage() {
             if (this.currentPage < this.totalPages) this.currentPage++;
