@@ -1,6 +1,6 @@
 import uvicorn
 from fastapi import FastAPI, Query,Request
-from fastapi.responses import JSONResponse, PlainTextResponse
+from fastapi.responses import JSONResponse, PlainTextResponse, StreamingResponse
 from sqlite3 import connect
 from gpt import request_sentences, write_cards_to_csv, parse_response_to_dicts
 import os
@@ -19,6 +19,8 @@ import pandas as pd
 from fastapi import FastAPI, File, UploadFile
 from fastapi.responses import FileResponse
 import uuid
+import zipfile
+import io
 
 app = FastAPI()
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -73,6 +75,19 @@ async def download_file(filename: str):
     if not os.path.exists(file_path):
         return {"error": "Файл не найден."}
     return FileResponse(path=file_path, filename=filename, media_type='text/csv')
+
+@app.get("/download/all-processed")
+async def download_all_processed():
+    memory_file = io.BytesIO()
+    with zipfile.ZipFile(memory_file, 'w') as zf:
+        for filename in os.listdir(PROCESSED_DIR):
+            file_path = os.path.join(PROCESSED_DIR, filename)
+            if os.path.isfile(file_path):
+                zf.write(file_path, arcname=filename)
+    memory_file.seek(0)
+    return StreamingResponse(memory_file, media_type='application/zip', headers={
+        "Content-Disposition": "attachment; filename=all_processed.zip"
+    })
 
 @app.get("/user/get")
 async def get_user(login: str):
