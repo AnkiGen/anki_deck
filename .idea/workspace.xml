@@ -5,12 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="222a644d-2c41-450d-9c06-d2446119ffae" name="Changes" comment="Merge branch 'gen-api' of https://github.com/AnkiGen/anki_deck into gen-api&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;api/anki_deck.db">
-      <change beforePath="$PROJECT_DIR$/.github/workflows/main.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/main.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/anki_deck.db" beforeDir="false" afterPath="$PROJECT_DIR$/api/anki_deck.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/fast_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/fast_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database_preparation.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/database_preparation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/anki_deck.db" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -202,6 +198,6 @@
     <SUITE FILE_PATH="coverage/anki_deck$fast_api.coverage" NAME="fast_api Coverage Results" MODIFIED="1752925262275" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/api" />
     <SUITE FILE_PATH="coverage/anki_deck$genius.coverage" NAME="genius Coverage Results" MODIFIED="1752715701010" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/api" />
     <SUITE FILE_PATH="coverage/anki_deck$main.coverage" NAME="main Coverage Results" MODIFIED="1750505285064" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/anki_deck$.coverage" NAME=" Coverage Results" MODIFIED="1752940546998" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/api" />
+    <SUITE FILE_PATH="coverage/anki_deck$.coverage" NAME=" Coverage Results" MODIFIED="1752941228886" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/api" />
   </component>
 </project>
