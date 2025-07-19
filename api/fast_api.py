@@ -28,7 +28,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-correct_rows = []
 
 @app.get("/")
 def root():
@@ -199,6 +198,25 @@ async def get_wordlist():
     return {"words": words}
 
 
+def csv_generation(unknown_words, known_words, count, context_sentences):
+    words_to_generate = unknown_words.copy()
+    local_correct_rows = []
+    
+    while words_to_generate:
+        response_text = request_sentences(words_to_generate, known_words, count, context_sentences)
+        rows = parse_response_to_dicts(response_text)
+        still_incorrect = []
+        for row in rows:
+            word = row["word"]
+            sentences = [row["sentence1"]]
+            if is_word_in_generated_sentences(word, sentences):
+                local_correct_rows.append(row)
+            else:
+                still_incorrect.append(word)
+        words_to_generate = still_incorrect
+
+    return local_correct_rows
+
 @app.post("/wordlist/post", response_model=WordListRequest)
 async def post_text(payload: WordListRequest):
     unknown_words = payload.unknown_words
@@ -227,19 +245,8 @@ async def post_text(payload: WordListRequest):
         con.commit()
         ids += 1
     con.close()
-    words_to_generate = unknown_words.copy()
-    while words_to_generate:
-        response_text = request_sentences(words_to_generate, known_words, count, context_sentences)
-        rows = parse_response_to_dicts(response_text)
-        still_incorrect = []
-        for row in rows:
-            word = row["word"]
-            sentences = [row["sentence1"]]
-            if is_word_in_generated_sentences(word, sentences):
-                correct_rows.append(row)
-            else:
-                still_incorrect.append(word)
-        words_to_generate = still_incorrect
+    global correct_rows
+    correct_rows = csv_generation(unknown_words, known_words, count, context_sentences)
     return write_cards_to_csv(correct_rows)
 
 
@@ -256,7 +263,7 @@ async def regenerate_patch(payload: RegenerationPatchRequest):
     rows = list(reader)
 
     words_to_generate = payload.marked_words.copy()
-    correct_rows = []
+    correct_ros = []
 
     while words_to_generate:
         response_text = request_sentences(words_to_generate, payload.known_words, payload.count, payload.context_sentences)
@@ -265,7 +272,7 @@ async def regenerate_patch(payload: RegenerationPatchRequest):
 
         for row in generated:
             if is_word_in_generated_sentences(row["word"], [row["sentence1"]]):
-                correct_rows.append(row)
+                correct_ros.append(row)
             else:
                 still_incorrect.append(row["word"])
 
@@ -273,7 +280,7 @@ async def regenerate_patch(payload: RegenerationPatchRequest):
 
     replacements = {}
     nlp = spacy.load("en_core_web_sm")
-    for row in correct_rows:
+    for row in correct_ros:
         replacements[row["word"]] = {
             "word": row["word"],
             "lemma": nlp(row["word"])[0].lemma_,
@@ -290,7 +297,8 @@ async def regenerate_patch(payload: RegenerationPatchRequest):
             updated_rows.append(replacements[word])
         else:
             updated_rows.append(row)
-
+    global correct_rows
+    correct_rows = updated_rows
     output = StringIO(newline="")
     writer = csv.DictWriter(output, fieldnames=["word","lemma","context_sentence","word_translation","sentence1","sentence1_translation"], delimiter=";")
     writer.writeheader()
