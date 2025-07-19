@@ -48,8 +48,3 @@ jobs:
         run: |
           coverage run -m pytest api/integration_tests.py
           coverage xml -o coverage.xml
-
-      - name: Database preparation
-        run: |
-          coverage run -m python database_preparation.py
-          coverage xml -o coverage.xml

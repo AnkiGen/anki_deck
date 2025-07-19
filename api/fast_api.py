@@ -1,8 +1,5 @@
-
-import uvicorn
-from fastapi import FastAPI, Query,Request, Response
-from fastapi.responses import JSONResponse, PlainTextResponse
-from sqlite3 import connect
+from fastapi import FastAPI, Query, Response
+from fastapi.responses import PlainTextResponse
 from gpt import request_sentences, write_cards_to_csv, parse_response_to_dicts
 from fastapi.middleware.cors import CORSMiddleware
 from decryptors import *
@@ -12,7 +9,12 @@ from io import StringIO
 import csv
 import spacy
 from models import *
+from database_preparation import *
 
+if os.path.exists('anki_deck.db'):
+    pass
+else:
+    prepare_db()
 app = FastAPI()
 basedir = os.path.abspath(os.path.dirname(__file__))
 data_file = os.path.join(basedir, 'anki_deck.db')
