@@ -1,5 +1,7 @@
-from fastapi import FastAPI, Query
-from fastapi.responses import PlainTextResponse, JSONResponse
+
+import uvicorn
+from fastapi import FastAPI, Query,Request, Response
+from fastapi.responses import JSONResponse, PlainTextResponse
 from sqlite3 import connect
 from gpt import request_sentences, write_cards_to_csv, parse_response_to_dicts
 from fastapi.middleware.cors import CORSMiddleware
@@ -299,7 +301,11 @@ async def generate_cards_apkg():
     rows = correct_rows
     from gpt import write_cards_to_apkg
     apkg_bytes = write_cards_to_apkg(rows)
-    return apkg_bytes
+    return Response(
+        content=apkg_bytes,
+        media_type="application/octet-stream",
+        headers={"Content-Disposition": "attachment; filename=cards.apkg"}
+    )
 
 @app.post("/fetch-music/post", response_model=GeniusRequest)
 async def fetch_music(payload: GeniusRequest):

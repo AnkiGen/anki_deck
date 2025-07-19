@@ -7,6 +7,10 @@ from time import sleep
 load_dotenv()
 access_token = os.getenv("GENIUS_ACCESS_TOKEN")
 genius = Genius(access_token)
+genius._session.proxies = {
+    'http': os.getenv('HTTP_PROXY'),
+    'https': os.getenv('HTTPS_PROXY')
+}
 genius.remove_section_headers = True
 genius.skip_non_songs = True
 genius.excluded_terms = ["(Remix)", "(Live)"]
