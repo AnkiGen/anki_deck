@@ -1,25 +1,27 @@
+
 import uvicorn
 from fastapi import FastAPI, Query,Request, Response
 from fastapi.responses import JSONResponse, PlainTextResponse
 from sqlite3 import connect
 from gpt import request_sentences, write_cards_to_csv, parse_response_to_dicts
-import os
-from starlette.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from decryptors import *
-from pydantic import BaseModel
-from typing import List
+from genius import *
 from Appearance import *
-import json
 from io import StringIO
 import csv
 import spacy
 from models import *
+from database_preparation import prepare_db
 
 app = FastAPI()
 basedir = os.path.abspath(os.path.dirname(__file__))
 data_file = os.path.join(basedir, 'anki_deck.db')
 
+if os.path.exists('anki_deck.db'):
+    pass
+else:
+    prepare_db()
 
 app.add_middleware(
     CORSMiddleware,
@@ -318,10 +320,7 @@ async def generate_cards_apkg():
         headers={"Content-Disposition": "attachment; filename=cards.apkg"}
     )
 
-#@app.post("/fetch-music/post", response_model=GeniusRequest)
-#async def fetch_music(payload: GeniusRequest):
-#    artist, song = payload.artist_song.split(' - ')
-#    return JSONResponse({"lyrics": get_genius_text(artist, song)})
-
-#if __name__ == "__main__":
-#    uvicorn.run(app, host="127.0.0.1", port=8000)
+@app.post("/fetch-music/post", response_model=GeniusRequest)
+async def fetch_music(payload: GeniusRequest):
+    artist, song = payload.query.split(' - ')
+    return PlainTextResponse(get_genius_text(artist, song))

@@ -16,4 +16,4 @@ class WordListRegeneration(BaseModel):
 
 
 class GeniusRequest(BaseModel):
-    artist_song: str
+    query: str
