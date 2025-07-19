@@ -50,17 +50,13 @@ Please follow this format strictly.
 
 def request_sentences(unknown_words,known_words,count,context_sentences):#add arguements
     while True:
-        try:
-            prompt = generate_prompt(unknown_words,known_words,count, context_sentences)# add arguements
-
-            completion = client.chat.completions.create(
-                model="gpt-4o-mini",  # Или "gpt-4o-mini", если хочешь
-                messages=[{"role": "user", "content": prompt}],
-                temperature=0.7
-            )
-            return completion.choices[0].message.content
-        except Timeout:
-             sleep(5)
+        prompt = generate_prompt(unknown_words,known_words,count, context_sentences)# add arguements
+        completion = client.chat.completions.create(
+            model="gpt-4o-mini",  # Или "gpt-4o-mini", если хочешь
+            messages=[{"role": "user", "content": prompt}],
+            temperature=0.7
+        )
+        return completion.choices[0].message.content
 
 def parse_response_to_dicts(response_text):
     rows = []
