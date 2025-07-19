@@ -15,16 +15,18 @@ from io import StringIO
 import csv
 import spacy
 from models import *
-import pandas as pd
 from fastapi import FastAPI, File, UploadFile
 from fastapi.responses import FileResponse
-import uuid
-import zipfile
-import io
 
 app = FastAPI()
 basedir = os.path.abspath(os.path.dirname(__file__))
 data_file = os.path.join(basedir, 'anki_deck.db')
+
+UPLOAD_DIR = "/uploaded_files"
+os.makedirs(UPLOAD_DIR, exist_ok=True)
+
+PROCESSED_DIR = "/processed"
+os.makedirs(PROCESSED_DIR, exist_ok=True)
 
 
 app.add_middleware(
@@ -41,53 +43,6 @@ correct_rows = []
 def root():
     return {"message": "FastAPI is working!"}
 
-UPLOAD_DIR = "uploads"
-PROCESSED_DIR = "processed"
-os.makedirs(UPLOAD_DIR, exist_ok=True)
-os.makedirs(PROCESSED_DIR, exist_ok=True)
-
-@app.post("/upload/")
-async def upload_csv(file: UploadFile = File(...)):
-    if not file.filename.endswith(".csv"):
-        return {"error": "Только CSV файлы поддерживаются."}
-
-    unique_filename = f"{uuid.uuid4()}.csv"
-    upload_path = os.path.join(UPLOAD_DIR, unique_filename)
-
-    # Сохраняем файл
-    with open(upload_path, "wb") as f:
-        content = await file.read()
-        f.write(content)
-
-    # Обработка CSV (пример: просто добавим новую колонку)
-    df = pd.read_csv(upload_path)
-    df["Processed"] = "✅"
-
-    processed_path = os.path.join(PROCESSED_DIR, unique_filename)
-    df.to_csv(processed_path, index=False)
-
-    return {"message": "Файл обработан", "download_url": f"/download/{unique_filename}"}
-
-
-@app.get("/download/{filename}")
-async def download_file(filename: str):
-    file_path = os.path.join(PROCESSED_DIR, filename)
-    if not os.path.exists(file_path):
-        return {"error": "Файл не найден."}
-    return FileResponse(path=file_path, filename=filename, media_type='text/csv')
-
-@app.get("/download/all-processed")
-async def download_all_processed():
-    memory_file = io.BytesIO()
-    with zipfile.ZipFile(memory_file, 'w') as zf:
-        for filename in os.listdir(PROCESSED_DIR):
-            file_path = os.path.join(PROCESSED_DIR, filename)
-            if os.path.isfile(file_path):
-                zf.write(file_path, arcname=filename)
-    memory_file.seek(0)
-    return StreamingResponse(memory_file, media_type='application/zip', headers={
-        "Content-Disposition": "attachment; filename=all_processed.zip"
-    })
 
 @app.get("/user/get")
 async def get_user(login: str):
@@ -366,6 +321,25 @@ async def generate_cards_apkg():
     from gpt import write_cards_to_apkg
     apkg_bytes = write_cards_to_apkg(rows)
     return apkg_bytes
+
+@app.post("/upload")
+async def upload_csv(file: UploadFile = File(...)):
+    if not file.filename.endswith(".csv"):
+        return {"error": "Только CSV файлы поддерживаются."}
+
+    save_path = os.path.join(UPLOAD_DIR, file.filename)
+    with open(save_path, "wb") as f:
+        content = await file.read()
+        f.write(content)
+
+    return {"message": "Файл успешно загружен", "filename": file.filename}
+
+@app.get("/download/{filename}")
+async def download_file(filename: str):
+    file_path = os.path.join(PROCESSED_DIR, filename)
+    if not os.path.exists(file_path):
+        return {"error": "Файл не найден."}
+    return FileResponse(path=file_path, filename=filename, media_type='text/csv')
 
 #@app.post("/fetch-music/post", response_model=GeniusRequest)
 #async def fetch_music(payload: GeniusRequest):

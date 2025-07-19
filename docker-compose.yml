@@ -6,6 +6,8 @@ services:
       - "8000:8000"
     volumes:
       - ./api:/app
+      - ./uploaded_files:/uploaded_files
+      - ./processed:/processed
     environment:
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - GENIUS_ACCESS_TOKEN=${GENIUS_ACCESS_TOKEN}
