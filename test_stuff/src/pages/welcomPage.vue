@@ -64,7 +64,6 @@ export default {
 
 <template>
     <div class="welcome-page">
-        <h1>DANKO’s </h1>
         <h1>Anki Deck Generator</h1>
         <div class="mainContent">
             <div class="grid-cell">

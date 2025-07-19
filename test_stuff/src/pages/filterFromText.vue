@@ -106,12 +106,18 @@ export default {
             
             // Redirect to review page instead of final page
             router.push({name: "Review"});
-        }
+        },
+        goBack() {
+            router.push({name: 'Input'});
+        },
     }
 }
 </script>
 
 <template>
+    <header>
+        <h2 @click="goBack"><-- Вернуться назад</h2>
+    </header>
     <div class="main-container">
         <h1>Выделение слов <span class="question-mark" @mouseover="isVisiable = true" @mouseleave="isVisiable = false">?
             <span v-if="isVisiable" class="user-hint">Кликни по слову чтобы задать ему статус:<br><span style="background-color: #71c686;">Зеленые:</span>
@@ -146,6 +152,17 @@ export default {
     }
     .neverLearn{
         background-color: #B74747;
+    }
+    header h2 {
+        font-size: 15px;
+        font-weight: 100;
+        font-family: "Roboto", sans-serif;
+    }
+    header h2:hover {
+        cursor: pointer;
+        text-decoration: underline;
+        text-decoration-color: #fff;
+        text-underline-offset: 4px;
     }
     .main-container{
         display: flex;

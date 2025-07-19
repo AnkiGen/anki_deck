@@ -75,6 +75,9 @@ export default {
             // Redirect to review page instead of final page
             router.push({name: "Review"});
         },
+        goFilter() {
+            router.push({name: "Filter"});
+        }
     },
     mounted() {
         this.validateWords();
@@ -86,13 +89,17 @@ export default {
 </script>
 
 <template>
-    <div class="main-container">
-        <h1>Выбор слов из текста
-            <span class="question-mark" @mouseover="isVisible=true" @mouseout="isVisible=false">?
-                <span v-if="isVisible" class="user-hint">Кликни по карточке со словом, чтобы задать ей статус:<br><span style="background-color: #71c686;">Зеленые карточки:</span>
-                неизвестные слова, которые ты хочешь учить<br>
-                <span style="background-color: #B74747;">Красные карточки:</span> слова, которые ты не хочешь учить</span>
-            </span>
+    <main>
+        <header>
+            <h2 @click="goFilter"><-- Вернуться к фильтрам</h2>
+        </header>
+        <div class="main-container">
+            <h1>Выбор слов из текста
+                <span class="question-mark" @mouseover="isVisible=true" @mouseout="isVisible=false">?
+                    <span v-if="isVisible" class="user-hint">Кликни по карточке со словом, чтобы задать ей статус:<br><span style="background-color: #71c686;">Зеленые карточки:</span>
+                    неизвестные слова, которые ты хочешь учить<br>
+                    <span style="background-color: #B74747;">Красные карточки:</span> слова, которые ты не хочешь учить</span>
+                </span>
         </h1>
     </div> 
     <div class="table-container">
@@ -129,14 +136,28 @@ export default {
         <Basebutton class="start-generation" @click="startGen"> Начать генерацию </Basebutton> 
     </div>
     
+</main>
 </template>
 
 <style scoped>
+    main {
+        font-family: "Roboto", sans-serif;
+    }
     .main-container{
         display: flex;
         flex-direction: column;
         align-items: center;
         /* height: 100%; */
+    }
+    header h2 {
+        font-size: 15px;
+        font-weight: 100;
+    }
+    header h2:hover {
+        cursor: pointer;
+        text-decoration: underline;
+        text-decoration-color: #fff;
+        text-underline-offset: 4px;
     }
     h1{
         flex: 0 0 auto;

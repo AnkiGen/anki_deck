@@ -8,8 +8,8 @@ import { useUserTextStore } from '@/stores/userText';
 export default {
     data() {
         return {
-            maxword: 90,
-            lenword: 90,
+            maxword: 10,
+            lenword: 20,
             choice: 0 // 0 - tinder, 1 - manually, 2 - word list
         }
     },
@@ -60,27 +60,10 @@ export default {
             <div class = "max-words">
                 <h2 id = "header">Количество слов для изучения</h2>
                 <div class = "slider-container">
-                    <input type="range" min = "1" max = "180" v-model = "maxword" value = "90" class = "slider" @input="progressScript">
+                    <input type="range" min = "3" max = "180" v-model = "lenword" value = "20" class = "slider" @input="progressScript">
                     <div class = "number-list">
                         <div class = "col">
-                            1
-                        </div>
-                        <div class = "col">
-                            {{ maxword }}
-                        </div>
-                        <div class = "col">
-                            180
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class = "max-words">
-                <h2 id = "header">Кол-во слов в сгенерированных предложениях</h2>
-                <div class = "slider-container">
-                    <input type="range" min = "5" max = "180" v-model = "lenword" value = "90" class = "slider" @input="progressScript">
-                    <div class = "number-list">
-                        <div class = "col">
-                            5
+                            3
                         </div>
                         <div class = "col">
                             {{ lenword }}
@@ -91,8 +74,25 @@ export default {
                     </div>
                 </div>
             </div>
+            <div class = "max-words">
+                <h2 id = "header">Кол-во слов в сгенерированных предложениях</h2>
+                <div class = "slider-container">
+                    <input type="range" min = "5" max = "20" v-model = "maxword" value = "10" class = "slider" @input="progressScript">
+                    <div class = "number-list">
+                        <div class = "col">
+                            5
+                        </div>
+                        <div class = "col">
+                            {{ maxword }}
+                        </div>
+                        <div class = "col">
+                            20
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class = "choose">
-                <h2 id = "header">Кол-во незнакомых слов</h2>
+                <h2 id = "header">Режим для выбора слов</h2>
                 <div class = "radio-container">
                     <label class="check" for="choice0">
                         <input type="radio" id="choice0" name="choice" value="0" v-model="choice">
@@ -117,6 +117,7 @@ export default {
     header h2 {
         font-size: 15px;
         font-weight: 100;
+        font-family: "Roboto", sans-serif;
     }
     header h2:hover {
         cursor: pointer;
