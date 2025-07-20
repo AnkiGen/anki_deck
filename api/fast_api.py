@@ -12,6 +12,11 @@ import spacy
 from models import *
 from database_preparation import *
 
+if os.path.exists('anki_deck.db'):
+    pass
+else:
+    prepare_db()
+
 app = FastAPI()
 basedir = os.path.abspath(os.path.dirname(__file__))
 data_file = os.path.join(basedir, 'anki_deck.db')
