@@ -32,7 +32,7 @@ app.add_middleware(
 
 correct_rows = []
 
-@app.get("/")
+@app.get("/api")
 def root():
     return {"message": "FastAPI is working!"}
 
