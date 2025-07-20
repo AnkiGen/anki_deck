@@ -9,11 +9,17 @@ class WordListRequest(BaseModel):
     context_sentences: List[str]
 
 
-class WordListRegeneration(BaseModel):
+class RegenerationPatchRequest(BaseModel):
+    csv_text: str
+    marked_words: List[str]
     known_words: List[str]
     count: int
-    currentStuff: Dict[int, Dict[str, str]]
+    context_sentences: List[str]
 
 
 class GeniusRequest(BaseModel):
-    artist_song: str
+    query: str
+
+
+class WordListGet(BaseModel):
+    wordlist: List[str]

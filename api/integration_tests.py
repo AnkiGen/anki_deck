@@ -1,5 +1,7 @@
 import pytest
 from fastapi.testclient import TestClient
+import os
+from api.database_preparation import prepare_db
 from api.fast_api import app
 
 client = TestClient(app)
@@ -11,6 +13,10 @@ def setup_and_teardown():
 
 
 def test_root():
+    #if os.path.exists('anki_deck.db'):
+    #    pass
+    #else:
+    #    prepare_db()
     response = client.get("/")
     assert response.status_code == 200
     assert response.json() == {"message": "FastAPI is working!"}
@@ -106,23 +112,19 @@ def test_post_word():
     assert response.json() == {"status": "ok"}
 
 
-#def test_fetch_music():
-#    payload = {
-#        "artist_song": "Eminem - Rap God"
-#    }
+def test_fetch_music():
+    payload = {
+        "query": "Eminem - Rap God"
+    }
 
-#    response = client.post("/fetch-music/post", json=payload)
+    response = client.post("/fetch-music/post", json=payload)
 
-#    assert response.status_code == 200
-
-#    response_json = response.json()
-#    assert "lyrics" in response_json
-#    assert isinstance(response_json["lyrics"], str)
+    assert response.status_code == 200
 
 
 def test_wordlist_regeneration_invalid_payload():
     payload = {
-        "known_words": ["слово1"],
+        "known_words": ["word1"],
         "currentStuff": {}
     }
     response = client.post("/regenerate_patch", json=payload)

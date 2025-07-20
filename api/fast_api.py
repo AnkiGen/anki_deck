@@ -1,20 +1,21 @@
-import uvicorn
-from fastapi import FastAPI, Query,Request, Response
-from fastapi.responses import JSONResponse, PlainTextResponse
-from sqlite3 import connect
+from fastapi import FastAPI, Query, Response
+from fastapi.responses import PlainTextResponse
 from gpt import request_sentences, write_cards_to_csv, parse_response_to_dicts
-import os
-from starlette.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from decryptors import *
-from pydantic import BaseModel
-from typing import List
+from sqlite3 import connect
+from genius import *
 from Appearance import *
-import json
 from io import StringIO
 import csv
 import spacy
 from models import *
+from database_preparation import *
+
+if os.path.exists('anki_deck.db'):
+    pass
+else:
+    prepare_db()
 
 app = FastAPI()
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -29,6 +30,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+correct_rows = []
 
 @app.get("/")
 def root():
@@ -185,38 +187,28 @@ async def post_word(word: str, context_sentence: str, user_id: int, mode: str):
     return {"status": 'ok'}
 
 
-@app.get("/wordlist/get")
-async def get_wordlist():
+@app.get("/wordlist/get", response_model=WordListGet)
+async def get_wordlist(payload: WordListGet):
     con = connect(data_file)
     cur = con.cursor()
-    ids = cur.execute("SELECT word_id FROM known_words").fetchall()
-    words = []
-    for word_id in ids:
-        word = cur.execute("SELECT word FROM words WHERE word_id = ?", (word_id[0],)).fetchall()
-        if word:
-            words.append(word[0])
+    words = payload.wordlist
+    ans = {}
+    for word in words:
+        word_id = cur.execute("SELECT word_id FROM words WHERE word = ?", (word,)).fetchone()
+        if word_id:
+            word_id = word_id[0]
+            known_id = cur.execute("SELECT word_id FROM known_words WHERE word_id = ?", (word_id,)).fetchone()
+            if known_id:
+                ans[word] = "known"
+
+            unknown_id = cur.execute("SELECT word_id FROM unknown_words WHERE word_id = ?", (word_id,)).fetchone()
+            if unknown_id:
+                ans[word] = "unknown"
+        else:
+            ans[word] = "none"
     con.close()
-    return {"words": words}
+    return ans
 
-
-def csv_generation(unknown_words, known_words, count, context_sentences):
-    words_to_generate = unknown_words.copy()
-    local_correct_rows = []
-    
-    while words_to_generate:
-        response_text = request_sentences(words_to_generate, known_words, count, context_sentences)
-        rows = parse_response_to_dicts(response_text)
-        still_incorrect = []
-        for row in rows:
-            word = row["word"]
-            sentences = [row["sentence1"]]
-            if is_word_in_generated_sentences(word, sentences):
-                local_correct_rows.append(row)
-            else:
-                still_incorrect.append(word)
-        words_to_generate = still_incorrect
-
-    return local_correct_rows
 
 @app.post("/wordlist/post", response_model=WordListRequest)
 async def post_text(payload: WordListRequest):
@@ -246,17 +238,21 @@ async def post_text(payload: WordListRequest):
         con.commit()
         ids += 1
     con.close()
-    global correct_rows
-    correct_rows = csv_generation(unknown_words, known_words, count, context_sentences)
+    words_to_generate = unknown_words.copy()
+    while words_to_generate:
+        response_text = request_sentences(words_to_generate, known_words, count, context_sentences)
+        rows = parse_response_to_dicts(response_text)
+        still_incorrect = []
+        for row in rows:
+            word = row["word"]
+            sentences = [row["sentence1"]]
+            if is_word_in_generated_sentences(word, sentences):
+                correct_rows.append(row)
+            else:
+                still_incorrect.append(word)
+        words_to_generate = still_incorrect
     return write_cards_to_csv(correct_rows)
 
-
-class RegenerationPatchRequest(BaseModel):
-    csv_text: str
-    marked_words: List[str]
-    known_words: List[str]
-    count: int
-    context_sentences: List[str]
 
 @app.post("/regenerate_patch")
 async def regenerate_patch(payload: RegenerationPatchRequest):
@@ -318,10 +314,7 @@ async def generate_cards_apkg():
         headers={"Content-Disposition": "attachment; filename=cards.apkg"}
     )
 
-#@app.post("/fetch-music/post", response_model=GeniusRequest)
-#async def fetch_music(payload: GeniusRequest):
-#    artist, song = payload.artist_song.split(' - ')
-#    return JSONResponse({"lyrics": get_genius_text(artist, song)})
-
-#if __name__ == "__main__":
-#    uvicorn.run(app, host="127.0.0.1", port=8000)
+@app.post("/fetch-music/post", response_model=GeniusRequest)
+async def fetch_music(payload: GeniusRequest):
+    artist, song = payload.query.split(' - ')
+    return PlainTextResponse(get_genius_text(artist, song))
