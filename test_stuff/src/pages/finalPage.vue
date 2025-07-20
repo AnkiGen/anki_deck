@@ -61,7 +61,7 @@ export default {
             this.$router.push({ name: 'Welcom' });
         },
         async downloadApkg() {
-        const response = await fetch('http://127.0.0.1:8000/generate-cards-apkg/', {
+        const response = await fetch('http://85.209.195.11:8000/generate-cards-apkg/', {
             method: 'POST',
             headers: {
             'Content-Type': 'application/json',
