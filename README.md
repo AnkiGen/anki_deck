@@ -82,11 +82,11 @@ With our project you can turn your *favorite songs* or *books* into **personaliz
 ## Getting Started
 
 You can run our project in these ways:
-### 1. Use the Deployed Web Version
+### Use the Deployed Web Version(for customer)
 The easiest way!
 Just access this [link.](https://github.com/AnkiGen/anki_deck/deployments/github-pages)
 
-### 2. Run with Docker (Recommended)
+### Run with Docker (Recommended) (for customer)
 #### Prerequisites
 * docker
 
