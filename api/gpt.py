@@ -134,6 +134,7 @@ def write_cards_to_apkg(response_text, deck_name="name"):
     )
 
     media_files = []
+
     for row in response_text:
         lemma = row.get("lemma") or nlp(row["word"])[0].lemma_
         audio_filename, audio_bytes = get_word_audio(row["word"])
