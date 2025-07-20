@@ -30,7 +30,7 @@ export default {
         //after rendering get data from store
         this.text = this.textStore.text;
         console.log(this.text);
-        this.sentences = this.text.split(/[\.!?\n]+/)
+        this.sentences = this.text.split(/[\n]+/)
                                     .filter((sentance) => sentance.length > 0)
                                     .map((sentance) => {
                                     return sentance.trim();
@@ -43,18 +43,13 @@ export default {
     },
     methods: {
         validateWords() {
-            let wordsArr = this.text.trim().split(/(\s+)/);
+            let wordsArr = this.text.trim().split(/(\s+|\n)/);
             let sentenceIndex = 0;
             let prevWord = "";
             this.words = wordsArr.map((word) => {
                 let currentIndex = sentenceIndex;
-                let endOfSentance = /[!?\.]+/.exec(word);
-                if (endOfSentance != null) {
-                    sentenceIndex++
-                }
-                if (word == '\n') {
-                    if (/[!?\.]+/.exec(prevWord) == null)
-                        sentenceIndex++;
+                if (word.includes("\n")) {
+                    sentenceIndex++;
                     return {
                         word: '',
                         extrChars:['', '\n'],
@@ -65,6 +60,13 @@ export default {
 
                 let regex = /[a-zA-Z'`’-]+/;
                 let newWord = regex.exec(word);
+                if (word.includes("[") || word.includes("]")) {
+                    return {
+                        word: '',
+                        extrChars: ['', ''],
+                        class: "default"
+                    }
+                }
                 if (newWord != null) {
                     return {
                     word: newWord[0],
