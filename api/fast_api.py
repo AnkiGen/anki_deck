@@ -3,6 +3,7 @@ from fastapi.responses import PlainTextResponse
 from gpt import request_sentences, write_cards_to_csv, parse_response_to_dicts
 from fastapi.middleware.cors import CORSMiddleware
 from decryptors import *
+from sqlite3 import connect
 from genius import *
 from Appearance import *
 from io import StringIO
@@ -28,6 +29,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+correct_rows = []
 
 @app.get("/")
 def root():
@@ -198,25 +200,6 @@ async def get_wordlist():
     return {"words": words}
 
 
-def csv_generation(unknown_words, known_words, count, context_sentences):
-    words_to_generate = unknown_words.copy()
-    local_correct_rows = []
-    
-    while words_to_generate:
-        response_text = request_sentences(words_to_generate, known_words, count, context_sentences)
-        rows = parse_response_to_dicts(response_text)
-        still_incorrect = []
-        for row in rows:
-            word = row["word"]
-            sentences = [row["sentence1"]]
-            if is_word_in_generated_sentences(word, sentences):
-                local_correct_rows.append(row)
-            else:
-                still_incorrect.append(word)
-        words_to_generate = still_incorrect
-
-    return local_correct_rows
-
 @app.post("/wordlist/post", response_model=WordListRequest)
 async def post_text(payload: WordListRequest):
     unknown_words = payload.unknown_words
@@ -245,8 +228,19 @@ async def post_text(payload: WordListRequest):
         con.commit()
         ids += 1
     con.close()
-    global correct_rows
-    correct_rows = csv_generation(unknown_words, known_words, count, context_sentences)
+    words_to_generate = unknown_words.copy()
+    while words_to_generate:
+        response_text = request_sentences(words_to_generate, known_words, count, context_sentences)
+        rows = parse_response_to_dicts(response_text)
+        still_incorrect = []
+        for row in rows:
+            word = row["word"]
+            sentences = [row["sentence1"]]
+            if is_word_in_generated_sentences(word, sentences):
+                correct_rows.append(row)
+            else:
+                still_incorrect.append(word)
+        words_to_generate = still_incorrect
     return write_cards_to_csv(correct_rows)
 
 
