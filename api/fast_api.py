@@ -11,11 +11,6 @@ import csv
 import spacy
 from models import *
 from database_preparation import *
-
-if os.path.exists('anki_deck.db'):
-    pass
-else:
-    prepare_db()
 app = FastAPI()
 basedir = os.path.abspath(os.path.dirname(__file__))
 data_file = os.path.join(basedir, 'anki_deck.db')
@@ -56,6 +51,10 @@ async def get_user(login: str):
 
 @app.post("/user/post/{login}/{encrypted_password}")
 async def post_user(login: str, encrypted_password: str):
+    if os.path.exists('anki_deck.db'):
+        pass
+    else:
+        prepare_db()
     con = connect(data_file)
     cur = con.cursor()
     ids = cur.execute("SELECT user_id FROM user WHERE login = ?", (login,)).fetchone(),
@@ -87,6 +86,10 @@ async def get_deck(deck_id: int):
 
 @app.post("/deck/post")
 async def post_deck(user_id: int, cards: list[int] = Query()):
+    if os.path.exists('anki_deck.db'):
+        pass
+    else:
+        prepare_db()
     con = connect(data_file)
     cur = con.cursor()
     cur.execute("INSERT INTO decks (user_id, cards) VALUES (?, ?)", (user_id, array_to_blob(cards)))
@@ -115,6 +118,10 @@ async def get_card(card_id: int):
 
 @app.post("/card/post")
 async def post_card(word_id: int, sentences: list[str] = Query()):
+    if os.path.exists('anki_deck.db'):
+        pass
+    else:
+        prepare_db()
     con = connect(data_file)
     cur = con.cursor()
     cur.execute("INSERT INTO cards (word_id, sentences) VALUES (?, ?)", (word_id,
@@ -170,6 +177,10 @@ async def get_by_id(word_id: int):
 
 @app.post("/word/post")
 async def post_word(word: str, context_sentence: str, user_id: int, mode: str):
+    if os.path.exists('anki_deck.db'):
+        pass
+    else:
+        prepare_db()
     con = connect(data_file)
     cur = con.cursor()
     cur.execute("INSERT INTO words (word, context_sentence, user_id)"
@@ -211,6 +222,10 @@ async def get_wordlist(payload: WordListGet):
 
 @app.post("/wordlist/post", response_model=WordListRequest)
 async def post_text(payload: WordListRequest):
+    if os.path.exists('anki_deck.db'):
+        pass
+    else:
+        prepare_db()
     unknown_words = payload.unknown_words
     known_words = payload.known_words
     count = payload.count
@@ -253,15 +268,12 @@ async def post_text(payload: WordListRequest):
     return write_cards_to_csv(correct_rows)
 
 
-class RegenerationPatchRequest(BaseModel):
-    csv_text: str
-    marked_words: List[str]
-    known_words: List[str]
-    count: int
-    context_sentences: List[str]
-
 @app.post("/regenerate_patch")
 async def regenerate_patch(payload: RegenerationPatchRequest):
+    if os.path.exists('anki_deck.db'):
+        pass
+    else:
+        prepare_db()
     reader = csv.DictReader(StringIO(payload.csv_text), delimiter=";")
     rows = list(reader)
 
@@ -322,5 +334,9 @@ async def generate_cards_apkg():
 
 @app.post("/fetch-music/post", response_model=GeniusRequest)
 async def fetch_music(payload: GeniusRequest):
+    if os.path.exists('anki_deck.db'):
+        pass
+    else:
+        prepare_db()
     artist, song = payload.query.split(' - ')
     return PlainTextResponse(get_genius_text(artist, song))
