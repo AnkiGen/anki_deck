@@ -20,9 +20,10 @@ def get_genius_text(artist_name, song_title):
         try:
             song = genius.search_song(title=song_title, artist=artist_name)
             lyrics = song.lyrics
+            if "Lyrics" in lyrics:
+                lyrics = lyrics.split("Lyrics")[1].strip()
             if "Read More" in lyrics:
                 lyrics = lyrics.split("Read More")[1].strip()
-            lyrics = '\n'.join(lyrics.split('\n')[1:])
             return lyrics
         except Timeout:
             sleep(5)
