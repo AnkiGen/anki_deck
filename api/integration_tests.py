@@ -13,10 +13,10 @@ def setup_and_teardown():
 
 
 def test_root():
-    if os.path.exists('anki_deck.db'):
-        pass
-    else:
-        prepare_db()
+    #if os.path.exists('anki_deck.db'):
+    #    pass
+    #else:
+    #    prepare_db()
     response = client.get("/")
     assert response.status_code == 200
     assert response.json() == {"message": "FastAPI is working!"}
