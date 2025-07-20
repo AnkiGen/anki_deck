@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="222a644d-2c41-450d-9c06-d2446119ffae" name="Changes" comment="Merge branch 'gen-api' of https://github.com/AnkiGen/anki_deck into gen-api&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;api/anki_deck.db">
-      <change beforePath="$PROJECT_DIR$/.github/workflows/main.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/main.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

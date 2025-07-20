@@ -31,4 +31,3 @@ api/__pycache__/
 *.tsbuildinfo
 .env
 .venv
-api/anki_deck.db
