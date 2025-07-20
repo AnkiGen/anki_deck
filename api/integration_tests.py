@@ -1,5 +1,7 @@
 import pytest
 from fastapi.testclient import TestClient
+import os
+from api.database_preparation import prepare_db
 from api.fast_api import app
 
 client = TestClient(app)
@@ -11,6 +13,10 @@ def setup_and_teardown():
 
 
 def test_root():
+    if os.path.exists('anki_deck.db'):
+        pass
+    else:
+        prepare_db()
     response = client.get("/")
     assert response.status_code == 200
     assert response.json() == {"message": "FastAPI is working!"}

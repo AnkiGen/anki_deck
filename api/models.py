@@ -17,3 +17,7 @@ class WordListRegeneration(BaseModel):
 
 class GeniusRequest(BaseModel):
     query: str
+
+
+class WordListGet(BaseModel):
+    wordlist: List[str]

@@ -186,18 +186,27 @@ async def post_word(word: str, context_sentence: str, user_id: int, mode: str):
     return {"status": 'ok'}
 
 
-@app.get("/wordlist/get")
-async def get_wordlist():
+@app.get("/wordlist/get", response_model=WordListGet)
+async def get_wordlist(payload: WordListGet):
     con = connect(data_file)
     cur = con.cursor()
-    ids = cur.execute("SELECT word_id FROM known_words").fetchall()
-    words = []
-    for word_id in ids:
-        word = cur.execute("SELECT word FROM words WHERE word_id = ?", (word_id[0],)).fetchall()
-        if word:
-            words.append(word[0])
+    words = payload.wordlist
+    ans = {}
+    for word in words:
+        word_id = cur.execute("SELECT word_id FROM words WHERE word = ?", (word,)).fetchone()
+        if word_id:
+            word_id = word_id[0]
+            known_id = cur.execute("SELECT word_id FROM known_words WHERE word_id = ?", (word_id,)).fetchone()
+            if known_id:
+                ans[word] = "known"
+
+            unknown_id = cur.execute("SELECT word_id FROM unknown_words WHERE word_id = ?", (word_id,)).fetchone()
+            if unknown_id:
+                ans[word] = "unknown"
+        else:
+            ans[word] = "none"
     con.close()
-    return {"words": words}
+    return ans
 
 
 @app.post("/wordlist/post", response_model=WordListRequest)
