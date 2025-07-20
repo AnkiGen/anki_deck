@@ -47,11 +47,11 @@ export default {
             let words = text.split(/(\s+|\n)/)
                 .map((word) => {
                     let currentIndex = sentenceIndex;
-                    let endOfSentance = endSentenctRegexp.exec(word);
-                    if (endOfSentance != null) {
-                        sentenceIndex++;
-                    }
-                    if (word == "\n" && endSentenctRegexp.exec(prevWord) == null) {
+                    // let endOfSentance = endSentenctRegexp.exec(word);
+                    // if (endOfSentance != null) {
+                    //     sentenceIndex++;
+                    // }
+                    if (word.trim() == "\n") {
                         sentenceIndex++;
                     }
                     let newWord = regex.exec(word);
@@ -69,7 +69,7 @@ export default {
                 .filter((word) =>  word.word.length > 2);
             words = this.toSet(words);
             const wordCount = words.length;
-            let sentences = text.split(/[\.!?\n]+/)
+            let sentences = text.split(/[\n]+/)
                 .filter((sentance) => sentance.length > 0)
                 .map((sentance) => {
                     return sentance.trim();
@@ -79,32 +79,6 @@ export default {
             this.textStore.setText(text);
             this.textStoreV.setContext(sentences);
             router.push({name: "Filter"});
-        },
-        //this function is not need and should be deleted later
-        //when all features on this page will be finished
-        async fatchdata() {
-            this.pickWords();            
-            const resp = { // add
-                unknown_words: ["give","survive","climb"],
-                known_words:["dog","cat","emansipation","Russia"],
-                count:6,
-                context_sentences: ["I will never give up", "He will survive", "This mount is too high to climb"],
-            };
-            const response = await fetch("http://127.0.0.1:8000/wordlist/post", {
-                method: "POST",
-                headers: {
-                    'Content-Type' : 'application/json'
-                },
-                body: JSON.stringify(resp),
-            })
-            const blob = await response.blob();
-            const url = window.URL.createObjectURL(blob);
-            let a = document.createElement('a');
-            a.href = url;
-            a.setAttribute("download", "Anki_deck.csv");
-            document.body.appendChild(a);
-            a.click();
-            a.remove();
         },
         async handleSubmit() {
             if (this.userText) {
@@ -137,13 +111,15 @@ export default {
             let words = this.userText.split(/(\s+|\n)/)
                                         .map((word) => {
                                             let currentIndex = sentenceIndex;
-                                            let endOfSentance = endSentenctRegexp.exec(word);
-                                            if (endOfSentance != null) {
+                                            // let endOfSentance = endSentenctRegexp.exec(word);
+                                            // if (endOfSentance != null) {
+                                            //     sentenceIndex++;
+                                            // }
+                                            if (word.includes("\n")) {
                                                 sentenceIndex++;
                                             }
-                                            if (word == "\n" && endSentenctRegexp.exec(prevWord) == null) {
-                                                sentenceIndex++;
-                                            }
+                                            if (word.includes("["))
+                                                return {word: ''};
                                             let newWord = regex.exec(word);
                                             prevWord = word
                                             if (newWord != null) {
@@ -171,8 +147,8 @@ export default {
                 return;
             }
             
-            if (wordCount > 500) {
-                alert('Пожалуйста, введите не более 500 слов.');
+            if (wordCount > 3000) {
+                alert('Пожалуйста, введите не более 3000 слов.');
                 return;
             }
             else {
