@@ -61,6 +61,8 @@
 
 
 <!-- ABOUT THE PROJECT -->
+## Link to the demo video
+[The demo video](https://drive.google.com/file/d/15u6kpIRd822xEZKmVCjCvSnQB6wSUhYu/view?usp=drive_link)
 ## About The Project
 
 Whether you're a language enthusiast, a curious learner, or a developer exploring NLP-powered tools,  **Anki Deck Generator**  helps you learn languages in context—sentence by sentence. 
